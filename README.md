@@ -2,6 +2,10 @@
 
 Handwritten lecture notes (44 pages) transcribed into LaTeX, paired with 12 computational labs for a 10-week course at UATX. Labs run entirely in Google Colab — no local setup required.
 
+<a href="https://github.com/sashakolpakov/linalg-lec/blob/main/linear_algebra_notes.pdf" target="_blank"><img src="https://img.shields.io/badge/Lecture%20Notes-PDF-red?logo=adobe-acrobat-reader" alt="Lecture Notes PDF"/></a>
+&nbsp;
+<a href="https://github.com/sashakolpakov/linalg-lec/blob/main/labs/LABS.md" target="_blank"><img src="https://img.shields.io/badge/Labs-12%20notebooks-blue?logo=jupyter" alt="Labs"/></a>
+
 ## Contents
 
 | Path | Description |
