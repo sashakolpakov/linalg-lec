@@ -1,0 +1,12 @@
+# OCR working files
+ocr_pages/
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+
+# macOS
+.DS_Store

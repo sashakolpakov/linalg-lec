@@ -1,0 +1,692 @@
+% ============================================================
+%  Linear Algebra — Computational Labs
+%  UATX, Spring 2025
+%  12 labs designed for an 11-week course (instructor chooses ~10)
+% ============================================================
+\documentclass[11pt, a4paper]{article}
+
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{booktabs}
+\usepackage{mdframed}
+
+\geometry{margin=2.5cm}
+
+\hypersetup{colorlinks=true, linkcolor=blue, urlcolor=blue}
+
+\definecolor{prereqcolor}{RGB}{30,90,160}
+\definecolor{taskcolor}{RGB}{0,110,60}
+\definecolor{notecolor}{RGB}{160,60,0}
+
+\newmdenv[linecolor=prereqcolor, linewidth=1pt, leftmargin=0pt,
+          rightmargin=0pt, innertopmargin=6pt, innerbottommargin=6pt]{prereqbox}
+\newmdenv[linecolor=taskcolor, linewidth=1pt, leftmargin=0pt,
+          rightmargin=0pt, innertopmargin=6pt, innerbottommargin=6pt]{taskbox}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Linear Algebra — Computational Labs}
+\lhead{UATX}
+\rfoot{\thepage}
+
+\titleformat{\section}[block]
+  {\large\bfseries\color{prereqcolor}}
+  {Lab \thesection.}{0.5em}{}[\vspace{-2pt}\rule{\linewidth}{0.4pt}]
+
+\newcommand{\labmeta}[3]{%
+  \begin{prereqbox}
+  \textbf{Suggested week:}~#1 \quad
+  \textbf{Notebook:}~\texttt{#2} \quad
+  \textbf{Prerequisites:}~#3
+  \end{prereqbox}
+  \vspace{4pt}
+}
+
+\newcommand{\objectives}[1]{%
+  \textbf{\color{prereqcolor}Learning objectives.}\vspace{2pt}
+  \begin{itemize}[leftmargin=1.6em, itemsep=1pt] #1 \end{itemize}
+}
+
+\newcommand{\tasks}[1]{%
+  \begin{taskbox}
+  \textbf{\color{taskcolor}Tasks.}
+  \begin{enumerate}[leftmargin=1.6em, itemsep=3pt] #1 \end{enumerate}
+  \end{taskbox}
+}
+
+\newcommand{\extensions}[1]{%
+  \textbf{\color{notecolor}Extensions.}
+  \begin{itemize}[leftmargin=1.6em, itemsep=1pt] #1 \end{itemize}
+}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+  {\LARGE\bfseries Linear Algebra: Computational Labs}\\[6pt]
+  {\large UATX \quad Spring 2025}\\[4pt]
+  \textit{12 labs — instructor selects 10 for an 11-week course}
+\end{center}
+
+\vspace{8pt}
+
+\noindent\textbf{Overview.}
+Each lab is a self-contained Jupyter notebook intended for a two-hour session.
+Labs are ordered to follow the lecture notes closely. Labs with an existing
+notebook are marked with their filename; the remaining labs are to be built.
+The table below summarises the full sequence.
+
+\vspace{8pt}
+
+\begin{center}
+\begin{tabular}{cllll}
+\toprule
+\# & Title & Week & Notebook & Status \\
+\midrule
+1  & Vector Spaces in Python              & 2  & \texttt{lab01\_vector\_spaces.ipynb}          & to build \\
+2  & Linear Maps and Their Matrices       & 3  & \texttt{lab02\_linear\_maps.ipynb}            & to build \\
+3  & Image, Kernel, and Gaussian Elimination & 4--5 & \texttt{lab03\_im\_ker\_gaussian.ipynb}   & exists   \\
+4  & Solving $Ax=b$: the Four Cases       & 5  & \texttt{lab04\_solving\_axb.ipynb}           & to build \\
+5  & Polynomial Regression                & 5--6 & \texttt{lab05\_polynomial\_regression.ipynb} & exists   \\
+6  & Inner Products, Norms, Gram--Schmidt & 7  & \texttt{lab06\_gram\_schmidt.ipynb}           & to build \\
+7  & Four Fundamental Subspaces           & 7--8 & \texttt{lab07\_four\_subspaces.ipynb}        & to build \\
+8  & Change of Basis                      & 8  & \texttt{lab08\_change\_of\_basis.ipynb}       & to build \\
+9  & Eigenvalues via Rayleigh Quotients   & 9  & \texttt{lab09\_rayleigh\_quotients.ipynb}    & exists   \\
+10 & SVD: Geometry and Compression        & 10 & \texttt{lab10\_svd.ipynb}                    & exists   \\
+11 & Image Processing as Linear Algebra   & 10--11 & \texttt{lab11\_edge\_detection.ipynb}    & exists   \\
+12 & Matrix Denoising via SVD             & 11 & \texttt{lab12\_denoising.ipynb}               & to build \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{12pt}
+
+\noindent\textbf{Suggested schedule for a 10-lab course.}
+Drop one of Labs 1, 2, or 8 if time is short. Lab~12 can replace Lab~11 for
+a more theoretical emphasis on spectral methods.
+
+\newpage
+
+% ============================================================
+\section{Vector Spaces in Python}
+\label{lab:vecspaces}
+
+\labmeta{Week 2}{lab01\_vector\_spaces.ipynb}{Notes §1.1--§1.2 (pages 1--6)}
+
+\vspace{4pt}
+
+\noindent\textbf{Background.}
+A vector space over a field $F$ is a set $V$ with operations of addition and
+scalar multiplication satisfying eight axioms. The simplest examples are
+$F^n$, the space of polynomials $P_n$, and spaces of functions. A subset
+$W \subseteq V$ is a subspace if and only if it is closed under addition and
+scalar multiplication (the ``one-condition test'').
+
+\objectives{
+  \item Translate the abstract vector space axioms into concrete Python checks.
+  \item Recognise which candidate sets are subspaces and which are not.
+  \item Visualise linear combinations and span in $\mathbb{R}^2$ and $\mathbb{R}^3$.
+  \item Build intuition for why isomorphic spaces ($P_n \cong \mathbb{R}^{n+1}$) behave identically.
+}
+
+\tasks{
+  \item Implement \texttt{check\_vector\_space\_axioms(V, add, scale, F, samples=50)}
+        that draws random elements and verifies all eight axioms stochastically.
+        Run it on $\mathbb{R}^3$, $P_2$, and the set of $2\times 2$ matrices.
+  \item For each of the following subsets of $\mathbb{R}^3$, use the one-condition
+        test to determine (analytically and verify numerically) whether it is a
+        subspace: (a) $\{x : x_1 + x_2 = 0\}$, (b) $\{x : x_1 x_2 = 0\}$,
+        (c) $\{x : \|x\| = 1\}$, (d) $\{x : Ax = 0\}$ for a fixed matrix $A$.
+  \item Given $v_1, \ldots, v_k \in \mathbb{R}^n$, write code that generates
+        $m$ random linear combinations and plots them.  Show that
+        $\mathrm{span}\{(1,0),(0,1)\} = \mathbb{R}^2$ but
+        $\mathrm{span}\{(1,1)\}$ is only a line.
+  \item Represent polynomials $p \in P_2$ as coefficient vectors in
+        $\mathbb{R}^3$.  Evaluate the isomorphism: pick two random polynomials,
+        add them in both representations, and confirm the results match.
+}
+
+\extensions{
+  \item Implement the \emph{direct sum} test: given subspaces $U, W \subseteq \mathbb{R}^n$
+        expressed as column-span matrices, check whether $U \cap W = \{0\}$.
+  \item Explore $\mathbb{Z}_2^n$ as a vector space over $\mathbb{Z}_2$; verify the axioms.
+}
+
+% ============================================================
+\section{Linear Maps and Their Matrices}
+\label{lab:linmaps}
+
+\labmeta{Week 3}{lab02\_linear\_maps.ipynb}{Notes §1.5 (pages 11--14)}
+
+\vspace{4pt}
+
+\noindent\textbf{Background.}
+Every linear map $T: V \to W$ between finite-dimensional spaces is completely
+determined by its action on a basis: if $\{e_1,\ldots,e_n\}$ is a basis of $V$
+then the \emph{matrix of $T$} is $M_T = [T(e_1) \mid \cdots \mid T(e_n)]$.
+Composition of linear maps corresponds to matrix multiplication.
+A canonical example is the differentiation operator $D: P_n \to P_{n-1}$
+and the integration operator $J: P_{n-1} \to P_n$; one can show $D \circ J = \mathrm{id}$.
+
+\objectives{
+  \item Build the matrix of a linear map from its action on a basis.
+  \item Verify that composition of maps corresponds to matrix multiplication.
+  \item Explore differentiation and integration as explicit matrices on $P_n$.
+  \item Understand that $T$ is determined by finitely many values.
+}
+
+\tasks{
+  \item Represent $P_n$ as $\mathbb{R}^{n+1}$ (coefficient vectors).
+        Write \texttt{diff\_matrix(n)} that returns the $(n \times (n+1))$
+        matrix of $D: P_n \to P_{n-1}$ in the monomial basis.
+        Verify: applying the matrix to $[0,0,1,0]^T$ (representing $x^2$)
+        gives $[0,2,0]^T$ (representing $2x$).
+  \item Similarly build \texttt{int\_matrix(n)} for $J(p)(x) = \int_0^1 x\,p(xt)\,dt$.
+        Compute $D \cdot J$ and verify it equals the identity.
+  \item Write \texttt{matrix\_of\_T(T, basis)} that constructs $M_T$ for any
+        callable linear map $T$ and a list of basis vectors.
+        Apply it to (a) reflection across the line $y = x$ in $\mathbb{R}^2$,
+        (b) rotation by $\theta = \pi/4$, (c) projection onto a given vector $v$.
+  \item Compose two maps $T_1, T_2: \mathbb{R}^3 \to \mathbb{R}^3$ defined by your
+        matrices and verify $M_{T_2 \circ T_1} = M_{T_2} \cdot M_{T_1}$.
+}
+
+\extensions{
+  \item Compute $D^k$ (the $k$-th derivative operator) using matrix powers and
+        verify against symbolic differentiation with \texttt{sympy}.
+  \item Show that the space $L(V,W)$ of linear maps is itself a vector space
+        by defining addition and scalar multiplication of maps and checking axioms.
+}
+
+% ============================================================
+\section{Image, Kernel, and Gaussian Elimination}
+\label{lab:imker}
+
+\labmeta{Weeks 4--5}{lab03\_im\_ker\_gaussian.ipynb}{Notes §1.6 (pages 15--21)}
+
+\vspace{4pt}
+
+\noindent\textbf{Background.}
+For a matrix $A \in F^{m \times n}$, the \emph{image} $\mathrm{im}(A) = \{Ax : x \in F^n\}$
+and \emph{kernel} $\ker(A) = \{x : Ax = 0\}$ are both subspaces.
+Column reduction on $[A \mid I_n]$ simultaneously yields a basis for
+$\mathrm{im}(A)$ (the pivot columns) and a basis for $\ker(A)$
+(the kernel part of the non-pivot columns).
+
+A striking numerical example is the \emph{Hilbert matrix}
+$H_{ij} = 1/(i+j-1)$: it is theoretically invertible for all $n$,
+but floating-point column reduction declares $H_{20}$ to have rank~12
+because its condition number exceeds $10^{17}$.
+
+\objectives{
+  \item Implement column reduction on $[A \mid I_n]$ and read off bases for $\mathrm{im}(A)$ and $\ker(A)$.
+  \item Solve $Ax = b$ using the extended algorithm $[A \mid I_n \mid {-b}]$.
+  \item Understand the gap between exact (symbolic) and floating-point rank.
+  \item Connect the algorithm to classical Gauss--Jordan elimination.
+}
+
+\tasks{
+  \item \textbf{(Already in notebook)} Run \texttt{column\_reduce\_image\_kernel} on
+        a rank-2 matrix and an invertible matrix. Identify pivot columns, free columns,
+        image basis, and kernel basis.
+  \item \textbf{(Already in notebook)} Run \texttt{gauss\_solve} on:
+        (a) an invertible $3\times3$ system, (b) a consistent underdetermined system,
+        (c) an inconsistent system. In each case identify the solution, the solution set,
+        and the obstruction.
+  \item \textbf{(Already in notebook)} Compute the $20\times 20$ Hilbert matrix exactly
+        (using \texttt{sympy}) and verify $H H^{-1} = I$. Then pass $H$ as a
+        \texttt{float64} array to \texttt{column\_reduce\_image\_kernel} and observe
+        that it reports rank~12. Explain the discrepancy.
+  \item \textbf{(New)} Plot the numerical rank of $H_n$ (as reported by both
+        \texttt{np.linalg.matrix\_rank} and your algorithm) for $n = 2, 4, \ldots, 20$.
+        At what size does floating-point rank diverge from the true rank?
+}
+
+\extensions{
+  \item Repeat the rank experiment with different tolerance thresholds \texttt{tol} in
+        \texttt{column\_reduce\_image\_kernel}. How sensitive is the result?
+  \item Look up the closed-form formula for $\kappa(H_n)$ (condition number of the
+        Hilbert matrix) and overlay the theoretical curve on your rank plot.
+}
+
+% ============================================================
+\section{Solving $Ax = b$: The Four Cases}
+\label{lab:axb}
+
+\labmeta{Week 5}{lab04\_solving\_axb.ipynb}{Notes pages 20--21 (2×2 table)}
+
+\vspace{4pt}
+
+\noindent\textbf{Background.}
+The solvability of $Ax = b$ and the structure of the solution set are
+governed by two independent binary questions:
+\begin{enumerate}[itemsep=0pt]
+  \item Is $b \in \mathrm{im}(A)$? (existence)
+  \item Is $\ker(A)$ trivial? (uniqueness)
+\end{enumerate}
+This gives a $2\times 2$ table: unique solution, infinitely many solutions
+(coset $x_0 + \ker A$), no solution, or no solution. Importantly, the
+\emph{least-squares} solution $\hat x = (A^\top A)^{-1}A^\top b$ always
+exists when $A$ has full column rank and minimises $\|Ax - b\|$.
+
+\objectives{
+  \item Construct matrices and right-hand sides that realise each of the four cases.
+  \item Parameterise the full solution set $x_0 + \ker(A)$ from the reduced form.
+  \item Compute and interpret the least-norm solution when infinitely many solutions exist.
+  \item Visualise solution sets in $\mathbb{R}^2$ and $\mathbb{R}^3$.
+}
+
+\tasks{
+  \item For each case in the $2\times 2$ table, construct an explicit $3\times 3$
+        (or $3\times 4$) matrix $A$ and vector $b$ that realises it.
+        Use \texttt{gauss\_solve} from Lab~3 to confirm the classification.
+  \item For a $3\times 5$ matrix with rank 2 and $b \in \mathrm{im}(A)$,
+        extract one particular solution $x_0$ and a basis $\{k_1,\ldots,k_3\}$
+        for $\ker(A)$.  Verify that $x_0 + \alpha k_1 + \beta k_2 + \gamma k_3$
+        is a solution for random $\alpha, \beta, \gamma$.
+  \item Implement \texttt{least\_norm\_solution(A, b)} using
+        \texttt{np.linalg.lstsq} and verify it returns the solution $x^*$
+        orthogonal to $\ker(A)$ (i.e.\ $x^* \perp k_i$ for all kernel basis vectors).
+  \item Plot the solution set of $x_1 + 2x_2 = 3$ in $\mathbb{R}^2$ as a line,
+        and mark the least-norm solution as the point closest to the origin.
+        Generalise to a plane in $\mathbb{R}^3$.
+}
+
+\extensions{
+  \item Show that for any $b \in \mathrm{im}(A)$, the least-norm solution equals
+        $A^\top(AA^\top)^{-1}b$ (the right pseudoinverse formula).
+        Verify numerically.
+  \item Explore the Moore--Penrose pseudoinverse \texttt{np.linalg.pinv} for all four cases.
+}
+
+% ============================================================
+\section{Polynomial Regression}
+\label{lab:regression}
+
+\labmeta{Weeks 5--6}{lab05\_polynomial\_regression.ipynb}{Notes pages 22--23, §2.1}
+
+\vspace{4pt}
+
+\noindent\textbf{Background.}
+Given $N$ data points $(x_i, y_i)$, fitting a degree-$d$ polynomial amounts to
+solving an overdetermined linear system $X\beta = y$ where $X$ is the
+\emph{Vandermonde matrix} $X_{ij} = x_i^j$.  The \emph{normal equations}
+$X^\top X \beta = X^\top y$ give the least-squares solution.
+When $d \geq N - 1$ the system is underdetermined and the fit interpolates
+every point — this is \emph{overfitting}.
+
+\objectives{
+  \item Build the Vandermonde feature matrix and understand it as the matrix of a linear map.
+  \item Solve the normal equations and relate them to least-squares approximation.
+  \item Observe overfitting empirically and understand it in terms of rank and kernel.
+  \item Appreciate why the normal equations require an inner product (§2.1).
+}
+
+\tasks{
+  \item \textbf{(Already in notebook)} Generate 100 noisy samples from
+        $y = x^2 + 2x + 1$.  Build \texttt{feature\_matrix(x, d)} and
+        \texttt{solve\_linear\_system(X, y)}.  Confirm that degree~2 recovery
+        gives $\beta \approx [1, 2, 1]$.
+  \item Repeat for degrees $d = 1, 3, 5, 10$.  For each, plot the fitted
+        polynomial and report the training error $\|X\beta - y\|$.
+        Describe what happens as $d$ increases past the true degree.
+  \item Reduce $N$ to 12 data points and fit degree 11.  What do you observe?
+        Compute $\mathrm{rank}(X)$ and $\dim\ker(X)$ for this case.
+  \item Add a \emph{validation set} of 50 new samples from the same polynomial.
+        Plot training error and validation error versus degree $d = 1, \ldots, 15$.
+        Identify the degree at which validation error is minimised.
+}
+
+\extensions{
+  \item Replace the Vandermonde basis with the \emph{Chebyshev} polynomial basis.
+        Does this reduce numerical ill-conditioning? Check via \texttt{np.linalg.cond(X)}.
+  \item Implement ridge regression: instead of solving $X^\top X \beta = X^\top y$,
+        solve $(X^\top X + \lambda I)\beta = X^\top y$. How does $\lambda$ affect the
+        fitted polynomial for large $d$?
+}
+
+% ============================================================
+\section{Inner Products, Norms, and Gram--Schmidt}
+\label{lab:gramschmidt}
+
+\labmeta{Week 7}{lab06\_gram\_schmidt.ipynb}{Notes §2.1/§3.1 (pages 24--29)}
+
+\vspace{4pt}
+
+\noindent\textbf{Background.}
+An \emph{inner product} on $V$ is a bilinear, symmetric, positive-definite map
+$\langle \cdot, \cdot \rangle: V \times V \to F$.  It induces a norm
+$\|v\| = \sqrt{\langle v, v\rangle}$ and the key inequalities: Cauchy--Schwarz
+$|\langle u, v\rangle| \leq \|u\|\,\|v\|$ and the triangle inequality.
+The \emph{Gram--Schmidt} process takes any basis $\{v_1,\ldots,v_n\}$ and
+produces an orthonormal basis $\{q_1,\ldots,q_n\}$ spanning the same space;
+this is the $QR$ decomposition $A = QR$.
+
+\objectives{
+  \item Verify inner product axioms for standard and non-standard products.
+  \item Implement Gram--Schmidt and understand its geometric meaning.
+  \item Compute the $QR$ decomposition and connect it to least-squares regression.
+  \item Work with the $L^2$ inner product on $P_n$ using numerical integration.
+}
+
+\tasks{
+  \item Implement \texttt{gram\_schmidt(A)} that takes an $n \times k$ matrix
+        (columns = basis vectors) and returns $Q$ (orthonormal columns) and $R$
+        (upper-triangular).  Verify $A = QR$ and $Q^\top Q = I_k$.
+  \item Apply Gram--Schmidt to the monomial basis $\{1, x, x^2, x^3\}$ on $[-1,1]$
+        using the $L^2$ inner product $\langle f, g \rangle = \int_{-1}^1 f(x)g(x)\,dx$
+        (use \texttt{scipy.integrate.quad}).
+        The result should approximate the \emph{Legendre polynomials}; verify against
+        \texttt{scipy.special.legendre}.
+  \item Use the $QR$ decomposition to solve the polynomial regression problem from
+        Lab~5.  The formula $\beta = R^{-1}Q^\top y$ is numerically more stable than
+        normal equations.  Compare condition numbers of $X^\top X$ and $R$.
+  \item Verify Cauchy--Schwarz numerically: generate 1000 random pairs
+        $(u,v) \in \mathbb{R}^{10}$ and confirm $|\langle u,v\rangle| \leq \|u\|\|v\|$.
+        Plot the distribution of the ratio $|\langle u,v\rangle|/(\|u\|\|v\|)$.
+}
+
+\extensions{
+  \item Implement the \emph{modified} Gram--Schmidt (MGS) algorithm and compare its
+        numerical stability to classical Gram--Schmidt on a nearly-dependent set of vectors.
+  \item Show that orthogonal projection onto $W = \mathrm{col}(Q)$ equals $QQ^\top$.
+        Apply this to project a random vector onto a 3-dimensional subspace.
+}
+
+% ============================================================
+\section{The Four Fundamental Subspaces}
+\label{lab:fourspaces}
+
+\labmeta{Weeks 7--8}{lab07\_four\_subspaces.ipynb}{Notes pages 30--32}
+
+\vspace{4pt}
+
+\noindent\textbf{Background.}
+Every matrix $A \in \mathbb{R}^{m\times n}$ of rank $r$ determines four subspaces:
+\[
+  \text{column space } \mathrm{col}(A) \subseteq \mathbb{R}^m, \quad
+  \text{null space } \ker(A) \subseteq \mathbb{R}^n,
+\]
+\[
+  \text{row space } \mathrm{row}(A) \subseteq \mathbb{R}^n, \quad
+  \text{left null space } \ker(A^\top) \subseteq \mathbb{R}^m.
+\]
+By the Rank--Nullity theorem (and its transpose version):
+$\dim\mathrm{col}(A) = \dim\mathrm{row}(A) = r$,
+$\dim\ker(A) = n - r$, $\dim\ker(A^\top) = m - r$.
+The orthogonal decompositions $\mathbb{R}^n = \mathrm{row}(A) \oplus \ker(A)$ and
+$\mathbb{R}^m = \mathrm{col}(A) \oplus \ker(A^\top)$ are the core of the
+\emph{fundamental theorem of linear algebra}.
+
+\objectives{
+  \item Compute all four fundamental subspaces for a given matrix.
+  \item Verify the orthogonal complement relationships numerically.
+  \item Visualise the two decompositions geometrically in low dimensions.
+  \item Connect the four subspaces to the solvability of $Ax = b$.
+}
+
+\tasks{
+  \item Write \texttt{four\_subspaces(A)} that returns orthonormal bases for
+        $\mathrm{col}(A)$, $\ker(A)$, $\mathrm{row}(A)$, $\ker(A^\top)$ using
+        \texttt{scipy.linalg.null\_space} and \texttt{scipy.linalg.orth}.
+        Verify dimensions satisfy the Rank--Nullity theorem.
+  \item For a $4 \times 5$ matrix $A$ of rank 2, verify the orthogonality
+        relations:
+        (a) every row-space vector is orthogonal to every null-space vector,
+        (b) every column-space vector is orthogonal to every left-null vector.
+  \item Given $b \in \mathbb{R}^m$, decompose $b = b_{\mathrm{col}} + b_{\ker^\top}$
+        (projection onto column space + projection onto left null space).
+        Verify that $Ax = b$ is solvable iff $b_{\ker^\top} = 0$.
+  \item For a $3\times 3$ rank-2 matrix, draw the four subspaces in $\mathbb{R}^3$
+        using \texttt{matplotlib} 3D plots (planes and lines through the origin).
+}
+
+\extensions{
+  \item Show that $A^\top A$ and $A$ have the same null space and the same
+        row space. Use this to prove that the normal equations always have a solution.
+  \item Compute the four subspaces for the Hilbert matrix from Lab~3 using
+        exact (symbolic) arithmetic vs floating-point; compare dimensions.
+}
+
+% ============================================================
+\section{Change of Basis}
+\label{lab:cob}
+
+\labmeta{Week 8}{lab08\_change\_of\_basis.ipynb}{Notes §4.1 (pages 33--34)}
+
+\vspace{4pt}
+
+\noindent\textbf{Background.}
+If $\mathcal{B} = \{b_1,\ldots,b_n\}$ is a basis of $\mathbb{R}^n$ and
+$P = [b_1 \mid \cdots \mid b_n]$ is the \emph{change-of-basis matrix}, then
+any vector $v$ has coordinates $[v]_\mathcal{B} = P^{-1}v$ in $\mathcal{B}$.
+A linear map $T$ with matrix $A$ in the standard basis has matrix
+$A' = P^{-1}AP$ in $\mathcal{B}$.  Matrices related by $A' = P^{-1}AP$
+are called \emph{similar}; they represent the \emph{same} linear map in
+different bases.
+
+\objectives{
+  \item Find the change-of-basis matrix $P$ and compute coordinates in a new basis.
+  \item Compute $A' = P^{-1}AP$ and interpret it as the same map in a different basis.
+  \item Use an eigenbasis to diagonalise a $2\times 2$ matrix by hand and verify in code.
+  \item Apply change of basis to compute matrix powers efficiently via $A^k = P\Lambda^k P^{-1}$.
+}
+
+\tasks{
+  \item Given basis $\mathcal{B} = \{(1,1),(1,-1)\}/\sqrt{2}$, find the coordinates
+        of $(3,1)$ in $\mathcal{B}$.  Write a general function \texttt{coords(v, B)}
+        returning $P^{-1}v$.
+  \item For $A = \begin{pmatrix}3&1\\0&2\end{pmatrix}$, find eigenvalues and eigenvectors
+        by hand and build $P$.  Compute $A' = P^{-1}AP$ and confirm it is diagonal.
+  \item Use $A^k = P\Lambda^k P^{-1}$ to compute $A^{20}$ for the matrix above.
+        Compare against \texttt{np.linalg.matrix\_power(A, 20)}.
+  \item The Fibonacci sequence satisfies $F_{n+1} = F_n + F_{n-1}$.
+        Write it as $\begin{pmatrix}F_{n+1}\\F_n\end{pmatrix}
+        = M^n \begin{pmatrix}1\\0\end{pmatrix}$ with $M = \begin{pmatrix}1&1\\1&0\end{pmatrix}$.
+        Diagonalise $M$ and derive the closed-form Binet formula.
+        Verify for $n = 1, \ldots, 20$.
+}
+
+\extensions{
+  \item For a $3\times 3$ symmetric matrix, diagonalise by Gram--Schmidt on its
+        eigenvectors to get an \emph{orthogonal} $P$ (i.e.\ $P^{-1}=P^\top$).
+  \item Show that $\mathrm{tr}(A) = \mathrm{tr}(A')$ and $\det(A) = \det(A')$
+        for any change of basis, connecting to eigenvalue sums and products.
+}
+
+% ============================================================
+\section{Eigenvalues via Rayleigh Quotients}
+\label{lab:rayleigh}
+
+\labmeta{Week 9}{lab09\_rayleigh\_quotients.ipynb}{Notes §4.2 (pages 35--38)}
+
+\vspace{4pt}
+
+\noindent\textbf{Background.}
+For a symmetric matrix $A$, the \emph{Rayleigh quotient} is
+$R(x) = x^\top A x / x^\top x$.  Its minimum and maximum over the unit sphere
+equal the smallest and largest eigenvalues, respectively (Courant--Fischer theorem,
+a consequence of the Spectral Theorem from §4.3).
+This variational characterisation motivates a practical algorithm: minimise $R$
+by gradient descent on the sphere, then \emph{deflate} by projecting out the
+found eigenvector and repeating.
+
+\objectives{
+  \item Implement gradient descent on the unit sphere to find extreme eigenvalues.
+  \item Implement deflation to recover the full spectrum without determinants.
+  \item Understand why $\det(A - \lambda I) = 0$ is impractical for large matrices.
+  \item Verify results against \texttt{numpy.linalg.eigh}.
+}
+
+\tasks{
+  \item \textbf{(Already in notebook)} Construct a $10\times 10$ random symmetric matrix.
+        Run \texttt{min\_eigen\_via\_gradient} and compare with \texttt{np.linalg.eigh}.
+  \item \textbf{(Already in notebook)} Implement \texttt{compute\_k\_smallest} using
+        deflation and recover the full spectrum; measure the $L^2$ error against NumPy.
+  \item \textbf{(New)} Study convergence: plot $|R(x_t) - \lambda_{\min}|$ versus
+        gradient-descent step $t$ for learning rates $\eta \in \{0.001, 0.01, 0.1\}$.
+        What is the effect on speed and stability?
+  \item \textbf{(New)} Apply the algorithm to a $100\times 100$ random symmetric matrix.
+        Report wall-clock time versus \texttt{np.linalg.eigh}. When would the
+        gradient-descent approach be preferred in practice?
+}
+
+\extensions{
+  \item Implement the \emph{power iteration} method ($x \leftarrow Ax/\|Ax\|$) and
+        compare its convergence to gradient descent on the Rayleigh quotient.
+  \item Show that deflation by projection is equivalent to restricting $A$ to the
+        orthogonal complement of the found eigenvector (invariant subspace property).
+}
+
+% ============================================================
+\section{SVD: Geometry and Image Compression}
+\label{lab:svd}
+
+\labmeta{Week 10}{lab10\_svd.ipynb}{Notes §4.3 (page 44), forward pointer to SVD}
+
+\vspace{4pt}
+
+\noindent\textbf{Background.}
+Every matrix $A \in \mathbb{R}^{m\times n}$ factors as $A = U\Sigma V^\top$
+where $U \in \mathbb{R}^{m\times m}$, $V \in \mathbb{R}^{n\times n}$ are
+orthogonal and $\Sigma$ is diagonal with non-negative entries
+$\sigma_1 \geq \cdots \geq \sigma_r > 0$ (the \emph{singular values}).
+The \emph{Eckart--Young theorem} says $A_k = \sum_{i=1}^k \sigma_i u_i v_i^\top$
+is the best rank-$k$ approximation to $A$ in the Frobenius norm.
+
+\objectives{
+  \item Understand the SVD geometrically as mapping the unit sphere to an ellipsoid.
+  \item Apply the Eckart--Young theorem to image compression.
+  \item Analyse the distribution of singular values and their energy content.
+  \item Connect SVD to the spectral decomposition of $A^\top A$ and $AA^\top$.
+}
+
+\tasks{
+  \item \textbf{(Already in notebook)} For a $2\times 2$ matrix, visualise how
+        $A$ maps the unit circle to an ellipse; overlay the singular vectors $v_i$
+        and images $\sigma_i u_i$.
+  \item \textbf{(Already in notebook)} For a $50\times 50$ random matrix, plot
+        Frobenius reconstruction error $\|M - M_k\|_F$ versus rank $k$.
+  \item \textbf{(Already in notebook)} Apply SVD compression to grayscale images
+        (astronaut, chelsea, coffee, camera) at ranks 5, 20, 60.
+        Plot singular-value histograms and energy-per-decile charts.
+  \item \textbf{(New)} For each image, find the smallest rank $k^*$ such that
+        $\sum_{i=1}^{k^*}\sigma_i^2 / \sum_i \sigma_i^2 \geq 0.95$.
+        Report $k^*$ and the compression ratio $k^*(m+n)/(mn)$.
+}
+
+\extensions{
+  \item Verify $A^\top A = V\Sigma^2 V^\top$: the eigenvalues of $A^\top A$ are
+        the squared singular values of $A$.
+  \item For a colour image (3 channels), apply SVD to each channel independently
+        and reconstruct; compare quality to greyscale compression.
+}
+
+% ============================================================
+\section{Image Processing as Linear Algebra}
+\label{lab:image}
+
+\labmeta{Weeks 10--11}{lab11\_edge\_detection.ipynb}{Notes §1.9 (pages 9--10), Lab~10}
+
+\vspace{4pt}
+
+\noindent\textbf{Background.}
+An image $X \in \mathbb{R}^{m\times n}$ can be viewed as a vector in $\mathbb{R}^{mn}$.
+\emph{Convolution} with a kernel $K$ is a linear map; its matrix is a (block)
+Toeplitz matrix.  Finite-difference operators (Sobel, Laplacian) are sparse
+instances.  The diffusion PDE $\partial_t X = \alpha\Delta X + \beta(X - \bar X)$
+discretises to $X \leftarrow X + \alpha\Delta X + \beta(X - \bar{X})$, a
+repeated linear update that smooths and sharpens simultaneously.
+
+\objectives{
+  \item Recognise convolution as a linear map and identify its matrix.
+  \item Implement finite-difference gradient operators for edge detection.
+  \item Implement and tune the diffusion-evolution edge detector.
+  \item Compare handcrafted linear operators with library methods (Canny, Felzenszwalb).
+}
+
+\tasks{
+  \item \textbf{(Already in notebook)} Apply a $9\times 9$ averaging kernel to the
+        Mona Lisa image using \texttt{scipy.ndimage.convolve}.
+        Write the corresponding Toeplitz matrix for a $1$-D slice and verify
+        $\text{(matrix)} \cdot \text{(vector)} = \text{convolve}(\text{1-D signal}, \text{kernel})$.
+  \item \textbf{(Already in notebook)} Compute the gradient magnitude
+        $\|\nabla X\| = \sqrt{(\partial_x X)^2 + (\partial_y X)^2}$
+        using central finite differences.  Threshold to obtain an edge map.
+  \item \textbf{(Already in notebook)} Implement the diffusion-evolution edge
+        detector: iterate $X \leftarrow X + \alpha\Delta X + \beta(X - \bar X)$,
+        binarise at threshold $t$, and extract boundaries.
+        Experiment with $\alpha, \beta, t$ on at least two different images.
+  \item \textbf{(New)} Express the $1$-D Laplacian on $n$ points as an
+        $n\times n$ tridiagonal matrix $L$.  Compute its eigenvalues and eigenvectors.
+        Show that the eigenvectors are the discrete cosine modes
+        $v_k(j) = \cos(\pi k j / n)$.
+}
+
+\extensions{
+  \item Implement the \emph{Sobel operator} as a proper $3\times 3$ matrix kernel.
+        Compute its frequency response by taking the DFT.
+  \item For the diffusion step $X \leftarrow (I + \alpha L + \beta(I - \bar{\cdot}))X$,
+        write the update explicitly as a single matrix and find its eigenvalues.
+        What controls stability?
+}
+
+% ============================================================
+\section{Matrix Denoising via SVD}
+\label{lab:denoising}
+
+\labmeta{Week 11}{lab12\_denoising.ipynb}{Notes §4.3, Lab~10}
+
+\vspace{4pt}
+
+\noindent\textbf{Background.}
+In many applications one observes $M = A_{\text{signal}} + E$ where
+$A_{\text{signal}}$ is low-rank (the signal) and $E$ is random noise.
+SVD truncation $\hat{A}_k = \sum_{i=1}^k \sigma_i u_i v_i^\top$ recovers the
+signal when $k$ is chosen correctly.  The \emph{Marchenko--Pastur law} from
+random matrix theory gives a theoretical threshold: if $E$ has i.i.d.\
+$\mathcal{N}(0,\sigma^2)$ entries in $\mathbb{R}^{m\times n}$ with $m \leq n$,
+then all noise singular values lie below $\sigma(\sqrt{m}+\sqrt{n})$
+with high probability.  An \emph{elbow} in the singular-value plot gives a
+data-driven alternative.
+
+\objectives{
+  \item Construct a rank-$r$ signal plus Gaussian noise and recover the signal by SVD truncation.
+  \item Apply the Marchenko--Pastur threshold to choose the truncation rank automatically.
+  \item Detect the elbow in the singular-value spectrum as an alternative rank estimator.
+  \item Evaluate recovery quality via the Frobenius norm.
+}
+
+\tasks{
+  \item Construct a rank-3 signal $A = UV^\top$ where $U \in \mathbb{R}^{100\times 3}$,
+        $V \in \mathbb{R}^{200\times 3}$ have random orthonormal columns scaled by
+        singular values $[10, 5, 2]$.  Add noise $E \sim \mathcal{N}(0, \sigma^2)$
+        with $\sigma = 0.5$.  Plot the singular values of $M = A + E$ and mark the
+        Marchenko--Pastur threshold $\hat\sigma(\sqrt{m}+\sqrt{n})$ (use $\sigma$ known).
+  \item Truncate at $k = 1, 2, 3, 4, 5$ and for each compute
+        $\|\hat{A}_k - A\|_F$.  Show that $k = 3$ achieves minimum error.
+  \item Implement \texttt{elbow\_rank(s)} that finds the elbow of the singular-value
+        curve $\sigma_1 \geq \sigma_2 \geq \cdots$ using the \emph{knee-point} heuristic
+        (maximum perpendicular distance from the line connecting first and last points).
+        Compare its output to the Marchenko--Pastur threshold for several noise levels.
+  \item Apply SVD denoising to a real image: add synthetic Gaussian noise at levels
+        $\sigma \in \{0.05, 0.1, 0.2\}$ and denoise at the Marchenko--Pastur threshold.
+        Report PSNR (peak signal-to-noise ratio) before and after denoising.
+}
+
+\extensions{
+  \item Implement the \emph{optimal singular value threshold} from
+        Gavish \& Donoho (2014): $\tau = (4/\sqrt{3})\sqrt{n}\sigma$.
+        Compare to Marchenko--Pastur on your synthetic data.
+  \item Apply denoising to a real noisy dataset (e.g.\ collaborative filtering:
+        a partially observed user--item rating matrix).
+        Use the denoised matrix to predict missing entries; evaluate RMSE.
+}
+
+% ============================================================
+\end{document}
