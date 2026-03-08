@@ -38,7 +38,7 @@ ax.set_ylabel('$y$', fontsize=12, rotation=0, labelpad=10)
 ax.legend(fontsize=11, loc='upper left')
 
 plt.tight_layout()
-plt.savefig('/Users/sasha/linalg-lec/figures/fig05_poly_regression.png',
+plt.savefig(str(__import__('pathlib').Path(__file__).with_suffix('.png')),
             dpi=150, bbox_inches='tight')
 plt.close()
 print('saved')

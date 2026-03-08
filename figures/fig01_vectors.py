@@ -78,7 +78,7 @@ axR.set_title(r'Same vectors in $\mathcal{P}_2$', fontsize=13)
 axR.legend(fontsize=10.5, loc='upper left')
 
 plt.tight_layout()
-plt.savefig('/Users/sasha/linalg-lec/figures/fig01_vectors.png',
+plt.savefig(str(__import__('pathlib').Path(__file__).with_suffix('.png')),
             dpi=150, bbox_inches='tight')
 plt.close()
 print('saved')

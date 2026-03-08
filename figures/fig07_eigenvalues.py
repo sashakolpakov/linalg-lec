@@ -61,7 +61,7 @@ ax.text(v2[0]+0.10,  v2[1]-0.10,  '$v_2$',           fontsize=13, color='#2ca02c
 ax.text(Av2[0]+0.08, Av2[1]+0.10, r'$Av_2 = 3\,v_2$', fontsize=11, color='#2ca02c')
 
 plt.tight_layout()
-plt.savefig('/Users/sasha/linalg-lec/figures/fig07_eigenvalues.png',
+plt.savefig(str(__import__('pathlib').Path(__file__).with_suffix('.png')),
             dpi=150, bbox_inches='tight')
 plt.close()
 print('saved')

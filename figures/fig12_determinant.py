@@ -48,7 +48,7 @@ ax.text(cx, cy, r'$|\det A|$', fontsize=14, color='#1f77b4',
         ha='center', va='center')
 
 plt.tight_layout()
-plt.savefig('/Users/sasha/linalg-lec/figures/fig12_determinant.png',
+plt.savefig(str(__import__('pathlib').Path(__file__).with_suffix('.png')),
             dpi=150, bbox_inches='tight')
 plt.close()
 print('saved')

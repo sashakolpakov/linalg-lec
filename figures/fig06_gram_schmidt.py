@@ -97,7 +97,7 @@ axR.text(v2[0]+0.08, v2[1]+0.08, '$v_2$', fontsize=11,
          color='#d62728', alpha=0.4)
 
 plt.tight_layout()
-plt.savefig('/Users/sasha/linalg-lec/figures/fig06_gram_schmidt.png',
+plt.savefig(str(__import__('pathlib').Path(__file__).with_suffix('.png')),
             dpi=150, bbox_inches='tight')
 plt.close()
 print('saved')

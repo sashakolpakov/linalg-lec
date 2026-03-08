@@ -48,7 +48,7 @@ for ev, lam, col, lbl, loff in [
     ax.text(L*ev[0]+loff[0], L*ev[1]+loff[1], lbl, fontsize=12, color=col)
 
 plt.tight_layout()
-plt.savefig('/Users/sasha/linalg-lec/figures/fig08_psd_quadratic.png',
+plt.savefig(str(__import__('pathlib').Path(__file__).with_suffix('.png')),
             dpi=150, bbox_inches='tight')
 plt.close()
 print('saved')

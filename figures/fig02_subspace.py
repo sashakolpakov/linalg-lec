@@ -75,7 +75,7 @@ axR.axhline(2, color='#2ca02c', lw=1.5, alpha=0.5, linestyle='--')
 axR.text(2.2, 2.15, '$x_2=2$', fontsize=11, color='#2ca02c')
 
 plt.tight_layout()
-plt.savefig('/Users/sasha/linalg-lec/figures/fig02_subspace.png',
+plt.savefig(str(__import__('pathlib').Path(__file__).with_suffix('.png')),
             dpi=150, bbox_inches='tight')
 plt.close()
 print('saved')

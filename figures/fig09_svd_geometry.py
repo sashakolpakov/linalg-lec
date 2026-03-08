@@ -63,7 +63,7 @@ for ang in np.radians([90, 240, 280]):
     ax.plot(*Au, 'o', color='gray', ms=5, alpha=0.6)
 
 plt.tight_layout()
-plt.savefig('/Users/sasha/linalg-lec/figures/fig09_svd_geometry.png',
+plt.savefig(str(__import__('pathlib').Path(__file__).with_suffix('.png')),
             dpi=150, bbox_inches='tight')
 plt.close()
 print('saved')
