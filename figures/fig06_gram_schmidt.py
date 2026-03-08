@@ -61,7 +61,10 @@ draw_vec(axR, v2, '#d62728', lw=1.2, alpha=0.25)
 
 # projection step: show proj of v2 onto e1
 proj_tip = proj   # unscaled, actual projection point
-draw_vec(axR, proj_tip, '#2ca02c', lw=1.5, ls='dashed', alpha=0.7)
+# offset the projection arrow perpendicular to e1 so it clears the blue e1 arrow
+off = 0.06 * e2
+draw_vec(axR, proj_tip + off, '#2ca02c', lw=1.8, ls='dashed', alpha=0.9,
+         origin=tuple(off))
 # residual from proj_tip to v2
 draw_vec(axR, v2, '#ff7f0e', lw=1.5, ls='dashed', alpha=0.7,
          origin=tuple(proj_tip))

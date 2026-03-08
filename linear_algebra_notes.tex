@@ -5,6 +5,7 @@
 \usepackage{listings}
 \usepackage{hyperref}
 \usepackage{enumitem}
+\usepackage{graphicx}
 \usepackage{fourier-orns}
 \usepackage{pgfornament}
 
@@ -201,6 +202,16 @@ print("Error at position:", error_col)  # 3 (1-indexed)
   nature of the objects themselves.  A polynomial, a matrix, and an arrow in
   $\mathbb{R}^3$ can all be vectors if they satisfy the same axioms.
 \end{remark}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig01_vectors.png}
+  \caption{The same abstract addition $v_1+v_2$ in two concrete spaces.
+    \emph{Left:} arrows in $\mathbb{R}^3$ (oblique projection).
+    \emph{Right:} polynomials in $\mathcal{P}_2$; the $x^2$ terms cancel,
+    illustrating that the vector space axioms are the same regardless of
+    what the objects ``look like''.}
+\end{figure}
 
 \begin{definition}
   A \emph{vector space} $V$ over a field $\mathbb{F}$ is a set of vectors
@@ -445,6 +456,16 @@ plt.tight_layout(); plt.show()
           $\forall\, \lambda\in\mathbb{F},\, u\in U:\; \lambda u\in U$.
   \end{enumerate}
 \end{definition}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig02_subspace.png}
+  \caption{Subspace vs.\ affine subspace in $\mathbb{R}^2$.
+    \emph{Left:} the line through the origin is a subspace --- vectors $u$,
+    $v$, and their sum $u+v$ all lie on it.
+    \emph{Right:} the line $x_2=1$ is not a subspace --- $u+v$ escapes to
+    $x_2=2$, violating closure under addition (and $0\notin U$).}
+\end{figure}
 
 \begin{proposition}[Subspace test --- one condition]
   A nonempty subset $U\subseteq V$ is a subspace if and only if
@@ -763,6 +784,15 @@ print(f"W (inhomogeneous): {w_fails}/{n_trials} failures -> subspace: {w_fails==
   \textbf{Lesson:} whether a set spans depends on linear independence, not
   just on the number of vectors.
 \end{example}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig03_span.png}
+  \caption{Span in $\mathbb{R}^2$.
+    \emph{Left:} collinear $v_1,v_2$ --- span is a line.
+    \emph{Right:} linearly independent $u_1,u_2$ --- span fills $\mathbb{R}^2$
+    (shaded, with sample points).}
+\end{figure}
 
 \subsection*{Python: checking span via rank}
 \begin{lstlisting}
@@ -2363,6 +2393,17 @@ $p(x_i) \approx y_i$.  This gives the system:
 This is $N$ equations in $d+1$ unknowns --- almost a matrix equation
 $X\beta = y$, which we make precise on the next page.
 
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.88\textwidth]{figures/fig05_poly_regression.png}
+  \caption{Polynomial regression on 13 noisy samples of $\sin(2\pi x)$.
+    Degree~1 (red) underfits --- the linear model cannot capture the
+    oscillatory signal.
+    Degree~5 (green) balances bias and variance well.
+    Degree~12 (orange, dashed) overfits --- it chases every data point
+    and diverges wildly near the boundary.}
+\end{figure}
+
 \subsection*{Python: why exact fitting fails when $N \gg d$}
 \begin{lstlisting}
 import numpy as np
@@ -2709,6 +2750,26 @@ $\langle v+w, u\rangle$ and $\langle \lambda v, u\rangle$, then use symmetry.)
   This residual-orthogonality is the same condition as the normal equations
   $X^TXb = X^Ty$: the projection of $y$ onto $\operatorname{im}X$ makes
   the residual $y - Xb$ orthogonal to every column of $X$.
+\end{remark}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.6\textwidth]{figures/fig04_projection.png}
+  \caption{Orthogonal projection of $u$ onto $v$ in $\mathbb{R}^2$.
+    The projection $\hat u = \frac{\langle u,v\rangle}{\|v\|^2}v$ is the
+    foot of the perpendicular from $u$ to the line spanned by $v$;
+    the residual $u - \hat u$ is orthogonal to $v$.}
+\end{figure}
+
+\begin{remark}[Geometry as a guide to abstraction]
+  Figure above depicts projection in $\mathbb{R}^2$, where we can draw
+  arrows and right angles.  Other vector spaces --- polynomials, matrices,
+  sequences --- do not come with a ready-made picture.  Yet the formula
+  $\hat u = \frac{\langle u,v\rangle}{\|v\|^2}v$ holds in \emph{any}
+  inner product space, and the residual is always perpendicular to $v$ in
+  that space's inner product.  The power of the axiomatic framework is
+  precisely this: we develop intuition in $\mathbb{R}^2$, encode it in
+  abstract algebra, and then apply it for free in every vector space at once.
 \end{remark}
 
 \subsection*{Python: projection and orthogonality of residual}
@@ -3172,6 +3233,17 @@ By Thm~1.6, $m = \operatorname{rk}(A) + \operatorname{null}(A)$, giving:
   vector spaces.
 \end{remark}
 
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig06_gram_schmidt.png}
+  \caption{Gram--Schmidt orthogonalization in $\mathbb{R}^2$.
+    \emph{Left:} original vectors $v_1, v_2$ at angle $\theta$.
+    \emph{Right:} the green dashed arrow is the projection of $v_2$ onto
+    $e_1$; the orange dashed arrow is the residual $v_2 - \operatorname{proj}_{e_1}v_2$,
+    perpendicular to $e_1$ (right-angle marker at the foot).
+    Normalizing the residual gives $e_2$.}
+\end{figure}
+
 \subsection*{Python: the four fundamental subspaces are mutually orthogonal}
 \begin{lstlisting}
 import numpy as np
@@ -3379,6 +3451,18 @@ has a simpler structure --- e.g.\ diagonal, upper triangular?
   \]
   So $\lambda_1 = 1$ and $\lambda_2 = 3$.
 \end{example}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.62\textwidth]{figures/fig07_eigenvalues.png}
+  \caption{Eigenvalues of $A = \bigl[\begin{smallmatrix}2&1\\1&2\end{smallmatrix}\bigr]$
+    via the unit-circle picture.
+    The dashed circle maps to the blue ellipse under $A$.
+    Grey arrows connect a unit vector to its image.
+    Red: $v_1$ with $Av_1 = v_1$ ($\lambda_1=1$, unchanged).
+    Green solid/dashed: $v_2$ and $Av_2 = 3v_2$ ($\lambda_2=3$, tripled).
+    Eigenvectors are exactly the directions that are only scaled, not rotated or sheared.}
+\end{figure}
 
 \begin{proposition}[Eigenvalue $\Leftrightarrow$ non-invertible shift]
   $\lambda$ is an eigenvalue of $L$ if and only if
@@ -3948,6 +4032,17 @@ so the maximum is attained at some $v$ with $\|v\|=1$.
   \]
 \end{theorem}
 
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.62\textwidth]{figures/fig08_psd_quadratic.png}
+  \caption{Level curves $x^T\!Ax = c$ for $A = \bigl[\begin{smallmatrix}2&1\\1&2\end{smallmatrix}\bigr]$,
+    $c = 1, 3, 6$.
+    The curves are ellipses whose principal axes align with the eigenvectors
+    (dashed lines).
+    The semi-axis length along eigenvector $v_i$ equals $\sqrt{c/\lambda_i}$,
+    so the larger eigenvalue $\lambda_2 = 3$ corresponds to the \emph{shorter} axis.}
+\end{figure}
+
 \begin{remark}[$P^TAP$ vs $P^{-1}AP$]
   Because $P$ is orthogonal ($P^T = P^{-1}$), the change-of-basis formula
   $P^{-1}AP = \Lambda$ simplifies to $P^TAP = \Lambda$.  This is a strictly
@@ -4157,6 +4252,17 @@ Set
   lengths $\sigma_1\ge\cdots\ge\sigma_r$ along directions $u_1,\ldots,u_r$.
 \end{remark}
 
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.62\textwidth]{figures/fig09_svd_geometry.png}
+  \caption{SVD geometry for $A = \bigl[\begin{smallmatrix}3&1\\0&2\end{smallmatrix}\bigr]$.
+    The dashed unit circle maps to the blue ellipse.
+    Solid arrows: right singular vectors $v_1, v_2$ (input directions).
+    Dashed arrows: $\sigma_i u_i$ (output directions, scaled by singular values).
+    Because $A$ is not symmetric, input and output directions differ ---
+    grey arrows show the rotation and stretching for three sample unit vectors.}
+\end{figure}
+
 % ============================================================
 % ============================================================
 \subsection*{Low-rank approximation and the Eckart--Young theorem}
@@ -4235,6 +4341,18 @@ truncation} keeps only the $k$ largest singular values:
   $\sigma_i\le\sigma_{k+1}$ for $i\ge k+1$.)
   Therefore $\|A-B\|_F^2 \ge \sum_{i=k+1}^r\sigma_i^2 = \|A-A_k\|_F^2$.
 \end{proof}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\textwidth]{figures/fig10_eckart_young.png}
+  \caption{Eckart--Young theorem illustrated on a $6\times 8$ matrix with
+    prescribed singular value decay.
+    \emph{Left:} singular value spectrum; blue bars ($\sigma_1,\sigma_2,\sigma_3$)
+    are kept, light bars are discarded.
+    \emph{Right:} Frobenius approximation error $\|A-A_k\|_F$ vs.\ rank $k$;
+    the red dot marks $k=3$.
+    Each step down corresponds to including one more singular value.}
+\end{figure}
 
 % ============================================================
 \subsection*{Applications}
@@ -4351,6 +4469,18 @@ plt.quiver(0, 0, *pc1*6, angles='xy', scale_units='xy', scale=1,
 plt.axis('equal'); plt.legend(); plt.title('PCA on elongated data'); plt.show()
 \end{lstlisting}
 
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.72\textwidth]{figures/fig11_pca.png}
+  \caption{PCA on a correlated 2D data cloud.
+    $\mathrm{PC}_1$ (blue) points along the direction of maximum variance;
+    $\mathrm{PC}_2$ (green) is orthogonal.
+    Dashed lines extend each axis across the full plot.
+    The red point decomposes as $x = z_1\,\mathrm{PC}_1 + z_2\,\mathrm{PC}_2$:
+    the blue dot is its foot on the $\mathrm{PC}_1$ axis (score $z_1$),
+    the green dot is its foot on the $\mathrm{PC}_2$ axis (score $z_2$).}
+\end{figure}
+
 % ------------------------------------------------------------------
 % Sections 3 (Denoising) and 4 (LoRA) removed to lab exercises.
 % See TODO.md for lab ideas.
@@ -4414,6 +4544,14 @@ for k in [1, 2, 3, 4]:
   $x\mapsto Ax$.  The sign records orientation.
   For $n=2$: $|\det(A)|$ is the area of the parallelogram spanned by the columns.
 \end{remark}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.55\textwidth]{figures/fig12_determinant.png}
+  \caption{Determinant as area in $\mathbb{R}^2$.
+    Vectors $a$ (blue) and $b$ (red) span the shaded parallelogram;
+    its area equals $|\det[a\mid b]| = |a_1 b_2 - a_2 b_1|$.}
+\end{figure}
 
 \begin{proposition}
   $\det(A) = 0$ iff the columns of $A$ are linearly dependent.

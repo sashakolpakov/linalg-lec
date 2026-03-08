@@ -70,6 +70,9 @@ axR.text(s2[0]+0.12, s2[1]+0.10, '$u+v$', fontsize=13, color=C['s'])
 axR.plot(0, 0, 'ko', ms=6, zorder=5)
 # mark where x2=1 line is
 axR.text(2.2, 1.15, '$x_2=1$', fontsize=11, color='#1f77b4')
+# show x2=2 line where u+v lands
+axR.axhline(2, color='#2ca02c', lw=1.5, alpha=0.5, linestyle='--')
+axR.text(2.2, 2.15, '$x_2=2$', fontsize=11, color='#2ca02c')
 
 plt.tight_layout()
 plt.savefig('/Users/sasha/linalg-lec/figures/fig02_subspace.png',
