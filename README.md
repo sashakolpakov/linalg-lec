@@ -12,7 +12,7 @@ Handwritten lecture notes (44 pages) transcribed into LaTeX, paired with 12 comp
 |------|-------------|
 | `linear_algebra_notes.tex` / `.pdf` | Full course notes (vector spaces through SVD and spectral theorem) |
 | `labs/` | 12 Jupyter notebooks, one per topic |
-| `labs/LABS.md` | Lab index with Colab links and prerequisites |
+| `labs/LABS.md` | Lab index with Colab links |
 
 ## Labs overview
 
