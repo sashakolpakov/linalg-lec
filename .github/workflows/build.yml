@@ -1,0 +1,43 @@
+name: Build PDF
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install TeX Live
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends \
+            texlive-latex-base \
+            texlive-latex-extra \
+            texlive-fonts-recommended \
+            texlive-fonts-extra \
+            texlive-science \
+            latexmk
+
+      - name: Install Python dependencies
+        run: pip install numpy matplotlib
+
+      - name: Generate figures
+        run: bash figures/make_figures.sh
+
+      - name: Compile LaTeX (twice for references)
+        run: |
+          pdflatex -interaction=nonstopmode linear_algebra_notes.tex
+          pdflatex -interaction=nonstopmode linear_algebra_notes.tex
+
+      - name: Upload PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: linear_algebra_notes
+          path: linear_algebra_notes.pdf
+          retention-days: 30
