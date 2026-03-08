@@ -1,4 +1,6 @@
 \documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage{amsmath, amssymb, amsthm, mathtools}
 \usepackage[margin=1in]{geometry}
 \usepackage{xcolor}
@@ -18,7 +20,9 @@
   showstringspaces=false,
   frame=single,
   breaklines=true,
-  columns=fullflexible
+  columns=fullflexible,
+  inputencoding=utf8,
+  extendedchars=true
 }
 
 \theoremstyle{definition}
@@ -626,7 +630,7 @@ import numpy as np
 # R^4 = V1 + V2 where:
 #   V1 = span{e1, e2}  (first two coords free, last two zero)
 #   V2 = span{e3, e4}  (first two zero, last two coords free)
-# This is a direct sum: V1 ∩ V2 = {0}.
+# This is a direct sum: V1 \cap V2 = {0}.
 
 def project_V1(v): return np.array([v[0], v[1], 0, 0])
 def project_V2(v): return np.array([0, 0, v[2], v[3]])
@@ -639,11 +643,11 @@ print("v  =", v)
 print("v1 =", v1, " (component in V1)")
 print("v2 =", v2, " (component in V2)")
 print("v1 + v2 == v:", np.allclose(v1 + v2, v))   # True: decomposition works
-print("V1 ∩ V2 = {0}:", np.allclose(project_V1(v2), 0) and
+print("V1 \cap V2 = {0}:", np.allclose(project_V1(v2), 0) and
                          np.allclose(project_V2(v1), 0))
 
 # Now a NON-direct sum: V3 = span{e1+e2}, V4 = span{e1}
-# V3 + V4 = span{e1, e2} but V3 ∩ V4 ≠ {0}
+# V3 + V4 = span{e1, e2} but V3 \cap V4 \neq {0}
 V3_basis = np.array([1., 1.])   # in R^2 for simplicity
 V4_basis = np.array([1., 0.])
 w = np.array([2., 1.])
@@ -3258,7 +3262,7 @@ col_A  = orth(A)                     # basis for col(A)   in R^4
 lnul_A = null_space(A.T)             # basis for ker(A^T) in R^4
 
 print("row(A)  perp ker(A):", np.allclose(row_A.T  @ ker_A,  0))  # True
-print("col(A)  perp ker(Aᵀ):", np.allclose(col_A.T @ lnul_A, 0))  # True
+print("col(A)  perp ker(A^T):", np.allclose(col_A.T @ lnul_A, 0))  # True
 
 # Dimension check
 print(f"R^6: dim row={row_A.shape[1]}, dim ker={ker_A.shape[1]}, sum={row_A.shape[1]+ker_A.shape[1]}")   # 4+2=6
