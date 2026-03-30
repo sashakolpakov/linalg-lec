@@ -20,9 +20,7 @@
   showstringspaces=false,
   frame=single,
   breaklines=true,
-  columns=fullflexible,
-  inputencoding=utf8,
-  extendedchars=true
+  columns=fullflexible
 }
 
 \theoremstyle{definition}
@@ -3769,6 +3767,165 @@ print("A ~ A:", np.allclose(np.linalg.inv(np.eye(2)) @ A @ np.eye(2), A))
 # Eigenvalues are preserved under similarity
 A2 = P @ np.diag([5., 7.]) @ np.linalg.inv(P)   # construct a similar matrix
 print("eigenvalues of similar matrix:", np.linalg.eigvals(A2).round(8))  # [5, 7]
+\end{lstlisting}
+
+% ============================================================
+\section{The Discrete Fourier Transform}
+% ============================================================
+
+\noindent
+The DFT is the most important explicit diagonalisation in applied
+mathematics.  It arises from a single observation: the cyclic shift
+matrix $S$ has $N$ distinct eigenvalues, so it is diagonalisable, and
+every matrix that commutes with $S$ is diagonalised by the same basis.
+
+% ------------------------------------------------------------
+\subsection*{The Shift Matrix}
+% ------------------------------------------------------------
+
+\noindent
+Let $\omega = e^{2\pi i/N}$.  The \textbf{cyclic shift} on
+$\mathbb{C}^N$ is $(Su)_j = u_{j+1\bmod N}$.  Its matrix is
+$S_{jk}=\delta_{k,\,j+1\bmod N}$.  Since $S^N = I$, the minimal
+polynomial of $S$ divides $x^N-1$, whose roots
+$1,\omega,\omega^2,\ldots,\omega^{N-1}$ are distinct; hence $S$ is
+diagonalisable with those eigenvalues.  A direct check shows the
+corresponding unit eigenvectors are
+\[
+  v^{(k)}_j = \frac{1}{\sqrt{N}}\,\omega^{jk}, \qquad k=0,\ldots,N-1,
+\]
+and they are orthonormal: $\langle v^{(k)},v^{(\ell)}\rangle
+= \frac{1}{N}\sum_j \omega^{j(k-\ell)} = \delta_{k\ell}$
+(geometric series).
+
+% ------------------------------------------------------------
+\subsection*{Circulant Matrices and the Fourier Matrix}
+% ------------------------------------------------------------
+
+\begin{definition}
+  $C\in M_N(\mathbb{C})$ is \textbf{circulant} with symbol $(c_0,\ldots,c_{N-1})$
+  if $C_{jk}=c_{(j-k)\bmod N}$, i.e.\ each row is the previous one
+  shifted right by one.  Equivalently, $C=\sum_{m=0}^{N-1}c_m S^m$.
+\end{definition}
+
+\noindent
+The \textbf{Fourier matrix} $F=\frac{1}{\sqrt{N}}(\omega^{jk})_{j,k=0}^{N-1}$
+is unitary ($F^*F=I$) and simultaneously diagonalises every circulant:
+
+\begin{theorem}
+  $F^*CF = \operatorname{diag}(\hat{c}_0,\ldots,\hat{c}_{N-1})$, where
+  $\hat{c}_k = \sum_{j=0}^{N-1}c_j\,\omega^{jk}$ is the \textbf{DFT} of
+  the symbol.
+\end{theorem}
+\begin{proof}
+  $F^*CF = \sum_m c_m (F^*S^m F) = \sum_m c_m \Lambda_S^m$,
+  where $\Lambda_S=\operatorname{diag}(1,\omega,\ldots,\omega^{N-1})$.
+  The $(k,k)$ entry is $\sum_m c_m\omega^{mk}=\hat{c}_k$.
+\end{proof}
+
+\noindent
+The DFT of $u\in\mathbb{C}^N$ is $\hat u_k = \sum_j u_j\omega^{-jk}$
+with inverse $u_j = \frac{1}{N}\sum_k\hat u_k\omega^{jk}$.
+
+% ------------------------------------------------------------
+\subsection*{The Convolution Theorem and the FFT}
+% ------------------------------------------------------------
+
+\noindent
+The \textbf{cyclic convolution} $(c*u)_j=\sum_m c_{(j-m)\bmod N}u_m$
+is the circulant matrix-vector product $Cu$.
+By the diagonalisation theorem:
+
+\begin{theorem}[Convolution theorem]
+  $\widehat{c*u}=\hat c\cdot\hat u$ (pointwise).
+\end{theorem}
+\begin{proof}
+  $F^*(Cu)=F^*C(FF^*)u=(F^*CF)(F^*u)=\operatorname{diag}(\hat c)\cdot\hat u$.
+\end{proof}
+
+\noindent
+This reduces cyclic convolution from $O(N^2)$ to $O(N\log N)$ once
+the DFT is computed efficiently.  The \textbf{Cooley--Tukey FFT}
+achieves this by splitting $u$ into even- and odd-indexed halves:
+\[
+  \hat u_k = \hat u^{(e)}_k + \omega^{-k}\hat u^{(o)}_k, \qquad
+  \hat u_{k+N/2} = \hat u^{(e)}_k - \omega^{-k}\hat u^{(o)}_k,
+\]
+reducing the $N$-point DFT to two $N/2$-point DFTs.  The recurrence
+$T(N)=2T(N/2)+O(N)$ solves to $T(N)=O(N\log N)$.
+
+% ------------------------------------------------------------
+\subsection*{Python: DFT, FFT, and the Convolution Theorem}
+% ------------------------------------------------------------
+
+\begin{lstlisting}
+import numpy as np
+
+N = 128
+np.random.seed(0)
+u = np.random.randn(N)
+u_hat = np.fft.fft(u)
+
+# Unitarity: ||u||^2 = (1/N)||u_hat||^2  (Parseval)
+print("Parseval error:", abs(np.dot(u, u) - np.dot(u_hat, u_hat.conj()).real / N))
+
+# Shift theorem: fft(roll(u,1))[k] = omega^k * u_hat[k]
+omega = np.exp(2j * np.pi * np.arange(N) / N)
+shift_err = np.max(np.abs(np.fft.fft(np.roll(u, 1)) - omega * u_hat))
+print("Shift theorem error:", shift_err)
+
+# Convolution theorem: circulant matrix-vector product via FFT
+c = np.zeros(N); c[:4] = 0.25           # 4-tap box filter
+C = np.array([[c[(j-k)%N] for k in range(N)] for j in range(N)])
+conv_direct = C @ u
+conv_fft    = np.real(np.fft.ifft(np.fft.fft(c) * u_hat))
+print("Convolution error:", np.max(np.abs(conv_direct - conv_fft)))
+\end{lstlisting}
+
+% ------------------------------------------------------------
+\subsection*{2D DFT and the Lecture~1 Transfer Rule}
+% ------------------------------------------------------------
+
+\noindent
+The 2D DFT on $\mathbb{Z}_N^2$ is separable (apply 1D FFT to rows,
+then columns) at cost $O(N^2\log N)$.  Any
+\textbf{translation-invariant} operator $(Tu)_{m,n}=\sum_{a,b}h_{a,b}\,u_{m-a,n-b}$
+is diagonalised by the 2D plane waves $e^{2\pi i(k_1 m+k_2 n)/N}$
+with eigenvalue $\hat h_{k_1,k_2}$ (the 2D DFT of the kernel).
+
+\begin{example}[Lecture~1 transfer rule]
+  The rule $u_{m,n}(t+1)=p\,u_{m+1,n+1}(t)+q\,u_{m-1,n-1}(t)$ has kernel
+  $h_{a,b}=p\,\delta_{a,-1}\delta_{b,-1}+q\,\delta_{a,1}\delta_{b,1}$
+  with transfer function
+  \[
+    \hat h_{k_1,k_2}=p\,e^{i(\kappa_1+\kappa_2)}+q\,e^{-i(\kappa_1+\kappa_2)},
+    \qquad \kappa_j=2\pi k_j/N.
+  \]
+  This depends only on $\kappa_1+\kappa_2$, which is exactly why the
+  anti-diagonal direction ($\kappa_1=-\kappa_2$) gives a
+  \emph{constant} $|\hat h|=p+q$ for all modes: those modes all see
+  the same kernel value.  The amplification map in Lecture~1 is just
+  the modulus of the 2D DFT of the kernel.  The spectrum
+  $\{pe^{i\theta}+qe^{-i\theta}:\theta\in[0,2\pi)\}$ is an ellipse in
+  $\mathbb{C}$ with semi-axes $p+q$ and $|p-q|$.
+\end{example}
+
+\begin{lstlisting}
+import numpy as np
+
+N, p, q = 256, 1.2, 0.8
+h = np.zeros((N, N))
+h[-1, -1] = p; h[1, 1] = q          # kernel (periodic indexing)
+H = np.fft.fft2(h)
+print(f"max |H| = {np.max(np.abs(H)):.6f}  (should be p+q = {p+q})")
+print(f"min |H| = {np.min(np.abs(H)):.6f}  (should be |p-q| = {abs(p-q)})")
+
+def step(u): return p*np.roll(np.roll(u,-1,0),-1,1)+q*np.roll(np.roll(u,1,0),1,1)
+u0 = np.random.randn(N, N)*0.01
+u_sim = u0.copy()
+for _ in range(30): u_sim = step(u_sim)
+u_fft = np.real(np.fft.ifft2(np.fft.fft2(u0) * H**30))
+print(f"Prediction error at t=30: {np.max(np.abs(u_sim - u_fft)):.2e}")
 \end{lstlisting}
 
 % ============================================================
