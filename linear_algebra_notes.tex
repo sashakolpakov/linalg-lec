@@ -472,18 +472,15 @@ plt.tight_layout(); plt.show()
 \begin{proposition}[Subspace test --- one condition]
   A nonempty subset $U\subseteq V$ is a subspace if and only if
   \[
-    \forall\, u,v\in U,\; \forall\,\lambda\in\mathbb{F}:\quad \lambda u + v\in U.
+    \forall\, u,v\in U,\; \forall\,\lambda, \mu\in\mathbb{F}:\quad \lambda u + \mu v\in U.
   \]
 \end{proposition}
 \begin{proof}
   ($\Rightarrow$) If $U$ is a subspace, closure under scalar multiplication
-  gives $\lambda u\in U$, and then closure under addition gives
-  $\lambda u + v\in U$.
+  gives $\lambda u\in U$ and $\mu v \in U$. Then closure under addition gives
+  $\lambda u + \mu v\in U$.
 
-  ($\Leftarrow$) Set $\lambda=0$: $0\cdot u + v = v\in U$, so $U$ is closed
-  under addition.  Set $v=0$: $\lambda u + 0 = \lambda u\in U$, so $U$ is
-  closed under scalar multiplication.  For the zero vector, pick any $u\in U$
-  (nonempty) and set $\lambda=0$, $v=0$: $0\in U$.
+  ($\Leftarrow$) For the zero vector, pick any $u\in U$ (non--empty), set $\lambda=\mu=0$ and $v=u$: then $0\cdot u + 0\cdot v = 0 + 0 = 0 \in U$. Then set $\lambda=\mu=1$, and get $1\cdot u + 1\cdot v = u + v\in U$, so $U$ is closed under addition. Finally, set $v=0$: $\lambda u + 0 = \lambda u\in U$, so $U$ is closed under scalar multiplication. 
 \end{proof}
 
 \begin{example}[Trivial subspaces]
@@ -531,7 +528,7 @@ plt.tight_layout(); plt.show()
 \begin{example}[Homogeneous vs.\ inhomogeneous linear constraints]
   Let $V = \mathbb{R}^4$ and $b\in\mathbb{R}$ a fixed constant.  Consider
   \[
-    U_b = \{(x_1,x_2,x_3,t)^T\in\mathbb{R}^4 : x_3 = 5x_1 + b\}.
+    U_b = \{(x_1,x_2,x_3,x_4)^T\in\mathbb{R}^4 : x_3 = 5x_1 + b\}.
   \]
   \textbf{Claim:} $U_b$ is a subspace if and only if $b = 0$.
   \begin{proof}
@@ -797,6 +794,9 @@ print(f"W (inhomogeneous): {w_fails}/{n_trials} failures -> subspace: {w_fails==
 \end{figure}
 
 \subsection*{Python: checking span via rank}
+
+Rank is the least number of vectors that are needed to span a given subspace. We will use this notion later on, and it opens up a computational way of deciding if systems of \textit{linear} equations are solvable. 
+
 \begin{lstlisting}
 import numpy as np
 
