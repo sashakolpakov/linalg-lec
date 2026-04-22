@@ -76,7 +76,7 @@
 \newpage
 
 % ============================================================
-\section*{Course Philosophy}
+\section{Course Philosophy}
 % ============================================================
 
 \begin{enumerate}
@@ -130,7 +130,7 @@ engineering, ODE/PDE, AI/ML, and scientific computing.
 \end{itemize}
 These will feel circular at first---and that is intentional.
 
-\subsection*{Back to basics: fields}
+\subsection{Back to basics: fields}
 
 The scalars come from a \emph{field} $\mathbb{F}$.  We primarily use
 $\mathbb{F}=\mathbb{R}$ and $\mathbb{F}=\mathbb{C}$ (LADR), but the
@@ -146,7 +146,7 @@ definition works for any field.
   over $\mathbb{Z}_2$ appear in coding theory and cryptography.
 \end{example}
 
-\subsection*{Python: arithmetic over $\mathbb{Z}_2$}
+\subsection{Python: arithmetic over $\mathbb{Z}_2$}
 \begin{lstlisting}
 import numpy as np
 
@@ -190,7 +190,7 @@ error_col = int("".join(map(str, syndrome_err)), 2)
 print("Error at position:", error_col)  # 3 (1-indexed)
 \end{lstlisting}
 
-\subsection*{\S1.1 Vectors and vector spaces}
+\subsection{Vectors and vector spaces}
 
 \begin{definition}
   A \emph{vector} is an element of a vector space.
@@ -222,7 +222,11 @@ print("Error at position:", error_col)  # 3 (1-indexed)
     \item addition $+: V\times V \to V$,
     \item scalar multiplication $\cdot\,: \mathbb{F}\times V \to V$,
   \end{itemize}
-  satisfying the following eight axioms.  The quantifiers apply to
+  satisfying the following eight axioms. 
+  
+  \medskip 
+  
+  The quantifiers apply to
   \emph{all} $u,v,w\in V$ and \emph{all} $\lambda,\mu\in\mathbb{F}$ unless
   stated otherwise.
   \begin{enumerate}
@@ -249,13 +253,15 @@ print("Error at position:", error_col)  # 3 (1-indexed)
   \end{enumerate}
 \end{definition}
 
-\subsection*{Examples}
+\subsection{Examples}
 
 \begin{remark}[Examples are important]
   The axioms are necessary but dry.  Examples are where intuition lives.
   Every time you meet a new vector space, ask: what do addition and scalar
   multiplication \emph{mean} here?  What does the zero vector look like?
 \end{remark}
+
+\newpage
 
 \begin{example}\leavevmode
   \begin{enumerate}
@@ -312,7 +318,7 @@ print("Error at position:", error_col)  # 3 (1-indexed)
   \end{enumerate}
 \end{example}
 
-\subsection*{Python: function spaces as vectors --- signals}
+\subsection{Python: function spaces as vectors --- signals}
 \begin{lstlisting}
 import numpy as np
 import matplotlib.pyplot as plt
@@ -348,7 +354,7 @@ plt.legend(); plt.title("Addition in the function space $\mathbb{R}^{[0,2\pi]}$"
 plt.tight_layout(); plt.show()
 \end{lstlisting}
 
-\subsection*{Formal consequences of the axioms}
+\subsection{Formal consequences of the axioms}
 
 \begin{remark}[Why formal proofs?  Universality.]
   The propositions below are not hard.  The point is not the results
@@ -361,7 +367,7 @@ plt.tight_layout(); plt.show()
   Abstraction is not the goal; universality is.
 \end{remark}
 
-\begin{proposition}[1.1.1 --- Uniqueness of zero]
+\begin{proposition}
   A vector space has a unique additive identity $0$.
 \end{proposition}
 \begin{proof}
@@ -374,7 +380,7 @@ plt.tight_layout(); plt.show()
   \]
 \end{proof}
 
-\begin{proposition}[1.1.2 --- Uniqueness of additive inverse]
+\begin{proposition}
   Every vector $v\in V$ has a unique additive inverse.
 \end{proposition}
 \begin{proof}
@@ -390,7 +396,7 @@ plt.tight_layout(); plt.show()
   \]
 \end{proof}
 
-\begin{proposition}[1.1.3]
+\begin{proposition}
   $\forall\, v\in V$:\; $0_{\mathbb{F}}\cdot v = 0_V$.
 \end{proposition}
 \begin{proof}
@@ -404,7 +410,7 @@ plt.tight_layout(); plt.show()
   $0_V = 0_{\mathbb{F}}\cdot v$.
 \end{proof}
 
-\begin{proposition}[1.1.4]
+\begin{proposition}
   $\forall\, \lambda\in\mathbb{F}$:\; $\lambda\cdot 0_V = 0_V$.
 \end{proposition}
 \begin{proof}
@@ -417,7 +423,7 @@ plt.tight_layout(); plt.show()
   Adding $-(\lambda\cdot 0_V)$ to both sides: $0_V = \lambda\cdot 0_V$.
 \end{proof}
 
-\begin{proposition}[1.1.5]
+\begin{proposition}
   $\forall\, v\in V$:\; $(-1)\cdot v = -v$.
 \end{proposition}
 \begin{proof}
@@ -448,7 +454,7 @@ plt.tight_layout(); plt.show()
 \noindent\textit{Notation.} $V$ denotes a vector space over $\mathbb{F}$
 (take $\mathbb{F}=\mathbb{R}$ whenever a specific field is not mentioned).
 
-\begin{definition}[\S1.2]
+\begin{definition}
   A subset $U\subseteq V$ is a \emph{subspace} (written $U\le V$) if:
   \begin{enumerate}
     \item $0\in U$,
@@ -546,7 +552,7 @@ plt.tight_layout(); plt.show()
   affine subsets, not subspaces.
 \end{example}
 
-\subsection*{Sum and direct sum of subspaces}
+\subsection{Sum and direct sum of subspaces}
 
 \begin{definition}
   Let $V_1, V_2, \ldots, V_m \le V$ be subspaces.  Their \emph{sum} is
@@ -565,7 +571,7 @@ plt.tight_layout(); plt.show()
   \]
 \end{exercise}
 
-\begin{proposition}[1.2.1]
+\begin{proposition}
   Let $V_1,\ldots,V_m\le V$ be subspaces.  Then $V_1+\cdots+V_m$ is the
   \emph{smallest} subspace of $V$ containing each $V_i$.
 \end{proposition}
@@ -618,7 +624,7 @@ plt.tight_layout(); plt.show()
   \in V_i\cap\sum_{j\ne i}V_j = \{0\}$, giving $v_i=v_i'$.
 \end{proof}
 
-\subsection*{Python: direct sum decomposition and uniqueness}
+\subsection{Python: direct sum decomposition and uniqueness}
 \begin{lstlisting}
 import numpy as np
 
@@ -660,7 +666,7 @@ print("Rank of [V3, V4]:", np.linalg.matrix_rank(A),
       " (should be 1, not 2 -> not direct sum)")
 \end{lstlisting}
 
-\subsection*{Python: numerically testing the subspace conditions}
+\subsection{Python: numerically testing the subspace conditions}
 \begin{lstlisting}
 import numpy as np
 
@@ -731,7 +737,7 @@ print(f"W (inhomogeneous): {w_fails}/{n_trials} failures -> subspace: {w_fails==
   From here onward, theory and computation go hand in hand.
 \end{remark}
 
-\subsection*{\S1.3 Linear combinations and span}
+\subsection{Linear combinations and span}
 
 \begin{definition}
   A \emph{linear combination} of vectors $v_1,\ldots,v_p\in V$ is any
@@ -793,7 +799,7 @@ print(f"W (inhomogeneous): {w_fails}/{n_trials} failures -> subspace: {w_fails==
     (shaded, with sample points).}
 \end{figure}
 
-\subsection*{Python: checking span via rank}
+\subsection{Python: checking span via rank}
 
 Rank is the least number of vectors that are needed to span a given subspace. We will use this notion later on, and it opens up a computational way of deciding if systems of \textit{linear} equations are solvable. 
 
@@ -939,7 +945,7 @@ print("b in span:", np.linalg.matrix_rank(aug) == rank)
   (otherwise $\{v_1,\ldots,v_n,w\}$ would be independent, contradicting maximality).
 \end{proof}
 
-\subsection*{Python: coordinates in a basis}
+\subsection{Python: coordinates in a basis}
 \begin{lstlisting}
 import numpy as np
 
@@ -963,7 +969,7 @@ coords2 = np.linalg.solve(B2, v)
 print("Standard coords:", coords2)     # just v itself
 \end{lstlisting}
 
-\subsection*{Python: differentiation as a matrix --- and nilpotency}
+\subsection{Python: differentiation as a matrix --- and nilpotency}
 \begin{lstlisting}
 import numpy as np
 
@@ -1017,7 +1023,7 @@ print("D o J = I:", np.allclose(D6 @ J, np.eye(6)))   # True: FTC
   numerically stable.
 \end{remark}
 
-\subsection*{\S1.9 Matrices --- a practical bridge}
+\section{Matrices}
 
 \begin{example}[Digital images as matrices]
   A \textbf{color image} $N = (R,G,B)$ is stored as three separate
@@ -1046,7 +1052,7 @@ print("D o J = I:", np.allclose(D6 @ J, np.eye(6)))   # True: FTC
   (Eckart--Young theorem) later in the course.
 \end{example}
 
-\subsection*{Python: images as matrices}
+\subsection{Python: images as matrices}
 \begin{lstlisting}
 import numpy as np
 import matplotlib.pyplot as plt
@@ -1158,7 +1164,7 @@ for k in [1, 3, 10]:
   $b\in\operatorname{col}(A)$.
 \end{remark}
 
-\subsection*{Python: standard matrix units and vec}
+\subsection{Python: standard matrix units and vec}
 \begin{lstlisting}
 import numpy as np
 
@@ -1188,7 +1194,7 @@ print("Ax via @:         ", Ax_direct)
 print("Ax via col combo: ", Ax_lincombo)
 \end{lstlisting}
 
-\subsection*{Matrix-matrix multiplication}
+\subsection{Matrix-matrix multiplication}
 
 \begin{definition}
   For $A\in\mathbb{F}^{m\times n}$ and $B\in\mathbb{F}^{n\times k}$, the
@@ -1247,7 +1253,7 @@ print("Ax via col combo: ", Ax_lincombo)
   \end{itemize}
 \end{remark}
 
-\subsection*{Python: three views of matrix multiplication}
+\subsection{Python: three views of matrix multiplication}
 \begin{lstlisting}
 import numpy as np
 
@@ -1279,19 +1285,18 @@ print("Outer-product view matches:", np.allclose(AB, AB_outer))
 \section{Linear Maps}
 % ============================================================
 
-\subsection*{\S1.5 Linear transformations}
+\subsection{Linear transformations}
 
 \begin{remark}[A more natural view than matrices]
   Matrices are powerful computational tools, but they depend on a choice
   of basis.  Linear transformations are the \emph{basis-free} concept
-  that matrices represent.  The hierarchy is:
+  that matrices represent.  In the order of abstraction, the hierarchy is:
   \[
-    \text{set map} \;\subset\;
-    \text{linear map (between vector spaces)} \;\subset\;
+    \text{set map} \;\supset\;
+    \text{linear map (between vector spaces)} \;\supset\;
     \text{matrix (linear map in chosen bases)}.
   \]
-  Understanding the linear map first, and the matrix second, is the more
-  natural order.
+  However, understanding the linear map first, and the matrix second, could also be natural.
 \end{remark}
 
 \begin{definition}[Transformation]
@@ -1406,7 +1411,7 @@ print("Outer-product view matches:", np.allclose(AB, AB_outer))
   $[T] = [T(e_1)\mid T(e_2)\mid\cdots\mid T(e_n)]$.
 \end{remark}
 
-\subsection*{Python: constructing a linear map from its action on a basis}
+\subsection{Python: constructing a linear map from its action on a basis}
 \begin{lstlisting}
 import numpy as np
 
@@ -1443,7 +1448,7 @@ print("\nMatrix of T in standard basis (from non-standard spec):\n",
       np.round(M_T_standard, 4))
 \end{lstlisting}
 
-\subsection*{Matrix representation of a linear map}
+\subsection{Matrix representation of a linear map}
 
 \begin{proposition}
   Let $T:\mathbb{F}^n\to\mathbb{F}^m$ be linear and $\{e_1,\ldots,e_n\}$
@@ -1467,7 +1472,7 @@ print("\nMatrix of T in standard basis (from non-standard spec):\n",
   basis vector, stack the results as columns.
 \end{remark}
 
-\subsection*{$\mathcal{L}(V,W)$ is a vector space}
+\subsection{$\mathcal{L}(V,W)$ is a vector space}
 
 \begin{proposition}
   The set $\mathcal{L}(V,W)$ of all linear maps $T:V\to W$ is a vector
@@ -1490,7 +1495,7 @@ print("\nMatrix of T in standard basis (from non-standard spec):\n",
   vector spaces, which is why matrix operations are defined entry-wise.
 \end{remark}
 
-\subsection*{Composition = matrix multiplication}
+\subsection{Composition = matrix multiplication}
 
 \begin{theorem}
   Let $T:\mathbb{F}^n\to\mathbb{F}^m$ with matrix $A=M_T$ and
@@ -1518,7 +1523,7 @@ print("\nMatrix of T in standard basis (from non-standard spec):\n",
   immediate: it is just associativity of composition of functions.
 \end{remark}
 
-\subsection*{Python: composition and matrix multiplication}
+\subsection{Python: composition and matrix multiplication}
 \begin{lstlisting}
 import numpy as np
 
@@ -1552,7 +1557,7 @@ print("M_T == A:", np.allclose(M_T, A))
   the intrinsic object.
 \end{remark}
 
-\subsection*{Many questions --- the roadmap ahead}
+\subsection{Many questions --- the roadmap ahead}
 
 The theory so far raises three natural questions that will drive the
 rest of the course.
@@ -1585,7 +1590,7 @@ rest of the course.
 % ============================================================
 % Pages 15--19
 
-\subsection*{\S1.6 Matrix algorithms}
+\subsection{Matrix algorithms}
 
 Let $A \in \mathbb{R}^{n \times m}$.
 
@@ -1641,7 +1646,7 @@ Equation~\eqref{eq:col-dep} can be written as
   Hence $\operatorname{im} A \leq \mathbb{R}^n$.
 \end{proof}
 
-\subsection*{Python: kernel as the space of linear relations}
+\subsection{Python: kernel as the space of linear relations}
 \begin{lstlisting}
 import numpy as np
 
@@ -1659,7 +1664,7 @@ print("Basis for ker A:\n", K)    # 2-dimensional: two free variables
 \end{lstlisting}
 
 % ----- Page 16 -------------------------------------------------------
-\subsection*{Column operations and echelon form}
+\subsection{Column operations and echelon form}
 
 Since $\operatorname{im} A$ is spanned by the columns of $A$ and is closed under
 linear combinations, \emph{column operations that replace a column by a linear
@@ -1670,7 +1675,7 @@ Concretely, two operation types preserve the image:
         or\quad $\bar{a}_i \leftarrow \lambda\bar{a}_i$ \;($\lambda \neq 0$).
   \item Column swap: $i \leftrightarrow j$.
 \end{enumerate}
-\begin{proof}[Why $\operatorname{im}A' = \operatorname{im}A$]
+\begin{proof}[Why is $\operatorname{im}A' = \operatorname{im}A$?]
   Every column of $A'$ is a linear combination of columns of $A$, so
   $\operatorname{im}A' \subseteq \operatorname{im}A$.  Since each operation is
   invertible (the inverse is the same type), the reverse inclusion holds too.
@@ -1681,7 +1686,7 @@ Applying these operations repeatedly brings $A$ to \emph{echelon reduced form}
 $A'$, with $\operatorname{im}A = \operatorname{im}A'$.
 
 \medskip\noindent
-\textbf{Algorithm (step 1).}
+\textbf{Algorithm.}
 \begin{enumerate}
   \item Find the first column with a non-zero entry; take the bottom non-zero
         entry as the pivot.
@@ -1707,7 +1712,7 @@ the remaining (zero) columns point toward $\ker A$ (see page~17).
   structure is the same; only the notation differs.
 \end{remark}
 
-\subsection*{Python: column reduction and basis for the image}
+\subsection{Python: column reduction and basis for the image}
 \begin{lstlisting}
 import numpy as np
 
@@ -1730,7 +1735,7 @@ print("residual (should be ~0):", res)
 \end{lstlisting}
 
 % ----- Page 17 -------------------------------------------------------
-\subsection*{Combined algorithm for $\operatorname{im} A$ and $\ker A$}
+\subsection{Combined algorithm for $\operatorname{im} A$ and $\ker A$}
 
 \begin{definition}
   $I_{n\times n} = I$ is the $n\times n$ \emph{identity matrix}: $1$s on the
@@ -1797,7 +1802,7 @@ the one zero top column gives a basis vector for $\ker A$.
   the special case where the kernel is trivial.
 \end{remark}
 
-\subsection*{Python: image and kernel via \texttt{scipy}}
+\subsection{Python: image and kernel via \texttt{scipy}}
 \begin{lstlisting}
 import numpy as np
 from scipy.linalg import orth, null_space
@@ -1841,7 +1846,7 @@ The algorithm of pages 16--17 produces the block structure
 If $\dim = \#\text{basis vectors}$, this directly reads off
 $\dim\operatorname{im}A$ and $\dim\ker A$.
 
-\begin{theorem}[1.6.1 — Rank--Nullity]\label{thm:ranknullity}
+\begin{theorem}[Rank--Nullity]\label{thm:ranknullity}
   For any $A \in \mathbb{R}^{m \times n}$:
   \[
     \dim\operatorname{im}A + \dim\ker A = n.
@@ -1855,7 +1860,7 @@ $\dim\operatorname{im}A$ and $\dim\ker A$.
   argument before giving the proof.
 \end{remark}
 
-\subsection*{Rank and well-definedness of dimension}
+\subsection{Rank and well-definedness of dimension}
 
 Let $B_1$ be a basis of $V$ and $B_2$ a linearly independent set
 $B_2 \subseteq V$.
@@ -1881,7 +1886,7 @@ $B_2 \subseteq V$.
 vectors, what is $\operatorname{rk}[B_1 \mid B_2]$?
 \emph{(Continued on page~19.)}
 
-\subsection*{Python: rank is independent of the chosen basis}
+\subsection{Python: rank is independent of the chosen basis}
 \begin{lstlisting}
 import numpy as np
 
@@ -1908,9 +1913,9 @@ print(np.linalg.matrix_rank(B2))  # 2 -- same rank regardless of basis
 \end{remark}
 
 % ----- Page 19 -------------------------------------------------------
-\subsection*{Rank sandwich and well-definedness of dimension}
+\subsection{Rank sandwich and well-definedness of dimension}
 
-Continuing from page~18: let $B_1$ be a basis of $V$ with $n_1$ vectors and
+Continuing from the previous page: let $B_1$ be a basis of $V$ with $n_1$ vectors and
 $B_2$ a linearly independent set in $V$ with $n_2$ vectors.  Then:
 \begin{align*}
   \operatorname{rk}[B_1 \mid B_2] &\geq n_2
@@ -1931,11 +1936,11 @@ bases for $\operatorname{im}A$, the sandwich gives $n_1 = n_2$, so
 $\operatorname{rk}A = \dim\operatorname{im}A$ is independent of the chosen
 basis.
 
-\begin{theorem}[1.6.2 --- Dimension is well-defined]
+\begin{theorem}[Dimension is well-defined]
   $\dim V = \#\text{basis vectors of }V$ is independent of the chosen basis.
 \end{theorem}
 
-\begin{corollary}[1.6.3]
+\begin{corollary}
   \leavevmode
   \begin{itemize}
     \item \textbf{Matrix form (Rank-Nullity).}
@@ -1965,7 +1970,7 @@ basis.
   already been defined algorithmically.
 \end{remark}
 
-\subsection*{Python: rank-nullity numerically}
+\subsection{Python: rank-nullity numerically}
 \begin{lstlisting}
 import numpy as np
 rng = np.random.default_rng(42)
@@ -1986,7 +1991,7 @@ print(f"rank = {r2}, nullity = {8 - r2}, sum = {r2 + (8 - r2)}")
 \end{lstlisting}
 
 % ----- Page 20 -------------------------------------------------------
-\subsection*{Finding coordinates and solving $Ax = b$}
+\subsection{Finding coordinates and solving $Ax = b$}
 
 \textbf{Problem.} Given a basis $B = \{b_1,\ldots,b_n\}$ of $V$ and a vector
 $v \in V$, find the coordinates of $v$ in $B$.
@@ -2040,7 +2045,7 @@ The last column of the bottom block gives $x$.
   The least-squares problem is the natural generalisation.
 \end{remark}
 
-\subsection*{Python: solving $Ax = b$ via \texttt{numpy}}
+\subsection{Python: solving $Ax = b$ via \texttt{numpy}}
 \begin{lstlisting}
 import numpy as np
 
@@ -2062,7 +2067,7 @@ print("residual:", np.linalg.norm(A @ x_ls - b))  # > 0
 \end{lstlisting}
 
 % ----- Page 21 -------------------------------------------------------
-\subsection*{The three outcomes of solving $Ax = b$}
+\subsection{The three outcomes of solving $Ax = b$}
 
 If $b \in \operatorname{im}A$, column-reducing
 $\left(\begin{smallmatrix}A & -b \\ I & 0\end{smallmatrix}\right)$
@@ -2118,7 +2123,7 @@ The complete picture is a $2\times 2$ table:
   algorithm in the special case where the kernel is trivial.
 \end{remark}
 
-\subsection*{Python: the three cases and matrix inversion}
+\subsection{Python: the three cases and matrix inversion}
 \begin{lstlisting}
 import numpy as np
 from scipy.linalg import null_space
@@ -2149,7 +2154,7 @@ x3, _, _, _ = np.linalg.lstsq(S, b3, rcond=None)
 print("residual:", np.linalg.norm(S @ x3 - b3))    # > 0
 \end{lstlisting}
 
-\subsection*{Orthogonal complement and the four fundamental subspaces}
+\subsection{Orthogonal complement and the four fundamental subspaces}
 
 Going back to the image-kernel theorem:
 \begin{align*}
@@ -2183,7 +2188,7 @@ This gives $\operatorname{rank}(A) = \dim\operatorname{row}(A)$.
   Column rank of $A$ $=$ row rank of $A$ $=$ $\operatorname{rk}(A)$.
 \end{theorem}
 
-\subsection*{Python example}
+\subsection{Python example}
 \begin{lstlisting}
 import numpy as np
 
@@ -2212,7 +2217,7 @@ of linear algebra over $\mathbb{Z}_2$.  It encodes 4-bit messages into
 correct} any single-bit transmission error.  Everything --- encoding,
 error detection, and correction --- reduces to kernel and image.
 
-\subsection*{Setup: the parity-check matrix}
+\subsection{Setup: the parity-check matrix}
 
 Work over the field $\mathbb{Z}_2 = \{0,1\}$ with addition mod~2.
 Define the \emph{parity-check matrix}
@@ -2241,7 +2246,7 @@ By the rank-nullity theorem (over $\mathbb{Z}_2$):
 so $|\mathcal{C}| = 2^4 = 16$: exactly 16 codewords, one for each
 4-bit message.
 
-\subsection*{Encoding}
+\subsection{Encoding}
 
 The \emph{generator matrix} $G\in\mathbb{Z}_2^{7\times 4}$ has columns
 that form a basis for $\ker(H)$:
@@ -2266,7 +2271,7 @@ every column of $G$ lies in $\ker(H)$.
   bottom three bits are \emph{parity bits} that carry redundancy.
 \end{remark}
 
-\subsection*{Error detection and correction via the syndrome}
+\subsection{Error detection and correction via the syndrome}
 
 Suppose the received word is $r = c + e\in\mathbb{Z}_2^7$, where
 $c\in\mathcal{C}$ and $e$ is an error vector.  Compute the
@@ -2305,7 +2310,7 @@ is exactly the binary representation of the error position $k$.
   single-error-correcting code for 4 data bits.
 \end{remark}
 
-\subsection*{Python: encoding, flipping, correcting}
+\subsection{Python: encoding, flipping, correcting}
 \begin{lstlisting}
 import numpy as np
 
@@ -2359,7 +2364,7 @@ print("matches original codeword:", np.array_equal(r_fixed, c))  # True
 % ============================================================
 % Pages 22--
 
-\subsection*{Setup}
+\subsection{Setup}
 
 Recall that $\mathcal{P}_d = \{a_0 + a_1 x + a_2 x^2 + \cdots + a_d x^d : a_i \in \mathbb{R}\}
 \cong \mathbb{R}^{d+1}$ (the isomorphism $p \leftrightarrow (a_0,\ldots,a_d)^T$
@@ -2406,7 +2411,7 @@ $X\beta = y$, which we make precise on the next page.
     and diverges wildly near the boundary.}
 \end{figure}
 
-\subsection*{Python: why exact fitting fails when $N \gg d$}
+\subsection{Python: why exact fitting fails when $N \gg d$}
 \begin{lstlisting}
 import numpy as np
 
@@ -2426,7 +2431,7 @@ print(f"residual ||Xbeta - y||: {np.linalg.norm(X @ beta - y):.4f}")
 \end{lstlisting}
 
 % ----- Page 23 -------------------------------------------------------
-\subsection*{Matrix form and normal equations}
+\subsection{Matrix form and normal equations}
 
 Encode the unknowns, data, and observations as vectors and a matrix:
 \begin{align*}
@@ -2481,7 +2486,7 @@ $X^TX$ is $(d+1)\times(d+1)$ and likely invertible, giving $\beta = (X^TX)^{-1}X
   tractable for large datasets.
 \end{remark}
 
-\subsection*{Python: Vandermonde matrix and normal equations}
+\subsection{Python: Vandermonde matrix and normal equations}
 \begin{lstlisting}
 import numpy as np
 
@@ -2506,7 +2511,7 @@ print("lstsq:           ", beta_lstsq)   # should match
 \end{lstlisting}
 
 % ----- Page 24 (bridge) -----------------------------------------------
-\subsection*{From polynomial regression to inner products}
+\subsection{From polynomial regression to inner products}
 
 To minimise $\|X\beta - y\|$ we need a notion of distance: $\|a - b\|$
 measures how close $a$ is to $b$.  The norm $\|X\beta - y\|$ we want to
@@ -2518,11 +2523,11 @@ Thus, we don't need merely vector spaces; we need vector spaces
 \textbf{with inner products and norms}.
 
 % ============================================================
-\section{Inner Products and Norms (\S2.1)}
+\section{Inner Products and Norms}
 % ============================================================
 % Pages 24--
 
-\subsection*{Definition and axioms}
+\subsection{Definition and axioms}
 
 \textbf{Toy example.}  $\mathbb{R}^2$ with the usual dot product:
 $v = (a, b)$, $\|v\|^2 = a^2 + b^2 = v \cdot v$.
@@ -2568,7 +2573,7 @@ $v = (a, b)$, $\|v\|^2 = a^2 + b^2 = v \cdot v$.
   The inner product is \emph{bilinear} only over $\mathbb{R}$.
 \end{remark}
 
-\subsection*{Python: inner product axioms}
+\subsection{Python: inner product axioms}
 \begin{lstlisting}
 import numpy as np
 
@@ -2593,7 +2598,7 @@ print("linearity:", np.isclose(inner(lam*u, v, W), lam * inner(u, v, W)))    # T
 \end{lstlisting}
 
 % ----- Page 25 -------------------------------------------------------
-\subsection*{Examples of inner products}
+\subsection{Examples of inner products}
 
 \begin{example}[Euclidean inner product on $\mathbb{R}^n$]
   \[
@@ -2654,7 +2659,7 @@ print("linearity:", np.isclose(inner(lam*u, v, W), lam * inner(u, v, W)))    # T
   by symmetry/Hermitian symmetry.
 \end{proof}
 
-\subsection*{Python: polynomial inner products}
+\subsection{Python: polynomial inner products}
 \begin{lstlisting}
 import numpy as np
 from scipy.integrate import quad
@@ -2675,7 +2680,7 @@ print("L2 weighted <p,q>:", round(val, 6))  # different value: different inner p
 \end{lstlisting}
 
 % ----- Page 26 -------------------------------------------------------
-\subsection*{Derived properties, norm, orthogonality}
+\subsection{Derived properties, norm, orthogonality}
 
 The following properties are consequences of the axioms (not additional
 assumptions):
@@ -2694,7 +2699,7 @@ $\langle v+w, u\rangle$ and $\langle \lambda v, u\rangle$, then use symmetry.)
   \]
 \end{definition}
 
-\begin{proposition}[3.1.2]
+\begin{proposition}
   For any $v \in V$ and $\lambda \in F$:
   \begin{enumerate}
     \item[(a)] $\|v\| = 0 \Longleftrightarrow v = 0$.
@@ -2718,12 +2723,12 @@ $\langle v+w, u\rangle$ and $\langle \lambda v, u\rangle$, then use symmetry.)
 \end{definition}
 
 \begin{example}
-  $0$ is orthogonal to every $v \in V$ (by Prop~3.1.1(b)).
+  $0$ is orthogonal to every $v \in V$.
   It is the \emph{only} vector orthogonal to itself: if $\langle v,v\rangle = 0$
   then $v = 0$ by positivity.
 \end{example}
 
-\begin{theorem}[3.1.3 — Pythagorean theorem]
+\begin{theorem}[Pythagorean theorem]
   If $u \perp v$, then $\|u + v\|^2 = \|u\|^2 + \|v\|^2$.
 \end{theorem}
 \begin{proof}
@@ -2774,7 +2779,7 @@ $\langle v+w, u\rangle$ and $\langle \lambda v, u\rangle$, then use symmetry.)
   abstract algebra, and then apply it for free in every vector space at once.
 \end{remark}
 
-\subsection*{Python: projection and orthogonality of residual}
+\subsection{Python: projection and orthogonality of residual}
 \begin{lstlisting}
 import numpy as np
 
@@ -2793,7 +2798,7 @@ print("Pythagorean check:", np.isclose(
 \end{lstlisting}
 
 % ----- Page 27 -------------------------------------------------------
-\begin{proposition}[3.1.4]
+\begin{proposition}
   If $v \neq 0$, then $\operatorname{proj}_v(u)$ and
   $w = u - \operatorname{proj}_v(u)$ are orthogonal for all $u \in V$.
 \end{proposition}
@@ -2806,7 +2811,7 @@ print("Pythagorean check:", np.isclose(
   \]
 \end{proof}
 
-\begin{theorem}[3.1.5 --- Cauchy--Schwarz]
+\begin{theorem}[Cauchy--Schwarz]
   For all $u, v \in V$:
   \[
     |\langle u, v\rangle| \leq \|u\|\,\|v\|,
@@ -2831,7 +2836,7 @@ print("Pythagorean check:", np.isclose(
   Equality holds iff the quadratic has a real root, i.e.\ $u = \lambda v$.
 \end{proof}
 
-\begin{theorem}[3.1.6 --- Triangle Inequality]
+\begin{theorem}[Triangle Inequality]
   For all $u, v \in V$: $\|u + v\| \leq \|u\| + \|v\|$,
   with equality iff $u = \lambda v$ for some $\lambda > 0$.
 \end{theorem}
@@ -2870,7 +2875,7 @@ print("Pythagorean check:", np.isclose(
 \end{definition}
 
 % ----- Page 28 -------------------------------------------------------
-\subsection*{Back to polynomial regression: why the normal equations work}
+\subsection{Back to polynomial regression: why the normal equations work}
 
 Let $U = \operatorname{im}X \leq \mathbb{R}^N$ be the column space of the
 feature matrix.  We want $\hat\beta$ minimising $\|y - X\beta\|$.
@@ -2944,7 +2949,7 @@ The complete chain of equivalences:
   These two properties characterise orthogonal projections.
 \end{definition}
 
-\subsection*{Python: hat matrix and projection}
+\subsection{Python: hat matrix and projection}
 \begin{lstlisting}
 import numpy as np
 
@@ -2966,7 +2971,7 @@ print("||resid||:", np.linalg.norm(resid).round(4))
 \end{lstlisting}
 
 % ----- Page 29 -------------------------------------------------------
-\subsection*{Completing the normal equations derivation}
+\subsection{Completing the normal equations derivation}
 
 \begin{lemma}\label{lem:zero-inner}
   For a fixed $a \in \mathbb{R}^n$: if $\langle a, b\rangle = 0$ for all
@@ -3012,9 +3017,9 @@ we conclude $X^TX\beta - X^Ty = 0$, i.e.\ $X^TX\beta = X^Ty$.
   \;\xRightarrow{\,X^TX \text{ invertible}\,}\;
   \beta^* = (X^TX)^{-1}X^Ty.
 \]
-This closes the loop opened on page~23.
+This closes the loop.
 
-\subsection*{Python: rank of $X^TX$ for good vs.\ degenerate data}
+\subsection{Python: rank of $X^TX$ for good vs.\ degenerate data}
 \begin{lstlisting}
 import numpy as np
 
@@ -3041,9 +3046,9 @@ print("rank(X^TX) few:", np.linalg.matrix_rank(X_few.T @ X_few))     # 3 < 4
 % ============================================================
 % Pages 30--31
 
-\subsection*{Terminology and statement}
+\subsection{Terminology and statement}
 
-Going back to Theorem~1.6 (Im-Ker / Rank-Nullity), we now give the full
+Going back to the Rank--Nullity Theorem, we now give the full
 proof in the abstract linear map setting.
 
 \medskip\noindent
@@ -3059,16 +3064,15 @@ Recall the terminology:
   The equality $\operatorname{rk}A = \dim\operatorname{im}A
   \stackrel{?}{=} \dim\operatorname{im}A^T$ is a genuine theorem, not
   obvious.  It follows from combining the Im-Ker Theorem applied to both
-  $A$ and $A^T$ with the identity $\operatorname{rk}(A^TA) = \operatorname{rk}(A)$
-  proved on page~28 (via $\ker(A^TA) = \ker(A)$).
+  $A$ and $A^T$ with the identity $\operatorname{rk}(A^TA) = \operatorname{rk}(A)$ proved before via $\ker(A^TA) = \ker(A)$.
 \end{remark}
 
-\begin{theorem}[1.6, matrix form]
+\begin{theorem}[Matrix form --- Rank-Nullity]
   For any $A \in \mathbb{R}^{m \times n}$:
   $\operatorname{rk}A + \operatorname{null}A = n$.
 \end{theorem}
 
-\begin{theorem}[1.6, linear transform form --- Im-Ker Theorem]
+\begin{theorem}[Linear transform form --- Im-Ker Theorem]
   For any $L \in \mathcal{L}(V, W)$:
   $\dim\operatorname{im}L + \dim\ker L = \dim V$.
 \end{theorem}
@@ -3079,7 +3083,7 @@ Recall the terminology:
 
   Let $V_1 = \ker L \leq V$ and $\dim V_1 = k \leq n = \dim V$.
   Pick a basis $\{b_1,\ldots,b_k\}$ for $V_1$.
-  By the Steinitz extension (pages~18--19), extend to a basis of $V$
+  By the Steinitz extension, extend to a basis of $V$
   by adjoining $\{u_1,\ldots,u_r\}$ with $k + r = n$:
   \[
     V = \langle b_1\rangle\oplus\cdots\oplus\langle b_k\rangle
@@ -3087,10 +3091,10 @@ Recall the terminology:
   \]
   Every $v \in V$ writes uniquely as
   $v = \sum_{i=1}^k \lambda_i b_i + \sum_{j=1}^r \mu_j u_j$.
-  \emph{(Proof continues on page~31.)}
+  \emph{(Proof continues below.)}
 \end{proof}
 
-\subsection*{Python: row rank equals column rank}
+\subsection{Python: row rank equals column rank}
 \begin{lstlisting}
 import numpy as np
 rng = np.random.default_rng(0)
@@ -3106,9 +3110,9 @@ print("row rank:", np.linalg.matrix_rank(B.T))  # 3
 \end{lstlisting}
 
 % ----- Page 31 -------------------------------------------------------
-\subsection*{Proof of Im-Ker Theorem (conclusion)}
+\subsection{Proof of Im-Ker Theorem (conclusion)}
 
-\begin{proof}[Proof (continued from page~30)]
+\begin{proof}[Proof (continued)]
   Let $V_1 = \ker L$ and $V_2 = \operatorname{span}\{u_1,\ldots,u_r\}$,
   so that $V = V_1 \oplus V_2$ (direct sum from the basis construction).
 
@@ -3160,7 +3164,7 @@ print("row rank:", np.linalg.matrix_rank(B.T))  # 3
 \end{remark}
 
 % ----- Page 32 -------------------------------------------------------
-\subsection*{Row space, orthogonal complements, and the four subspaces}
+\subsection{Row space, orthogonal complements, and the four subspaces}
 
 Recall that $Ax$ is a linear combination of the columns of $A$, but also:
 \[
@@ -3177,7 +3181,7 @@ Hence
 \]
 So $\ker A = \bigl(\operatorname{row}(A)\bigr)^\perp$ inside $\mathbb{R}^m$.
 
-\begin{proposition}[3.1.7, Homework]
+\begin{proposition}[Homework]
   $U^\perp \leq V$.
 \end{proposition}
 \begin{proof}
@@ -3188,7 +3192,7 @@ So $\ker A = \bigl(\operatorname{row}(A)\bigr)^\perp$ inside $\mathbb{R}^m$.
   So $U^\perp$ is closed under addition and scaling.
 \end{proof}
 
-\begin{proposition}[3.1.8, Homework]
+\begin{proposition}[Homework]
   $V = U \oplus U^\perp$.
 \end{proposition}
 \begin{proof}[Proof sketch]
@@ -3246,7 +3250,7 @@ By Thm~1.6, $m = \operatorname{rk}(A) + \operatorname{null}(A)$, giving:
     Normalizing the residual gives $e_2$.}
 \end{figure}
 
-\subsection*{Python: the four fundamental subspaces are mutually orthogonal}
+\subsection{Python: the four fundamental subspaces are mutually orthogonal}
 \begin{lstlisting}
 import numpy as np
 from scipy.linalg import null_space, orth
@@ -3269,7 +3273,7 @@ print(f"R^4: dim col={col_A.shape[1]}, dim lnul={lnul_A.shape[1]}, sum={col_A.sh
 
 % ----- Page 33 (conclusion of Im-Ker section) -------------------------
 
-\begin{theorem}[3.1.9 --- Row rank equals column rank]
+\begin{theorem}[Row rank equals column rank]
   For any $A \in \mathbb{R}^{m\times n}$:
   \[
     \text{column-rank}(A) = \text{row-rank}(A) = \operatorname{rk}A,
@@ -3278,18 +3282,18 @@ print(f"R^4: dim col={col_A.shape[1]}, dim lnul={lnul_A.shape[1]}, sum={col_A.sh
   and row-rank$(A)$ = max $\#$ of linearly independent rows.
 \end{theorem}
 \begin{proof}
-  By page~32: $\mathbb{R}^m = \operatorname{row}(A)\oplus\ker(A)$, so
+  We know that: $\mathbb{R}^m = \operatorname{row}(A)\oplus\ker(A)$, so
   $\dim\operatorname{row}(A) = m - \operatorname{null}(A)$.
-  By Thm~1.6: $\operatorname{rk}(A) = m - \operatorname{null}(A)$.
+  Also: $\operatorname{rk}(A) = m - \operatorname{null}(A)$.
   Hence $\text{row-rank}(A) = \operatorname{rk}(A) = \dim\operatorname{im}(A) = \text{column-rank}(A)$.
 \end{proof}
 
 % ============================================================
-\section{Structural Properties of Linear Transformations (\S4)}
+\section{Structural Properties of Linear Transformations}
 % ============================================================
 % Pages 33--
 
-\subsection*{\S4.1 Change of basis}
+\subsection{Change of basis}
 
 \textbf{Main question.}  Let $L: V \to W$ be a linear transform,
 $\dim V = n$, $\dim W = m$.  Can we ``simplify'' the action of $L$ by
@@ -3299,7 +3303,7 @@ choosing a good basis?
   The target normal forms, in increasing generality:
   \begin{itemize}
     \item \textbf{Diagonal} --- achievable when $L$ has $n$ linearly
-      independent eigenvectors (diagonalisable maps, \S4.2).
+      independent eigenvectors (diagonalisable maps).
     \item \textbf{Upper triangular} --- always achievable over $\mathbb{C}$
       (Schur decomposition).
     \item \textbf{Jordan normal form} --- the finest canonical form over
@@ -3332,7 +3336,7 @@ So the matrix of $L$ in basis $B$ is $\boxed{A_B = B^{-1}AB}$.
   \S4.
 \end{remark}
 
-\subsection*{Python: change of basis}
+\subsection{Python: change of basis}
 \begin{lstlisting}
 import numpy as np
 
@@ -3352,7 +3356,7 @@ print("eigenvalues of A_B:", np.linalg.eigvals(A_B))   # same
 \end{lstlisting}
 
 % ----- Page 34 -------------------------------------------------------
-\subsection*{Derivation of the change-of-basis formula}
+\subsection{Derivation of the change-of-basis formula}
 
 Let $P = [b_1' \mid b_2' \mid \cdots \mid b_n']$ be the change-of-basis
 matrix (columns = new basis vectors, expressed in the standard basis).
@@ -3386,16 +3390,18 @@ From $y = Ax$ and $x = Px'$, $y = Py'$:
 Equivalently: $A = PA'P^{-1}$, so the standard-basis matrix is recovered
 from the $B$-basis matrix by conjugation with $P$.
 
-\begin{remark}[Two equivalent forms]
+\begin{remark}
+There are two equivalent forms:
   \begin{itemize}
     \item $A' = P^{-1}AP$ \quad --- matrix of $L$ in basis $B$, given standard-basis matrix $A$.
     \item $A  = PA'P^{-1}$ \quad --- standard-basis matrix, given $B$-basis matrix $A'$.
   \end{itemize}
   Students often confuse which way the $P$ goes; checking with a simple
   example (as below) is the safest remedy.
+  
 \end{remark}
 
-\subsection*{Python: verifying $A' = P^{-1}AP$}
+\subsection{Python: verifying $A' = P^{-1}AP$}
 \begin{lstlisting}
 import numpy as np
 
@@ -3419,18 +3425,18 @@ print("eig(A_prime):", np.linalg.eigvals(A_prime))   # same
 
 % ============================================================
 % ============================================================
-\section{Eigenvalues and Diagonalization (\S4.2)}
+\section{Eigenvalues and Diagonalization}
 % ============================================================
 % Pages 35--
 
 % ----- Page 35 -------------------------------------------------------
 
 \noindent
-\textbf{Central question of \S4.}  Given $A \in \mathbb{R}^{n\times n}$,
+\textbf{Central question.}  Given $A \in \mathbb{R}^{n\times n}$,
 is there an invertible $P \in \mathbb{R}^{n\times n}$ such that $P^{-1}AP$
 has a simpler structure --- e.g.\ diagonal, upper triangular?
 
-\subsection*{\S4.2 Eigenvectors and eigenvalues}
+\subsection{Eigenvectors and eigenvalues}
 
 \begin{definition}
   Let $L : V \to V$ be a linear transform on a vector space $V$ over $F$.
@@ -3489,7 +3495,7 @@ has a simpler structure --- e.g.\ diagonal, upper triangular?
   When such a basis exists, $L$ is called \emph{diagonalisable}.
 \end{remark}
 
-\subsection*{Python: eigenvalues and eigenvectors}
+\subsection{Python: eigenvalues and eigenvectors}
 \begin{lstlisting}
 import numpy as np
 
@@ -3511,7 +3517,7 @@ print("P^{-1}AP:\n", D.round(10))    # diagonal with [1, 3]
 \end{lstlisting}
 
 % ----- Page 36 -------------------------------------------------------
-\subsection*{Building toward diagonalisation}
+\subsection{Building toward diagonalisation}
 
 Since $v \neq 0$, we can complete it to a basis
 $B = \{v, u_2, \ldots, u_n\}$.  The matrix of $L$ in basis $B$ is
@@ -3547,7 +3553,7 @@ Continuing: if all $n$ basis vectors are eigenvectors, $[L]_B$ is diagonal.
   reappear in the Jordan normal form and SVD.
 \end{remark}
 
-\begin{proposition}[4.2.1]
+\begin{proposition}
   If $L(u_1) = \lambda_1 u_1$ and $L(u_2) = \lambda_2 u_2$ with
   $\lambda_1 \neq \lambda_2$, then $u_1$ and $u_2$ are linearly independent.
 \end{proposition}
@@ -3620,7 +3626,7 @@ fill out the remaining $r = n - k$ slots with eigenvectors?
   \end{itemize}
 \end{remark}
 
-\subsection*{Python: partial diagonalisation and block structure}
+\subsection{Python: partial diagonalisation and block structure}
 \begin{lstlisting}
 import numpy as np
 
@@ -3647,7 +3653,7 @@ print("lower-left entries near zero:", np.allclose(D[1:, 0], 0))  # True
 \end{lstlisting}
 
 % ---- page 39: open questions ----
-\subsection*{Open questions}
+\subsection{Open questions}
 
 Three questions drive the rest of the course:
 
@@ -3716,7 +3722,7 @@ with the standard-basis matrix $[L]_I = A$, which is generically dense.
   consistent with the change-of-basis formula.
 \end{remark}
 
-\begin{proposition}[4.2.2]
+\begin{proposition}
   If $A\in\mathbb{R}^{n\times n}$ has $n$ distinct eigenvalues
   $\lambda_1,\ldots,\lambda_n$ ($\lambda_i\neq\lambda_j$ for $i\neq j$),
   then $A$ is diagonalizable:
@@ -3749,7 +3755,7 @@ with the standard-basis matrix $[L]_I = A$, which is generically dense.
   iterative algorithms (QR iteration), not by expanding a determinant.
 \end{remark}
 
-\subsection*{Python: diagonalization}
+\subsection{Python: diagonalization}
 \begin{lstlisting}
 import numpy as np
 
@@ -3780,7 +3786,7 @@ matrix $S$ has $N$ distinct eigenvalues, so it is diagonalisable, and
 every matrix that commutes with $S$ is diagonalised by the same basis.
 
 % ------------------------------------------------------------
-\subsection*{The Shift Matrix}
+\subsection{The Shift Matrix}
 % ------------------------------------------------------------
 
 \noindent
@@ -3799,7 +3805,7 @@ and they are orthonormal: $\langle v^{(k)},v^{(\ell)}\rangle
 (geometric series).
 
 % ------------------------------------------------------------
-\subsection*{Circulant Matrices and the Fourier Matrix}
+\subsection{Circulant Matrices and the Fourier Matrix}
 % ------------------------------------------------------------
 
 \begin{definition}
@@ -3828,7 +3834,7 @@ The DFT of $u\in\mathbb{C}^N$ is $\hat u_k = \sum_j u_j\omega^{-jk}$
 with inverse $u_j = \frac{1}{N}\sum_k\hat u_k\omega^{jk}$.
 
 % ------------------------------------------------------------
-\subsection*{The Convolution Theorem and the FFT}
+\subsection{The Convolution Theorem and the FFT}
 % ------------------------------------------------------------
 
 \noindent
@@ -3855,7 +3861,7 @@ reducing the $N$-point DFT to two $N/2$-point DFTs.  The recurrence
 $T(N)=2T(N/2)+O(N)$ solves to $T(N)=O(N\log N)$.
 
 % ------------------------------------------------------------
-\subsection*{Python: DFT, FFT, and the Convolution Theorem}
+\subsection{Python: DFT, FFT, and the Convolution Theorem}
 % ------------------------------------------------------------
 
 \begin{lstlisting}
@@ -3883,7 +3889,7 @@ print("Convolution error:", np.max(np.abs(conv_direct - conv_fft)))
 \end{lstlisting}
 
 % ------------------------------------------------------------
-\subsection*{2D DFT and the Lecture~1 Transfer Rule}
+\subsection{2D DFT and the Lecture~1 Transfer Rule}
 % ------------------------------------------------------------
 
 \noindent
@@ -3929,11 +3935,11 @@ print(f"Prediction error at t=30: {np.max(np.abs(u_sim - u_fft)):.2e}")
 \end{lstlisting}
 
 % ============================================================
-\section{Positive Semidefinite Matrices (\S4.3)}
+\section{Positive Semidefinite Matrices}
 % ============================================================
 % Pages 40--
 
-\subsection*{Definition and first properties}
+\subsection{Definition and first properties}
 
 \begin{definition}[PSD via factorization]
   A matrix $A\in\mathbb{R}^{n\times n}$ is called \emph{positive semidefinite}
@@ -3972,7 +3978,7 @@ So $f(x) \ge 0$ with minimum $f(x) = 0$ achieved precisely on $\ker B$.
 \textbf{Key example.} $A^TA$ is always PSD: take $B = A$, then
 $A^TA = B^TB$.  This is the matrix in the normal equations.
 
-\subsection*{Kernel of a PSD matrix}
+\subsection{Kernel of a PSD matrix}
 
 \begin{proposition}
   If $A = B^TB$, then $\ker B = \ker A$.
@@ -3990,7 +3996,7 @@ $A^TA = B^TB$.  This is the matrix in the normal equations.
 On $(\ker A)^\perp$, we have $f(x) = \|Bx\|^2 = 0 \Rightarrow x = 0$, so
 $A$ is \emph{positive definite on $(\ker A)^\perp$}.
 
-\subsection*{Python: three equivalent characterizations}
+\subsection{Python: three equivalent characterizations}
 \begin{lstlisting}
 import numpy as np
 
@@ -4017,7 +4023,7 @@ print("null_space(B) approx empty (full rank B):", null_space(B).shape[1])
 
 % ---- page 41 ----
 
-\subsection*{Invariant subspaces and restrictions}
+\subsection{Invariant subspaces and restrictions}
 
 \begin{definition}[Invariant subspace]
   A subspace $U \le V$ is \emph{invariant under} $L \in \mathcal{L}(V,V)$
@@ -4039,7 +4045,7 @@ print("null_space(B) approx empty (full rank B):", null_space(B).shape[1])
   The restriction is well-defined precisely because $U$ is invariant.
 \end{definition}
 
-\subsection*{Symmetric matrices preserve orthogonal complements}
+\subsection{Symmetric matrices preserve orthogonal complements}
 
 \begin{lemma}\label{lem:perp-invariant}
   Let $A \in \mathbb{R}^{n\times n}$ be symmetric ($A^T = A$) and let
@@ -4067,7 +4073,7 @@ print("null_space(B) approx empty (full rank B):", null_space(B).shape[1])
   the spectral theorem.
 \end{remark}
 
-\subsection*{Python: $U^\perp$ invariance for a symmetric matrix}
+\subsection{Python: $U^\perp$ invariance for a symmetric matrix}
 \begin{lstlisting}
 import numpy as np
 
@@ -4094,7 +4100,7 @@ for i in range(U_perp.shape[1]):
 
 % ---- page 42 ----
 
-\subsection*{The spectral theorem: proof via constrained optimisation}
+\subsection{The spectral theorem: proof via constrained optimisation}
 
 \textbf{Goal.}  We want to show that every symmetric $A\in\mathbb{R}^{n\times n}$
 has a real eigenvector.  Combined with the inductive argument
@@ -4181,7 +4187,7 @@ so the maximum is attained at some $v$ with $\|v\|=1$.
   \emph{geometric multiplicity} of $\lambda$.
 \end{definition}
 
-\begin{theorem}[4.3.1 — Spectral theorem for PSD matrices]
+\begin{theorem}[Spectral theorem for PSD matrices]
   Let $A\in\mathbb{R}^{n\times n}$ be PSD.  Then there exists an
   orthonormal eigenbasis $\{v_1,\ldots,v_n\}$ (i.e.\
   $v_i^Tv_j = \delta_{ij}$) such that $Av_i = \lambda_i v_i$,
@@ -4220,7 +4226,7 @@ so the maximum is attained at some $v$ with $\|v\|=1$.
   $AA^T$ simultaneously.  This is the subject of \S4.4.
 \end{remark}
 
-\subsection*{Python: largest eigenvector as constrained maximum}
+\subsection{Python: largest eigenvector as constrained maximum}
 \begin{lstlisting}
 import numpy as np
 
@@ -4299,10 +4305,10 @@ print("diagonal entries:", np.diag(Lambda).round(8))
 \end{corollary}
 
 % ============================================================
-\section{Singular Value Decomposition (\S4.4)}
+\section{Singular Value Decomposition}
 % ============================================================
 
-\subsection*{Motivation: symmetric is not enough}
+\subsection{Motivation: symmetric is not enough}
 
 The spectral theorem (Thm.~\ref{thm:spectral}) gives a complete
 orthonormal eigenbasis for \emph{symmetric} matrices.  Most matrices in
@@ -4310,7 +4316,7 @@ practice --- data matrices, regression matrices, image matrices --- are
 rectangular and not symmetric.  The SVD extends the spectral theorem to
 every $A\in\mathbb{R}^{m\times n}$.
 
-\subsection*{Step 1: $A^TA$ is PSD}
+\subsection{Step 1: $A^TA$ is PSD}
 
 \begin{lemma}
   For any $A\in\mathbb{R}^{m\times n}$, the matrices $A^TA\in\mathbb{R}^{n\times n}$
@@ -4326,7 +4332,7 @@ every $A\in\mathbb{R}^{m\times n}$.
 By the spectral theorem, $A^TA$ has an orthonormal eigenbasis
 $\{v_1,\ldots,v_n\}$ with eigenvalues $\lambda_1 \ge \cdots \ge \lambda_n \ge 0$.
 
-\subsection*{Step 2: right singular vectors and singular values}
+\subsection{Step 2: right singular vectors and singular values}
 
 Write $A^TAv_i = \lambda_i v_i$.  Define the \emph{singular values}
 \[
@@ -4338,7 +4344,7 @@ so $\lambda_i = 0 \Leftrightarrow v_i \in \ker A$).
 
 The $v_i$ are the \emph{right singular vectors} of $A$.
 
-\subsection*{Step 3: left singular vectors}
+\subsection{Step 3: left singular vectors}
 
 \begin{lemma}
   For $i \le r$, define $u_i = Av_i / \sigma_i$.  Then:
@@ -4364,7 +4370,7 @@ Extend $\{u_1,\ldots,u_r\}$ to a full orthonormal basis $\{u_1,\ldots,u_m\}$
 of $\mathbb{R}^m$ (the remaining $u_{r+1},\ldots,u_m$ span $\ker(A^T)$).
 These are the \emph{left singular vectors}.
 
-\subsection*{Step 4: assembling the SVD}
+\subsection{Step 4: assembling the SVD}
 
 Set
 \[
@@ -4426,10 +4432,10 @@ Set
 
 % ============================================================
 % ============================================================
-\subsection*{Low-rank approximation and the Eckart--Young theorem}
+\subsection{Low-rank approximation and the Eckart--Young theorem}
 % ============================================================
 
-\subsubsection*{Outer-product expansion}
+\subsubsection{Outer-product expansion}
 
 Writing $U\Sigma V^T$ column by column gives the \emph{outer-product form}:
 \[
@@ -4441,7 +4447,7 @@ truncation} keeps only the $k$ largest singular values:
   A_k = \sum_{i=1}^k \sigma_i\, u_i v_i^T, \qquad k \le r.
 \]
 
-\subsubsection*{The Eckart--Young theorem}
+\subsubsection{The Eckart--Young theorem}
 
 \begin{theorem}[Eckart--Young]\label{thm:eckart-young}
   \leavevmode
@@ -4516,10 +4522,10 @@ truncation} keeps only the $k$ largest singular values:
 \end{figure}
 
 % ============================================================
-\subsection*{Applications}
+\subsection{Applications}
 % ============================================================
 
-\subsubsection*{1.\ Image compression}
+\subsubsection{Image compression}
 
 A greyscale image is a matrix $A\in\mathbb{R}^{m\times n}$ of pixel intensities.
 Storing all $mn$ entries is expensive.  The rank-$k$ approximation $A_k$
@@ -4570,7 +4576,7 @@ plt.title('Singular value decay'); plt.legend(); plt.show()
 \end{lstlisting}
 
 % ------------------------------------------------------------------
-\subsubsection*{2.\ Principal Component Analysis (PCA)}
+\subsubsection{Principal Component Analysis (PCA)}
 
 \textbf{Setup.}  Given a data matrix $X\in\mathbb{R}^{N\times d}$ ($N$ samples,
 $d$ features), first \emph{centre}: subtract the column means so each feature
@@ -4645,7 +4651,7 @@ plt.axis('equal'); plt.legend(); plt.title('PCA on elongated data'); plt.show()
 % ------------------------------------------------------------------
 % Sections 3 (Denoising) and 4 (LoRA) removed to lab exercises.
 % See TODO.md for lab ideas.
-\subsubsection*{Further applications (lab ideas)}
+\subsubsection{Further applications (lab ideas)}
 
 \begin{itemize}
   \item \textbf{Denoising.}  Model $M = A_{\text{signal}} + E$ (low-rank signal
@@ -4657,7 +4663,7 @@ plt.axis('equal'); plt.legend(); plt.title('PCA on elongated data'); plt.show()
         applied to gradient updates.
 \end{itemize}
 
-\subsection*{Python: SVD basics and error formula}
+\subsection{Python: SVD basics and error formula}
 \begin{lstlisting}
 import numpy as np
 
@@ -4739,7 +4745,7 @@ for k in [1, 2, 3, 4]:
   and column $j$.
 \end{remark}
 
-\subsection*{Python example}
+\subsection{Python example}
 \begin{lstlisting}
 import numpy as np
 
@@ -4757,7 +4763,7 @@ print("area before:", area_before, "  after:", area_after)
 \end{lstlisting}
 
 % ----------------------------------------------------------------
-\subsection*{The symmetric group $S_n$ and the sign of a permutation}
+\subsection{The symmetric group $S_n$ and the sign of a permutation}
 % ----------------------------------------------------------------
 
 A \emph{permutation} of $\{1,\ldots,n\}$ is a bijection
@@ -4802,7 +4808,7 @@ operation, is the \emph{symmetric group} $S_n$.
 \end{example}
 
 % ----------------------------------------------------------------
-\subsection*{Uniqueness: the three axioms pin down $\det$}
+\subsection{Uniqueness: the three axioms pin down $\det$}
 % ----------------------------------------------------------------
 
 The definition stated three axioms.  We now show they are enough to
@@ -4863,7 +4869,7 @@ consequence.
 \end{example}
 
 % ----------------------------------------------------------------
-\subsection*{Computing $\det$ via column reduction}
+\subsection{Computing $\det$ via column reduction}
 % ----------------------------------------------------------------
 
 The same column operations from \S1.6 (which preserved $\operatorname{im}A$)
@@ -4966,7 +4972,7 @@ have a precise and simple effect on $\det$.
   kernel/image criterion of \S1.6 and the spectral criterion of \S4.2.
 \end{corollary}
 
-\subsection*{Python: determinants in practice}
+\subsection{Python: determinants in practice}
 \begin{lstlisting}
 import numpy as np
 from itertools import permutations
@@ -5011,7 +5017,7 @@ print("After swap col 0<->1:", round(np.linalg.det(C), 10))  # -8.0
 
 \section{Tensor Products}
 
-\subsection*{Motivation: bilinear maps}
+\subsection{Motivation: bilinear maps}
 
 Linear maps take one vector input and are linear in it.  Many natural
 operations in the course take \emph{two} vector inputs and are linear in
@@ -5046,7 +5052,7 @@ each:
 \end{remark}
 
 % ----------------------------------------------------------------
-\subsection*{The tensor product $V\otimes W$}
+\subsection{The tensor product $V\otimes W$}
 % ----------------------------------------------------------------
 
 The tensor product packages the data of all bilinear maps into a single
@@ -5114,7 +5120,7 @@ linear-algebra object.
 \end{remark}
 
 % ----------------------------------------------------------------
-\subsection*{The Kronecker product}
+\subsection{The Kronecker product}
 % ----------------------------------------------------------------
 
 If $A: V\to V'$ and $B: W\to W'$ are linear maps, the map
@@ -5178,7 +5184,7 @@ map $A\otimes B: V\otimes W\to V'\otimes W'$.
   above, means $\lambda_i + \mu_j \ne 0$ for all $i,j$.
 \end{example}
 
-\subsection*{Python: Kronecker products}
+\subsection{Python: Kronecker products}
 \begin{lstlisting}
 import numpy as np
 
@@ -5222,7 +5228,7 @@ print("Kronecker eigenvalues match:", np.allclose(expected, actual))
 
 \section{Alternating Forms and the Exterior Algebra}
 
-\subsection*{From bilinear to alternating}
+\subsection{From bilinear to alternating}
 
 The determinant is the canonical example of an $n$-linear \emph{alternating}
 form.  This section develops the full family of alternating forms, of which
@@ -5310,7 +5316,7 @@ $\det$ is the top member.
 \end{remark}
 
 % ----------------------------------------------------------------
-\subsection*{The wedge product}
+\subsection{The wedge product}
 % ----------------------------------------------------------------
 
 \begin{definition}[Wedge product of 1-forms]
@@ -5369,7 +5375,7 @@ $\det$ is the top member.
 \end{proof}
 
 % ----------------------------------------------------------------
-\subsection*{The determinant as a map on alternating forms}
+\subsection{The determinant as a map on alternating forms}
 % ----------------------------------------------------------------
 
 A linear map $A:\mathbb{R}^n\to\mathbb{R}^n$ acts on $k$-forms by
@@ -5408,7 +5414,7 @@ Evaluating at $(e_1,\ldots,e_n)$ gives $c(A) = \det(A)$.
   makes the structure explicit.
 \end{remark}
 
-\subsection*{Python: alternating forms and volume}
+\subsection{Python: alternating forms and volume}
 \begin{lstlisting}
 import numpy as np
 

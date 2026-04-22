@@ -10,3 +10,6 @@ ocr_pages/
 
 # macOS
 .DS_Store
+
+# Book proposal (not for repo)
+proposal/
