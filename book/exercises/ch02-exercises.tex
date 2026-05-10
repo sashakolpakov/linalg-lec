@@ -1,0 +1,64 @@
+\section*{Exercises}
+\addcontentsline{toc}{section}{Exercises}
+
+\subsection*{A. Theory}
+
+\begin{exercise}
+\exerciseid{2.A1}
+In one paragraph, explain why an image can be treated as a vector even though
+it is usually displayed as a rectangle of pixels.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{2.A2}
+Which of the following are naturally represented as vectors? For each, say
+what addition and scalar multiplication should mean: a temperature signal over
+time, a paragraph of text, a polynomial, a color image, a list of exam scores.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{2.A3}
+Explain why a \NumPy\ array should be thought of as a representation of a
+vector, not as the vector itself.
+\end{exercise}
+
+\subsection*{B. By Hand}
+
+\begin{exercise}
+\exerciseid{2.B1}
+Let $p(x)=2-x+3x^2$ and $q(x)=1+4x-x^2$. Compute $p+q$ and $2p-q$.
+Then write the coefficient vectors of all four polynomials.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{2.B2}
+Treat the grayscale image
+\[
+  \mat{1&2\\3&4}
+\]
+as a vector in $\R^4$ by stacking columns. What vector do you get? What if you
+stack rows instead?
+\end{exercise}
+
+\subsection*{C. Python / NumPy}
+
+\begin{exercise}
+\exerciseid{2.C1}
+Create two \NumPy\ arrays of length $5$. Print their sum, their difference,
+and three times the first array.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{2.C2}
+Represent a polynomial $a_0+a_1x+a_2x^2$ by the array
+\texttt{[a0, a1, a2]}. Write a function that evaluates such a polynomial at a
+number $x$.
+\end{exercise}
+
+\subsection*{D. Challenge}
+
+\begin{exercise}
+\exerciseid{2.D1}
+The set of RGB colors with integer entries between $0$ and $255$ is not a
+vector space over $\R$. Identify two different vector-space axioms that fail.
+\end{exercise}

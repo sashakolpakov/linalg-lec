@@ -1,0 +1,34 @@
+\chapter{Denoising, Matrix Completion, and Modern Low-Rank Methods}
+\label{ch:denoising-low-rank-methods}
+
+\begin{draftbox}
+This chapter is scaffolded. It will absorb SVD denoising, matrix completion
+ideas, and optional low-rank adaptation examples.
+\end{draftbox}
+
+\section{Guiding Question}
+
+How can low-rank structure reveal signal hidden in noise?
+
+\section{Planned Core Ideas}
+
+\begin{itemize}
+  \item many signals are approximately low rank;
+  \item noise spreads across many singular directions;
+  \item truncating the SVD can denoise a matrix;
+  \item missing entries can sometimes be predicted from low-rank structure;
+  \item modern low-rank methods should be introduced only through accessible
+    parameter-count and rank intuition.
+\end{itemize}
+
+\section{Planned Python Thread}
+
+Generate low-rank signal plus noise, inspect singular values, truncate the SVD,
+and measure reconstruction error.
+
+\section*{Chapter Summary}
+\addcontentsline{toc}{section}{Chapter Summary}
+
+To be completed in the chapter-shaping pass.
+
+\input{book/exercises/ch19-exercises}

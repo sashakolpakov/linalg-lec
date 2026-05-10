@@ -1,0 +1,83 @@
+\section*{Exercises}
+\addcontentsline{toc}{section}{Exercises}
+
+\subsection*{A. Theory}
+
+\begin{exercise}
+\exerciseid{3.A1}
+Prove that $\R^n$ with componentwise addition and scalar multiplication is a
+vector space. You may group the axioms by saying which properties follow from
+the corresponding properties of real numbers.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{3.A2}
+Prove that the zero vector in a vector space is unique.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{3.A3}
+Let $A$ be an $m\times n$ matrix. Prove that
+\[
+  \{x\in\R^n:Ax=0\}
+\]
+is a subspace of $\R^n$.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{3.A4}
+Find the false step in this argument: ``The set
+$\{(x,y):x+y=1\}$ is a subspace because the equation is linear.''
+\end{exercise}
+
+\subsection*{B. By Hand}
+
+\begin{exercise}
+\exerciseid{3.B1}
+Decide whether each subset of $\R^2$ is a subspace:
+\[
+  \{(x,y):y=2x\},\quad
+  \{(x,y):y=2x+1\},\quad
+  \{(x,y):xy=0\}.
+\]
+Give a short reason for each answer.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{3.B2}
+Let
+\[
+  W=\{(x,y,z)\in\R^3:x-y+z=0\}.
+\]
+Find three nonzero vectors in $W$. Then check by hand that the sum of any two
+of your vectors is still in $W$.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{3.B3}
+Give a vector in the set $\{(x,y,z):x+y+z=1\}$ and show directly why doubling
+it leaves the set.
+\end{exercise}
+
+\subsection*{C. Python / NumPy}
+
+\begin{exercise}
+\exerciseid{3.C1}
+Write a function \texttt{in\_plane(v)} that tests whether
+$v_1+v_2+v_3=0$ up to tolerance. Generate random examples in the plane and
+test closure under random linear combinations.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{3.C2}
+Write a stochastic test for the unit circle in $\R^2$. Use it to find evidence
+that the unit circle is not a subspace.
+\end{exercise}
+
+\subsection*{D. Challenge}
+
+\begin{exercise}
+\exerciseid{3.D1}
+Let $W_1$ and $W_2$ be subspaces of $V$. Prove that $W_1\cap W_2$ is a
+subspace. Is $W_1\cup W_2$ always a subspace?
+\end{exercise}

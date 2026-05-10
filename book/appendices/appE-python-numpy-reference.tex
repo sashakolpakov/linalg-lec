@@ -1,0 +1,35 @@
+\chapter{Python and NumPy Reference}
+\label{app:python-numpy}
+
+This appendix summarizes the small amount of \Python\ and \NumPy\ assumed in
+the main text exercises.
+
+\section{Arrays}
+
+\begin{lstlisting}
+import numpy as np
+
+v = np.array([1.0, 2.0, 3.0])
+A = np.array([[1.0, 2.0],
+              [3.0, 4.0]])
+\end{lstlisting}
+
+\section{Core Linear Algebra Commands}
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Command & Purpose \\
+\midrule
+\texttt{A @ x} & matrix-vector multiplication \\
+\texttt{A @ B} & matrix-matrix multiplication \\
+\texttt{np.linalg.solve(A, b)} & solve a square system \\
+\texttt{np.linalg.lstsq(A, b, rcond=None)} & least-squares solve \\
+\texttt{np.linalg.matrix\_rank(A)} & numerical rank \\
+\texttt{np.linalg.qr(A)} & QR decomposition \\
+\texttt{np.linalg.eig(A)} & eigenvalues/eigenvectors \\
+\texttt{np.linalg.eigh(A)} & symmetric eigenvalue problem \\
+\texttt{np.linalg.svd(A, full\_matrices=False)} & singular value decomposition \\
+\bottomrule
+\end{tabular}
+\end{center}

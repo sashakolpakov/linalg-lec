@@ -1,0 +1,121 @@
+% ============================================================
+\chapter{Vectors, Data, and Linear Structure}
+\label{ch:vectors-data}
+% ============================================================
+
+\section*{Chapter Preview}
+\addcontentsline{toc}{section}{Chapter Preview}
+
+The word ``vector'' does not mean only an arrow in the plane. In linear
+algebra, a vector is any object that belongs to a space where addition and
+scalar multiplication make sense. A signal, a polynomial, an image, a list of
+features, and an arrow in $\R^3$ can all be vectors.
+
+\section{Mathematics as a Productive Language}
+
+Mathematics is not only a descriptive language. A descriptive language names
+things. A productive language lets us compute with them, transform them, and
+derive new facts. Linear algebra is productive because it gives a common
+language for many different-looking objects.
+
+The same operation may appear in several forms:
+
+\begin{itemize}
+  \item adding arrows in the plane,
+  \item adding coefficient lists of polynomials,
+  \item adding signals pointwise,
+  \item adding image arrays pixel by pixel,
+  \item adding feature vectors in a data set.
+\end{itemize}
+
+The objects look different. The structure is the same.
+
+\begin{definition}
+  A \emph{scalar} is a number used to scale vectors. In this book the scalars
+  usually come from $\R$, and sometimes from $\C$.
+\end{definition}
+
+\begin{definition}
+  A \emph{vector} is an element of a vector space.
+\end{definition}
+
+This definition is intentionally circular until vector spaces are defined in
+Chapter~\ref{ch:vector-spaces-subspaces}. The important point for now is that a
+vector is not defined by what it looks like. It is defined by the operations it
+supports.
+
+\section{Fields of Scalars}
+
+The scalars in a vector space come from a field. A field is a number system
+where addition, subtraction, multiplication, and division by nonzero elements
+behave as expected. The main examples are $\R$ and $\C$.
+
+\begin{example}[The field $\Z_2$]
+The set $\Z_2=\{0,1\}$ with arithmetic modulo $2$ is a field:
+\[
+  1+1=0,\qquad 1\cdot 1=1.
+\]
+It is useful for switches, parity checks, and error-correcting codes. This is
+a reminder that linear algebra is not restricted to real numbers.
+\end{example}
+
+\section{Data as Vectors}
+
+A grayscale image with $m$ rows and $n$ columns is an $m\times n$ array of
+numbers. We may keep it as a matrix, or stack its entries into one long vector
+in $\R^{mn}$. A color image has three such arrays, one for each color channel.
+
+A data table with $N$ observations and $d$ features is usually represented by
+a matrix $X\in \R^{N\times d}$. Each row is a data point. Each column is a
+feature. This is already linear algebra.
+
+\begin{aimlbox}
+Feature vectors are one of the simplest bridges from linear algebra to machine
+learning. A model often begins by turning an object into a vector of numbers.
+Linear algebra then describes how those numbers are transformed, compared,
+projected, compressed, and approximated.
+\end{aimlbox}
+
+\section{Python: Arrays as Representatives}
+
+In \Python, a vector is often represented by a one-dimensional \NumPy array.
+The array is not the mathematical vector itself; it is a coordinate
+representation of that vector.
+
+\begin{lstlisting}
+import numpy as np
+
+u = np.array([2.0, -1.0, 3.0])
+v = np.array([0.5, 4.0, 1.0])
+
+print("u + v =", u + v)
+print("3u    =", 3 * u)
+print("zero  =", np.zeros(3))
+\end{lstlisting}
+
+When we later change basis, the same vector may have a different coordinate
+array. The object is the same; the description changes.
+
+\section*{Chapter Summary}
+\addcontentsline{toc}{section}{Chapter Summary}
+
+\begin{itemize}
+  \item Vectors are defined by structure, not appearance.
+  \item Scalars usually come from $\R$ or $\C$, but other fields can appear.
+  \item Data objects such as signals, images, and feature lists can be vectors.
+  \item A \NumPy array is a coordinate representation of a vector.
+\end{itemize}
+
+\section*{Where This Appears Later}
+\addcontentsline{toc}{section}{Where This Appears Later}
+
+Chapter~\ref{ch:vector-spaces-subspaces} defines vector spaces formally.
+Chapter~\ref{ch:span-bases-dimension} explains coordinates and bases.
+Chapter~\ref{ch:low-rank-pca} returns to data matrices, PCA, and compression.
+
+\begin{labbox}
+Lab 1 turns the vector-space axioms into \Python checks and explores span,
+subspaces, and polynomial coefficient vectors.
+\end{labbox}
+
+\input{book/exercises/ch02-exercises}

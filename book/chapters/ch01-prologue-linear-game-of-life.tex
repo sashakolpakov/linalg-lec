@@ -1,0 +1,78 @@
+% ============================================================
+\chapter{Prologue: A Linear Game of Life}
+\label{ch:prologue}
+% ============================================================
+
+\section*{Chapter Preview}
+\addcontentsline{toc}{section}{Chapter Preview}
+
+This prologue gives a preview of the course. It is not meant to be fully
+understood on first reading. Its purpose is to show the kind of questions
+linear algebra can answer: how a rule moves information, which patterns
+persist, and why changing coordinates can make a complicated system simple.
+
+\section{States and Rules}
+
+Imagine a finite grid. At each grid point we store a number. The whole grid is
+a state. If the grid has $N$ cells, then a state is a vector in $\R^N$.
+
+A rule takes one state and produces the next state. Some rules are nonlinear,
+such as Conway's Game of Life. In this book we focus on linear rules: rules
+where
+\[
+  T(u+v)=T(u)+T(v),
+  \qquad
+  T(\lambda u)=\lambda T(u).
+\]
+
+The linearity condition looks restrictive, but it buys us a great deal. A
+linear rule can be studied by understanding what it does to a basis. A linear
+rule can be represented by a matrix. Sometimes a linear rule becomes diagonal
+after the right change of basis.
+
+\section{A One-Dimensional Toy Rule}
+
+Take a vector $u=(u_1,\ldots,u_N)$ and define a new vector by
+\[
+  (Tu)_j = \frac{1}{2}u_{j-1}+\frac{1}{2}u_{j+1},
+\]
+with indices wrapped around the ends. Each entry is replaced by the average of
+its two neighbors. This is a linear transformation from $\R^N$ to $\R^N$.
+
+Some patterns are quickly smoothed out. Other patterns keep their shape and
+are merely scaled. Those special patterns are eigenvectors. The scaling factors
+are eigenvalues. Much later, Fourier modes will give a basis of such patterns
+for this kind of translation-invariant rule.
+
+\begin{aimlbox}
+Many data and signal-processing systems start with this same idea: a state is
+a vector, a rule is a transformation, and the useful coordinates are the ones
+where the rule becomes simple. Convolutional filters, smoothing, denoising, and
+frequency methods all live near this example.
+\end{aimlbox}
+
+\section{The Course Promise}
+
+By the end of the book, the statements above will no longer be mysterious. We
+will know what vector spaces are, what linear maps are, why matrices represent
+them, how bases change descriptions, and why eigenvectors and singular vectors
+are the preferred coordinates for many computations.
+
+\section*{Chapter Summary}
+\addcontentsline{toc}{section}{Chapter Summary}
+
+\begin{itemize}
+  \item A state with finitely many numbers can be treated as a vector.
+  \item A linear rule preserves addition and scalar multiplication.
+  \item Eigenvectors are patterns whose direction is preserved by a rule.
+  \item A good basis can turn a complicated rule into a simple one.
+\end{itemize}
+
+\section*{Where This Appears Later}
+\addcontentsline{toc}{section}{Where This Appears Later}
+
+Linear maps begin in Chapter~\ref{ch:matrices-linear-maps}. Eigenvectors and
+dynamics appear in Chapter~\ref{ch:eigenvalues-dynamics}. Convolution and the
+discrete Fourier transform return in Chapter~\ref{ch:images-convolution-dft}.
+
+\input{book/exercises/ch01-exercises}

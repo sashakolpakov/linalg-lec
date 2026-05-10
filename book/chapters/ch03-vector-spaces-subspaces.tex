@@ -1,0 +1,174 @@
+% ============================================================
+\chapter{Vector Spaces and Subspaces}
+\label{ch:vector-spaces-subspaces}
+% ============================================================
+
+\section*{Chapter Preview}
+\addcontentsline{toc}{section}{Chapter Preview}
+
+This chapter gives the formal definition that Chapter~\ref{ch:vectors-data}
+postponed. A vector space is a set with two operations: addition and scalar
+multiplication. A subspace is a smaller vector space sitting inside a larger
+one.
+
+\section{Vector Spaces}
+
+\begin{definition}
+  A \emph{vector space} $V$ over a field $\F$ is a set equipped with
+  \begin{itemize}
+    \item addition $+:V\times V\to V$,
+    \item scalar multiplication $\F\times V\to V$,
+  \end{itemize}
+  satisfying the following axioms for all $u,v,w\in V$ and all
+  $\lambda,\mu\in\F$:
+  \begin{enumerate}
+    \item $(u+v)+w=u+(v+w)$.
+    \item $u+v=v+u$.
+    \item There is a vector $0\in V$ such that $v+0=v$.
+    \item For every $v\in V$ there is a vector $-v\in V$ such that
+      $v+(-v)=0$.
+    \item $(\lambda\mu)v=\lambda(\mu v)$.
+    \item $(\lambda+\mu)v=\lambda v+\mu v$.
+    \item $\lambda(u+v)=\lambda u+\lambda v$.
+    \item $1v=v$.
+  \end{enumerate}
+\end{definition}
+
+The definition is long, but most examples are familiar. In $\R^n$, addition
+and scalar multiplication are componentwise. In a polynomial space, they are
+coefficientwise. In a function space, they are pointwise.
+
+\begin{example}[Polynomials of degree at most $n$]
+Let
+\[
+  \mathcal P_n
+  =
+  \{a_0+a_1x+\cdots+a_nx^n : a_i\in\R\}.
+\]
+Adding polynomials and multiplying them by real scalars stays inside
+$\mathcal P_n$. The zero vector is the zero polynomial.
+\end{example}
+
+\section{Consequences of the Axioms}
+
+The axioms imply facts that we usually take for granted.
+
+\begin{proposition}
+  The zero vector in a vector space is unique.
+\end{proposition}
+
+\begin{proof}
+  Suppose $0$ and $0'$ are both zero vectors. Since $0'$ is a zero vector,
+  $0+0'=0$. Since $0$ is a zero vector, $0+0'=0'$. Therefore $0=0'$.
+\end{proof}
+
+\begin{proposition}
+  For every vector $v$, one has $0_{\F}v=0_V$.
+\end{proposition}
+
+\begin{proof}
+  Since $0_{\F}+0_{\F}=0_{\F}$,
+  \[
+    0_{\F}v=(0_{\F}+0_{\F})v=0_{\F}v+0_{\F}v.
+  \]
+  Add the additive inverse of $0_{\F}v$ to both sides.
+\end{proof}
+
+\section{Subspaces}
+
+\begin{definition}
+  Let $V$ be a vector space over $\F$. A subset $W\subseteq V$ is a
+  \emph{subspace} if $W$ is itself a vector space using the addition and scalar
+  multiplication inherited from $V$.
+\end{definition}
+
+There is a simple test.
+
+\begin{theorem}[Subspace test]
+  A nonempty subset $W\subseteq V$ is a subspace if and only if for all
+  $u,v\in W$ and all $\lambda,\mu\in\F$,
+  \[
+    \lambda u+\mu v\in W.
+  \]
+\end{theorem}
+
+\begin{proof}
+  If $W$ is a subspace, it is closed under scalar multiplication and addition,
+  so $\lambda u+\mu v\in W$.
+
+  Conversely, assume the displayed condition. Taking $\lambda=\mu=1$ gives
+  closure under addition. Taking $\mu=0$ gives closure under scalar
+  multiplication. Since $W$ is nonempty, choose $w\in W$; then
+  $0w=0\in W$. Additive inverses follow from $-w=(-1)w\in W$. The remaining
+  vector-space axioms are inherited from $V$.
+\end{proof}
+
+\begin{example}[A plane through the origin]
+The set
+\[
+  W=\{(x,y,z)\in\R^3:x+y=0\}
+\]
+is a subspace of $\R^3$. If $u$ and $v$ satisfy the equation, then any linear
+combination $\lambda u+\mu v$ also satisfies it.
+\end{example}
+
+\begin{example}[An affine plane is not a subspace]
+The set
+\[
+  A=\{(x,y,z)\in\R^3:x+y=1\}
+\]
+is not a subspace. It does not contain the zero vector.
+\end{example}
+
+\section{Python: Testing Closure}
+
+\begin{lstlisting}
+import numpy as np
+
+def in_plane(v, tol=1e-10):
+    return abs(v[0] + v[1]) < tol
+
+def sample_plane():
+    x = np.random.randn()
+    z = np.random.randn()
+    return np.array([x, -x, z])
+
+ok = True
+for _ in range(200):
+    u = sample_plane()
+    v = sample_plane()
+    a, b = np.random.randn(), np.random.randn()
+    ok = ok and in_plane(a*u + b*v)
+
+print("closure test passed:", ok)
+\end{lstlisting}
+
+\begin{warningbox}
+A random numerical test can find counterexamples, but it is not a proof. The
+proof is the symbolic argument that arbitrary linear combinations stay inside
+the set.
+\end{warningbox}
+
+\section*{Chapter Summary}
+\addcontentsline{toc}{section}{Chapter Summary}
+
+\begin{itemize}
+  \item A vector space is a set with addition and scalar multiplication
+    satisfying eight axioms.
+  \item The zero vector is unique, and $0_{\F}v=0_V$.
+  \item A subspace is a subset that is closed under linear combinations.
+  \item Passing random numerical tests is not the same as proof.
+\end{itemize}
+
+\section*{Where This Appears Later}
+\addcontentsline{toc}{section}{Where This Appears Later}
+
+Subspaces reappear as spans, kernels, images, row spaces, column spaces,
+eigenspaces, and low-rank approximation spaces.
+
+\begin{labbox}
+Lab 1 includes a stochastic axiom checker and subspace tests. Use it to see
+how numerical experiments can support, but not replace, proof.
+\end{labbox}
+
+\input{book/exercises/ch03-exercises}

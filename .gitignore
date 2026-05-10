@@ -6,7 +6,12 @@ ocr_pages/
 *.log
 *.out
 *.toc
+*.fls
+*.fdb_latexmk
 *.synctex.gz
+
+# Book build output
+book/build/
 
 # macOS
 .DS_Store

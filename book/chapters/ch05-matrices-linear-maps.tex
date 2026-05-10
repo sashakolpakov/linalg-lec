@@ -1,0 +1,141 @@
+% ============================================================
+\chapter{Matrices and Linear Maps}
+\label{ch:matrices-linear-maps}
+% ============================================================
+
+\section*{Chapter Preview}
+\addcontentsline{toc}{section}{Chapter Preview}
+
+Matrices are not just rectangular tables of numbers. They represent linear
+maps once bases have been chosen. This chapter connects the algebra of matrix
+multiplication with the geometry of transformations.
+
+\section{Matrix-Vector Multiplication}
+
+Let $A\in\R^{m\times n}$ have columns $a_1,\ldots,a_n$. For
+$x=(x_1,\ldots,x_n)^T$, define
+\[
+  Ax=x_1a_1+\cdots+x_na_n.
+\]
+Thus $Ax$ is a linear combination of the columns of $A$.
+
+\begin{example}
+If
+\[
+  A=\mat{1&2\\3&4\\0&1},\qquad x=\mat{5\\-1},
+\]
+then
+\[
+  Ax=5\mat{1\\3\\0}-1\mat{2\\4\\1}
+    =\mat{3\\11\\-1}.
+\]
+\end{example}
+
+\section{Linear Maps}
+
+\begin{definition}
+  A map $T:V\to W$ between vector spaces over the same field is \emph{linear}
+  if
+  \[
+    T(u+v)=T(u)+T(v),
+    \qquad
+    T(\lambda v)=\lambda T(v)
+  \]
+  for all $u,v\in V$ and scalars $\lambda$.
+\end{definition}
+
+Equivalently, $T(\lambda u+\mu v)=\lambda T(u)+\mu T(v)$ for all choices of
+$u,v,\lambda,\mu$.
+
+\begin{proposition}
+  If $A$ is an $m\times n$ matrix, then $T(x)=Ax$ is a linear map
+  $\R^n\to\R^m$.
+\end{proposition}
+
+\begin{proof}
+  Matrix-vector multiplication distributes over vector addition and scalar
+  multiplication:
+  \[
+    A(u+v)=Au+Av,\qquad A(\lambda u)=\lambda Au.
+  \]
+\end{proof}
+
+\section{A Linear Map Is Determined by a Basis}
+
+If $b_1,\ldots,b_n$ is a basis of $V$, then a linear map $T:V\to W$ is
+completely determined by the vectors $T(b_1),\ldots,T(b_n)$. Indeed, if
+\[
+  v=c_1b_1+\cdots+c_nb_n,
+\]
+then linearity forces
+\[
+  T(v)=c_1T(b_1)+\cdots+c_nT(b_n).
+\]
+
+This is why matrices work: the columns tell us where the basis vectors go.
+
+\section{Matrix Multiplication as Composition}
+
+If $A:\R^n\to\R^m$ and $B:\R^m\to\R^p$, then applying $A$ and then $B$ gives
+the composite map
+\[
+  x\mapsto B(Ax).
+\]
+The matrix of this composite map is $BA$.
+
+\begin{theorem}
+  Matrix multiplication represents composition of linear maps.
+\end{theorem}
+
+\begin{proof}
+  The $j$-th column of the matrix of the composite is the image of the $j$-th
+  standard basis vector:
+  \[
+    B(Ae_j).
+  \]
+  Since $Ae_j$ is the $j$-th column of $A$, the columns are exactly the
+  columns produced by the usual definition of $BA$.
+\end{proof}
+
+\section{Python: Building a Matrix from a Rule}
+
+\begin{lstlisting}
+import numpy as np
+
+def matrix_of_T(T, n):
+    cols = []
+    for j in range(n):
+        e = np.zeros(n)
+        e[j] = 1.0
+        cols.append(T(e))
+    return np.column_stack(cols)
+
+def reflect_across_y_equals_x(v):
+    return np.array([v[1], v[0]])
+
+A = matrix_of_T(reflect_across_y_equals_x, 2)
+print(A)
+\end{lstlisting}
+
+\section*{Chapter Summary}
+\addcontentsline{toc}{section}{Chapter Summary}
+
+\begin{itemize}
+  \item $Ax$ is a linear combination of the columns of $A$.
+  \item Linear maps preserve addition and scalar multiplication.
+  \item A linear map is determined by its values on a basis.
+  \item Matrix multiplication represents composition.
+\end{itemize}
+
+\section*{Where This Appears Later}
+\addcontentsline{toc}{section}{Where This Appears Later}
+
+Image, kernel, rank, change of basis, eigenvalues, and SVD all build on the
+idea that a matrix is a coordinate representative of a linear map.
+
+\begin{labbox}
+Lab 2 builds matrices for differentiation, integration, rotations,
+reflections, projections, and composition.
+\end{labbox}
+
+\input{book/exercises/ch05-exercises}

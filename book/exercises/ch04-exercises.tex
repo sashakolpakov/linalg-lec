@@ -1,0 +1,64 @@
+\section*{Exercises}
+\addcontentsline{toc}{section}{Exercises}
+
+\subsection*{A. Theory}
+
+\begin{exercise}
+\exerciseid{4.A1}
+Prove that the span of a list of vectors is a subspace.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{4.A2}
+Prove that if a list of vectors is linearly dependent, then at least one vector
+in the list is a linear combination of the others.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{4.A3}
+Explain why a basis gives unique coordinates.
+\end{exercise}
+
+\subsection*{B. By Hand}
+
+\begin{exercise}
+\exerciseid{4.B1}
+Do the vectors $(1,0,1)$, $(0,1,1)$, and $(1,1,2)$ form a basis of $\R^3$?
+Explain without doing unnecessary arithmetic.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{4.B2}
+Let $b_1=(1,1)$ and $b_2=(1,-1)$. Find the coordinates of $v=(3,1)$ in the
+basis $(b_1,b_2)$.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{4.B3}
+Find a basis for the span of
+\[
+  (1,2,0),\quad (2,4,0),\quad (0,1,1).
+\]
+\end{exercise}
+
+\subsection*{C. Python / NumPy}
+
+\begin{exercise}
+\exerciseid{4.C1}
+Put the vectors in Exercise 4.B3 into the columns of a matrix and use
+\texttt{np.linalg.matrix\_rank} to check the dimension of their span.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{4.C2}
+Write a function \texttt{coords(B, v)} that returns the coordinate vector
+$c$ solving $Bc=v$.
+\end{exercise}
+
+\subsection*{D. Challenge}
+
+\begin{exercise}
+\exerciseid{4.D1}
+Give two different bases of $\mathcal P_2$ and compute the coordinates of
+$p(x)=1+x+x^2$ in both bases.
+\end{exercise}

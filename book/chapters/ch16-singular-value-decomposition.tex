@@ -1,0 +1,33 @@
+\chapter{Singular Value Decomposition}
+\label{ch:svd}
+
+\begin{draftbox}
+This chapter is scaffolded. It will absorb the SVD construction, geometric
+picture, and four-subspaces interpretation from the current notes.
+\end{draftbox}
+
+\section{Guiding Question}
+
+What replaces eigenvalue decomposition for rectangular matrices?
+
+\section{Planned Core Ideas}
+
+\begin{itemize}
+  \item $A^TA$ is symmetric PSD;
+  \item right singular vectors are eigenvectors of $A^TA$;
+  \item singular values are nonnegative stretches;
+  \item left singular vectors describe output directions;
+  \item $A=U\Sigma V^T$ works for every real matrix.
+\end{itemize}
+
+\section{Planned Python Thread}
+
+Use \texttt{np.linalg.svd} to reconstruct matrices, inspect singular values,
+and visualize the image of the unit circle for $2\times 2$ examples.
+
+\section*{Chapter Summary}
+\addcontentsline{toc}{section}{Chapter Summary}
+
+To be completed in the chapter-shaping pass.
+
+\input{book/exercises/ch16-exercises}

@@ -1,0 +1,142 @@
+% ============================================================
+\chapter{Span, Independence, Bases, and Dimension}
+\label{ch:span-bases-dimension}
+% ============================================================
+
+\section*{Chapter Preview}
+\addcontentsline{toc}{section}{Chapter Preview}
+
+A small list of vectors can describe a large space. Span explains how. Linear
+independence explains when no vector in the list is redundant. A basis is a
+list that is just large enough to describe every vector uniquely.
+
+\section{Linear Combinations and Span}
+
+\begin{definition}
+  A \emph{linear combination} of vectors $v_1,\ldots,v_k$ is a vector of the
+  form
+  \[
+    \lambda_1v_1+\cdots+\lambda_kv_k,
+  \]
+  where the coefficients $\lambda_i$ are scalars.
+\end{definition}
+
+\begin{definition}
+  The \emph{span} of $v_1,\ldots,v_k$ is the set of all their linear
+  combinations:
+  \[
+    \Span\{v_1,\ldots,v_k\}
+    =
+    \{\lambda_1v_1+\cdots+\lambda_kv_k:\lambda_i\in\F\}.
+  \]
+\end{definition}
+
+\begin{proposition}
+  $\Span\{v_1,\ldots,v_k\}$ is the smallest subspace containing
+  $v_1,\ldots,v_k$.
+\end{proposition}
+
+\begin{proof}
+  The span is closed under linear combinations, so it is a subspace. It
+  contains each $v_i$ by taking coefficient $1$ on $v_i$ and $0$ on the
+  others. Any subspace containing all the $v_i$ must contain all their linear
+  combinations, so it must contain the span.
+\end{proof}
+
+\section{Linear Independence}
+
+\begin{definition}
+  A list $v_1,\ldots,v_k$ is \emph{linearly independent} if
+  \[
+    \lambda_1v_1+\cdots+\lambda_kv_k=0
+  \]
+  implies $\lambda_1=\cdots=\lambda_k=0$.
+\end{definition}
+
+If a list is not independent, then one vector is redundant: it can be written
+as a linear combination of the others.
+
+\section{Bases}
+
+\begin{definition}
+  A \emph{basis} of a vector space $V$ is a list of vectors that spans $V$ and
+  is linearly independent.
+\end{definition}
+
+The two conditions work together. Spanning says every vector can be described.
+Independence says the description is unique.
+
+\begin{theorem}[Unique coordinates]
+  If $b_1,\ldots,b_n$ is a basis of $V$, then every $v\in V$ can be written in
+  a unique way as
+  \[
+    v=c_1b_1+\cdots+c_nb_n.
+  \]
+\end{theorem}
+
+\begin{proof}
+  Existence comes from spanning. For uniqueness, suppose
+  \[
+    v=c_1b_1+\cdots+c_nb_n=d_1b_1+\cdots+d_nb_n.
+  \]
+  Subtracting gives
+  \[
+    0=(c_1-d_1)b_1+\cdots+(c_n-d_n)b_n.
+  \]
+  Independence forces $c_i-d_i=0$ for all $i$, so $c_i=d_i$.
+\end{proof}
+
+\section{Dimension}
+
+\begin{definition}
+  If $V$ has a basis with $n$ vectors, then $V$ is \emph{finite-dimensional}
+  and $\dim V=n$.
+\end{definition}
+
+The fact that every basis of the same finite-dimensional space has the same
+number of vectors is a theorem. It is what makes dimension well-defined.
+
+\section{Python: Coordinates in a Basis}
+
+If the basis vectors are the columns of a matrix $B$, then finding coordinates
+of $v$ means solving
+\[
+  Bc=v.
+\]
+
+\begin{lstlisting}
+import numpy as np
+
+B = np.array([[1.0, 1.0],
+              [1.0, -1.0]])
+v = np.array([3.0, 1.0])
+
+c = np.linalg.solve(B, v)
+print("coordinates:", c)
+print("reconstruction:", B @ c)
+\end{lstlisting}
+
+\begin{computebox}
+The command \texttt{np.linalg.solve(B, v)} calls optimized numerical linear
+algebra routines. Later we will learn the mathematical structure behind this
+kind of computation.
+\end{computebox}
+
+\section*{Chapter Summary}
+\addcontentsline{toc}{section}{Chapter Summary}
+
+\begin{itemize}
+  \item Span is the set of all linear combinations.
+  \item Linear independence means no nontrivial linear combination gives zero.
+  \item A basis is a spanning independent list.
+  \item A basis gives unique coordinates.
+  \item Dimension is the number of vectors in any basis.
+\end{itemize}
+
+\section*{Where This Appears Later}
+\addcontentsline{toc}{section}{Where This Appears Later}
+
+Coordinates and bases are the mechanism behind matrices, change of basis,
+diagonalization, Fourier methods, and PCA.
+
+\input{book/exercises/ch04-exercises}

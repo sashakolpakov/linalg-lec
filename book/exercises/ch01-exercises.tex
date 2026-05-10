@@ -1,0 +1,41 @@
+\section*{Exercises}
+\addcontentsline{toc}{section}{Exercises}
+
+\subsection*{A. Theory}
+
+\begin{exercise}
+\exerciseid{1.A1}
+Explain why the averaging rule in the chapter is linear. Your answer should
+check both addition and scalar multiplication.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{1.A2}
+Give an example of a rule on grid states that is not linear. State which part
+of linearity fails.
+\end{exercise}
+
+\subsection*{B. By Hand}
+
+\begin{exercise}
+\exerciseid{1.B1}
+Let $u=(1,0,0,0)$ on a four-cell circular grid. Apply the averaging rule
+$(Tu)_j=(u_{j-1}+u_{j+1})/2$ once by hand.
+\end{exercise}
+
+\subsection*{C. Python / NumPy}
+
+\begin{exercise}
+\exerciseid{1.C1}
+Use basic \Python\ and \NumPy\ to implement the averaging rule for vectors of
+length $N$. Test that your function satisfies
+\texttt{T(u + v) == T(u) + T(v)} up to numerical tolerance.
+\end{exercise}
+
+\subsection*{D. Challenge}
+
+\begin{exercise}
+\exerciseid{1.D1}
+Find a nonzero vector on a four-cell circular grid that is unchanged by the
+averaging rule.
+\end{exercise}

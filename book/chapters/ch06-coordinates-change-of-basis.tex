@@ -1,0 +1,36 @@
+\chapter{Coordinates and Change of Basis}
+\label{ch:coordinates-change-basis}
+
+\begin{draftbox}
+This chapter is scaffolded. It will absorb the current notes on coordinates,
+change of basis, similar matrices, and the robot-arm basis demo.
+\end{draftbox}
+
+\section{Guiding Question}
+
+How can the same vector or linear map look simple in one coordinate system and
+complicated in another?
+
+\section{Planned Core Ideas}
+
+\begin{itemize}
+  \item coordinates are descriptions relative to a basis;
+  \item a change-of-basis matrix converts one description into another;
+  \item the same linear map has related matrices in different bases;
+  \item similar matrices represent the same transformation in different
+    coordinates;
+  \item basis choice affects interpretation and numerical conditioning.
+\end{itemize}
+
+\section{Planned Python Thread}
+
+Implement coordinate conversion with \texttt{np.linalg.solve}. Use the
+robot-arm trajectory example to compare a monomial basis with a basis whose
+parameters have direct physical meaning.
+
+\section*{Chapter Summary}
+\addcontentsline{toc}{section}{Chapter Summary}
+
+To be completed in the chapter-shaping pass.
+
+\input{book/exercises/ch06-exercises}
