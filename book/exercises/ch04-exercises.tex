@@ -5,60 +5,60 @@
 
 \begin{exercise}
 \exerciseid{4.A1}
-Prove that the span of a list of vectors is a subspace.
+Prove that if $A$ is a matrix, then $x\mapsto Ax$ is a linear map.
 \end{exercise}
 
 \begin{exercise}
 \exerciseid{4.A2}
-Prove that if a list of vectors is linearly dependent, then at least one vector
-in the list is a linear combination of the others.
+Give an example of a function $T:\R^2\to\R^2$ that satisfies
+$T(u+v)=T(u)+T(v)$ but is not linear over $\R$. Explain what fails.
 \end{exercise}
 
 \begin{exercise}
 \exerciseid{4.A3}
-Explain why a basis gives unique coordinates.
+Explain why the columns of a matrix are the images of the standard basis
+vectors.
 \end{exercise}
 
 \subsection*{B. By Hand}
 
 \begin{exercise}
 \exerciseid{4.B1}
-Do the vectors $(1,0,1)$, $(0,1,1)$, and $(1,1,2)$ form a basis of $\R^3$?
-Explain without doing unnecessary arithmetic.
+Compute $Ax$ using the column-combination view:
+\[
+  A=\mat{1&2\\0&3\\1&-1},\qquad x=\mat{4\\-2}.
+\]
 \end{exercise}
 
 \begin{exercise}
 \exerciseid{4.B2}
-Let $b_1=(1,1)$ and $b_2=(1,-1)$. Find the coordinates of $v=(3,1)$ in the
-basis $(b_1,b_2)$.
+Find the matrix of the map $T(x,y)=(y,x)$.
 \end{exercise}
 
 \begin{exercise}
 \exerciseid{4.B3}
-Find a basis for the span of
-\[
-  (1,2,0),\quad (2,4,0),\quad (0,1,1).
-\]
+Let $A=\mat{1&1\\0&1}$ and $B=\mat{2&0\\0&3}$. Compute $BA$ and interpret it
+as ``first apply $A$, then apply $B$.''
 \end{exercise}
 
 \subsection*{C. Python / NumPy}
 
 \begin{exercise}
 \exerciseid{4.C1}
-Put the vectors in Exercise 4.B3 into the columns of a matrix and use
-\texttt{np.linalg.matrix\_rank} to check the dimension of their span.
+Implement matrix-vector multiplication using loops. Compare your output with
+\texttt{A @ x}.
 \end{exercise}
 
 \begin{exercise}
 \exerciseid{4.C2}
-Write a function \texttt{coords(B, v)} that returns the coordinate vector
-$c$ solving $Bc=v$.
+Write a function \texttt{matrix\_of\_T(T, n)} that builds the matrix of a map
+$T:\R^n\to\R^m$ by applying $T$ to the standard basis vectors.
 \end{exercise}
 
 \subsection*{D. Challenge}
 
 \begin{exercise}
 \exerciseid{4.D1}
-Give two different bases of $\mathcal P_2$ and compute the coordinates of
-$p(x)=1+x+x^2$ in both bases.
+Let $D:\mathcal P_3\to\mathcal P_2$ be differentiation. Write the matrix of
+$D$ in the monomial bases $(1,x,x^2,x^3)$ and $(1,x,x^2)$.
 \end{exercise}

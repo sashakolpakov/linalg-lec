@@ -1,0 +1,372 @@
+\chapter{Orthogonal Projection and Least Squares}
+\label{ch:projection-least-squares}
+
+\section{The Best Approximation Problem}
+
+The equation $Ax=b$ asks whether $b$ is in the column space of $A$. If it is
+not, there is no exact solution. Least squares asks a different question:
+
+\[
+  \text{find }x\text{ so that }Ax\text{ is as close as possible to }b.
+\]
+
+This is not a trick for avoiding linear algebra. It is linear algebra. We are
+looking for the point in $\Img(A)$ closest to $b$.
+
+\begin{definition}[Least-squares problem]
+For $A \in \R^{m \times n}$ and $b \in \R^m$, a \emph{least-squares solution}
+is a vector $\hat{x}\in\R^n$ minimizing
+\[
+  \norm{Ax-b}.
+\]
+The vector $\hat{b}=A\hat{x}$ is the least-squares approximation to $b$ from
+the column space of $A$, and
+\[
+  r=b-A\hat{x}
+\]
+is the residual.
+\end{definition}
+
+The unknown $\hat{x}$ may not be unique. The fitted vector $\hat{b}$ is unique:
+there is only one closest point to $b$ in a finite-dimensional subspace.
+
+\section{Projection Onto A Subspace}
+
+\begin{definition}[Orthogonal complement]
+If $U$ is a subspace of an inner product space $V$, its orthogonal complement is
+\[
+  U^\perp=\{v\in V:\inner{v}{u}=0\text{ for every }u\in U\}.
+\]
+\end{definition}
+
+\begin{proposition}
+If $U$ is a subspace of a finite-dimensional inner product space $V$, then
+\[
+  V = U \oplus U^\perp.
+\]
+Thus every $v\in V$ can be written uniquely as
+\[
+  v=u+w,\qquad u\in U,\quad w\in U^\perp.
+\]
+\end{proposition}
+
+\begin{proof}
+Choose an orthonormal basis $q_1,\ldots,q_k$ for $U$. For any $v\in V$, set
+\[
+  u=\sum_{j=1}^k \inner{v}{q_j}q_j.
+\]
+Then $u\in U$. For each $i$,
+\[
+  \inner{v-u}{q_i}
+  =
+  \inner{v}{q_i}
+  -
+  \sum_{j=1}^k \inner{v}{q_j}\inner{q_j}{q_i}
+  =
+  \inner{v}{q_i}-\inner{v}{q_i}
+  =
+  0.
+\]
+Since $q_1,\ldots,q_k$ span $U$, we have $v-u\in U^\perp$. So
+$v=u+(v-u)$.
+
+For uniqueness, if $z\in U\cap U^\perp$, then $\inner{z}{z}=0$, so $z=0$.
+Thus the sum is direct.
+\end{proof}
+
+\begin{definition}[Orthogonal projection onto a subspace]
+The vector $u$ in the decomposition $v=u+w$, with $u\in U$ and
+$w\in U^\perp$, is the \emph{orthogonal projection} of $v$ onto $U$. We write
+\[
+  u=\Proj_U(v).
+\]
+\end{definition}
+
+\begin{proposition}[Best approximation property]
+Let $U$ be a subspace of a finite-dimensional inner product space $V$. For any
+$v\in V$, $\Proj_U(v)$ is the unique vector in $U$ minimizing
+\[
+  \norm{v-u},\qquad u\in U.
+\]
+\end{proposition}
+
+\begin{proof}
+Write $v=\hat{u}+r$ with $\hat{u}\in U$ and $r\in U^\perp$. For any other
+$u\in U$,
+\[
+  v-u = r + (\hat{u}-u).
+\]
+Here $r\perp(\hat{u}-u)$ because $\hat{u}-u\in U$. By the Pythagorean theorem,
+\[
+  \norm{v-u}^2
+  =
+  \norm{r}^2+\norm{\hat{u}-u}^2
+  \geq
+  \norm{r}^2
+  =
+  \norm{v-\hat{u}}^2.
+\]
+Equality forces $\hat{u}=u$.
+\end{proof}
+
+\section{Least Squares As Projection}
+
+Let $U=\Img(A)\subseteq\R^m$. Least squares is the projection problem
+\[
+  \hat{b}=\Proj_{\Img(A)}(b).
+\]
+If $\hat{b}=A\hat{x}$, then the residual
+\[
+  r=b-A\hat{x}
+\]
+is orthogonal to the whole column space of $A$.
+
+\begin{theorem}[Normal equations]
+A vector $\hat{x}$ is a least-squares solution to $Ax=b$ if and only if
+\[
+  A^T(A\hat{x}-b)=0.
+\]
+Equivalently,
+\[
+  A^TA\hat{x}=A^Tb.
+\]
+\end{theorem}
+
+\begin{proof}
+The vector $A\hat{x}$ is the closest point to $b$ in $\Img(A)$ exactly when
+the residual $b-A\hat{x}$ is orthogonal to $\Img(A)$. The columns of $A$ span
+$\Img(A)$, so this is equivalent to
+\[
+  a_j^T(b-A\hat{x})=0
+  \quad\text{for every column }a_j\text{ of }A.
+\]
+Stacking these conditions gives
+\[
+  A^T(b-A\hat{x})=0,
+\]
+which is the same as $A^TA\hat{x}=A^Tb$.
+\end{proof}
+
+\begin{warningbox}
+The normal equations are mathematically central, but they are not always the
+best numerical method. Forming $A^TA$ can amplify conditioning problems. The
+geometry belongs here; the numerically safer QR route belongs to
+Chapter~\ref{ch:regression-qr-stability}.
+\end{warningbox}
+
+\section{When Is The Least-Squares Solution Unique?}
+
+The fitted vector $\hat{b}=\Proj_{\Img(A)}(b)$ is always unique. The coefficient
+vector $\hat{x}$ is unique exactly when the columns of $A$ are linearly
+independent.
+
+\begin{proposition}
+The following are equivalent for $A\in\R^{m\times n}$:
+\begin{enumerate}[label=(\alph*)]
+  \item the least-squares solution is unique for every $b\in\R^m$;
+  \item $A^TA$ is invertible;
+  \item $\Ker(A)=\{0\}$;
+  \item the columns of $A$ are linearly independent.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The key identity is
+\[
+  \Ker(A^TA)=\Ker(A).
+\]
+Indeed, if $Av=0$, then $A^TAv=0$. Conversely, if $A^TAv=0$, then
+\[
+  0=v^TA^TAv=\norm{Av}^2,
+\]
+so $Av=0$. Thus $A^TA$ is invertible exactly when $\Ker(A)=\{0\}$, which is
+exactly column independence. In that case the normal equations have exactly one
+solution for every $b$.
+\end{proof}
+
+\section{A Small Computation By Hand}
+
+Fit a line $y=a+bt$ to the points
+\[
+  (0,1),\qquad (1,2),\qquad (2,2).
+\]
+The matrix equation is
+\[
+  \begin{bmatrix}
+  1&0\\
+  1&1\\
+  1&2
+  \end{bmatrix}
+  \begin{bmatrix}a\\ b\end{bmatrix}
+  =
+  \begin{bmatrix}1\\2\\2\end{bmatrix}.
+\]
+The system is overdetermined. The normal equations are
+\[
+  \begin{bmatrix}
+  3&3\\
+  3&5
+  \end{bmatrix}
+  \begin{bmatrix}a\\b\end{bmatrix}
+  =
+  \begin{bmatrix}5\\6\end{bmatrix}.
+\]
+Solving gives
+\[
+  \hat{a}=\frac{7}{6},
+  \qquad
+  \hat{b}=\frac{1}{2}.
+\]
+The fitted line is
+\[
+  \hat{y}=\frac{7}{6}+\frac{1}{2}t.
+\]
+
+\section{The Four Fundamental Subspaces}
+
+Orthogonality also organizes the row space, column space, null space, and left
+null space of a matrix.
+
+\begin{definition}[Four fundamental subspaces]
+For $A\in\R^{m\times n}$, the four fundamental subspaces are
+\[
+  \col(A)=\Img(A)\subseteq\R^m,
+  \qquad
+  \Ker(A)\subseteq\R^n,
+\]
+\[
+  \row(A)=\col(A^T)\subseteq\R^n,
+  \qquad
+  \Ker(A^T)\subseteq\R^m.
+\]
+\end{definition}
+
+The row space and null space live in $\R^n$. The column space and left null
+space live in $\R^m$. Keeping the ambient spaces straight prevents many
+mistakes.
+
+\begin{theorem}[Fundamental orthogonal decompositions]
+For $A\in\R^{m\times n}$,
+\[
+  \R^n = \row(A)\oplus \Ker(A),
+  \qquad
+  \R^m = \col(A)\oplus \Ker(A^T).
+\]
+\end{theorem}
+
+\begin{proof}
+The equation $Ax=0$ means every row of $A$ has dot product zero with $x$.
+Therefore
+\[
+  \Ker(A)=\row(A)^\perp.
+\]
+Since $\R^n=U\oplus U^\perp$ for any subspace $U\subseteq\R^n$, taking
+$U=\row(A)$ gives the first decomposition.
+
+Applying the same argument to $A^T$ gives
+\[
+  \Ker(A^T)=\row(A^T)^\perp=\col(A)^\perp,
+\]
+so $\R^m=\col(A)\oplus\Ker(A^T)$.
+\end{proof}
+
+\begin{computebox}
+These decompositions explain solvability. A vector $b\in\R^m$ splits uniquely
+as
+\[
+  b=b_{\col}+b_{\perp},
+  \qquad
+  b_{\col}\in\col(A),\quad b_{\perp}\in\Ker(A^T).
+\]
+The equation $Ax=b$ is solvable exactly when $b_{\perp}=0$. Least squares
+keeps $b_{\col}$ and discards the orthogonal obstruction $b_{\perp}$.
+\end{computebox}
+
+\section{Projection Matrices}
+
+When $A$ has linearly independent columns, the projection of $b$ onto
+$\col(A)$ is
+\[
+  \hat{b}=A(A^TA)^{-1}A^Tb.
+\]
+The matrix
+\[
+  H=A(A^TA)^{-1}A^T
+\]
+is called the projection matrix or hat matrix. It sends $b$ to $\hat{b}$.
+
+\begin{proposition}
+If $A$ has linearly independent columns, then
+\[
+  H^2=H,\qquad H^T=H.
+\]
+\end{proposition}
+
+\begin{proof}
+For idempotence,
+\[
+  H^2
+  =
+  A(A^TA)^{-1}A^T A(A^TA)^{-1}A^T
+  =
+  A(A^TA)^{-1}A^T
+  =
+  H.
+\]
+For symmetry, use $(A^TA)^T=A^TA$, so $(A^TA)^{-1}$ is also symmetric:
+\[
+  H^T
+  =
+  \left(A(A^TA)^{-1}A^T\right)^T
+  =
+  A(A^TA)^{-1}A^T.
+\]
+\end{proof}
+
+\section{Python Thread}
+
+\begin{lstlisting}
+import numpy as np
+
+A = np.array([[1.0, 0.0],
+              [1.0, 1.0],
+              [1.0, 2.0]])
+b = np.array([1.0, 2.0, 2.0])
+
+# Least squares by normal equations
+x_hat = np.linalg.solve(A.T @ A, A.T @ b)
+b_hat = A @ x_hat
+r = b - b_hat
+
+print("x_hat:", x_hat)
+print("residual:", r)
+print("A.T @ residual:", A.T @ r)
+
+# Projection matrix
+H = A @ np.linalg.solve(A.T @ A, A.T)
+print("H^2 = H:", np.allclose(H @ H, H))
+print("H.T = H:", np.allclose(H.T, H))
+print("H @ b equals b_hat:", np.allclose(H @ b, b_hat))
+\end{lstlisting}
+
+\begin{labbox}
+Lab 7 asks you to compute the four fundamental subspaces numerically and check
+the two orthogonal decompositions. Keep the dimensions visible: row and null
+spaces live in the domain; column and left-null spaces live in the codomain.
+\end{labbox}
+
+\section*{Chapter Summary}
+\addcontentsline{toc}{section}{Chapter Summary}
+
+\begin{itemize}
+  \item Least squares is projection onto the column space.
+  \item The residual of a least-squares approximation is orthogonal to the
+        column space.
+  \item The normal equations are $A^TA\hat{x}=A^Tb$.
+  \item The fitted vector is unique; the coefficient vector is unique when
+        the columns of $A$ are independent.
+  \item The row/null and column/left-null decompositions explain the geometry
+        of solving $Ax=b$.
+\end{itemize}
+
+\input{book/exercises/ch08-exercises}

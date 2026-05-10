@@ -1,10 +1,63 @@
 \section*{Exercises}
 \addcontentsline{toc}{section}{Exercises}
+
 \subsection*{A. Theory}
-\begin{exercise}\exerciseid{7.A1} Prove that $\Ker A$ is a subspace of the domain and $\Img A$ is a subspace of the codomain. \end{exercise}
+
+\begin{exercise}
+\exerciseid{7.A1}
+Let $v\neq 0$. Prove directly from the formula
+$\Proj_v(u)=\frac{\inner{u}{v}}{\inner{v}{v}}v$ that
+$u-\Proj_v(u)$ is orthogonal to $v$.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{7.A2}
+Prove the parallelogram identity:
+\[
+  \norm{u+v}^2+\norm{u-v}^2=2\norm{u}^2+2\norm{v}^2.
+\]
+\end{exercise}
+
 \subsection*{B. By Hand}
-\begin{exercise}\exerciseid{7.B1} For $A=\mat{1&2&3\\0&1&1}$, find one nonzero vector in $\Ker A$. \end{exercise}
+
+\begin{exercise}
+\exerciseid{7.B1}
+Project $v=(3,4)$ onto the line spanned by $u=(1,1)$. Compute the residual
+and check the dot product with $u$.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{7.B2}
+In $\R^2$, use the weighted inner product
+\[
+  \inner{x}{y}_w=x_1y_1+4x_2y_2.
+\]
+Compute the lengths of $a=(2,1)$ and $b=(2,-1)$, then check whether they are
+orthogonal under this weighted inner product.
+\end{exercise}
+
 \subsection*{C. Python / NumPy}
-\begin{exercise}\exerciseid{7.C1} Generate $A=UV$ with $U\in\R^{5\times 2}$ and $V\in\R^{2\times 4}$. Use \texttt{np.linalg.matrix\_rank} to estimate $\Rank A$. \end{exercise}
+
+\begin{exercise}
+\exerciseid{7.C1}
+Write a function that computes cosine similarity between two nonzero vectors.
+Test it on two parallel vectors and two orthogonal vectors.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{7.C2}
+Generate 1000 random pairs of vectors in $\R^5$. For each pair, compute
+\[
+  \frac{|\inner{u}{v}|}{\norm{u}\norm{v}}.
+\]
+Use \texttt{np.max} to check that the largest observed value is at most $1$
+up to floating-point error.
+\end{exercise}
+
 \subsection*{D. Challenge}
-\begin{exercise}\exerciseid{7.D1} Construct a $3\times 4$ matrix with rank $2$ and explain why its nullity must be $2$. \end{exercise}
+
+\begin{exercise}
+\exerciseid{7.D1}
+Give two different inner products on $\R^2$ for which the same two nonzero
+vectors have different cosine similarities.
+\end{exercise}

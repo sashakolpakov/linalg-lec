@@ -1,10 +1,58 @@
 \section*{Exercises}
 \addcontentsline{toc}{section}{Exercises}
+
 \subsection*{A. Theory}
-\begin{exercise}\exerciseid{10.A1} Prove the Cauchy-Schwarz inequality in the special case of $\R^2$ using the discriminant method. \end{exercise}
+
+\begin{exercise}
+\exerciseid{10.A1}
+Explain why coordinates depend on a basis, but the vector being described does
+not.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{10.A2}
+Let $A$ be the standard-basis matrix of a linear map $T:\R^n\to\R^n$, and let
+$P$ have a new basis as its columns. Derive the formula $A_B=P^{-1}AP$.
+\end{exercise}
+
 \subsection*{B. By Hand}
-\begin{exercise}\exerciseid{10.B1} Project $v=(3,4)$ onto the line spanned by $u=(1,1)$. \end{exercise}
+
+\begin{exercise}
+\exerciseid{10.B1}
+For $b_1=(1,1)$ and $b_2=(1,-1)$, convert $v=(4,2)$ to $B$-coordinates and
+back.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{10.B2}
+Let
+\[
+  A=\begin{bmatrix}2&0\\0&1\end{bmatrix},
+  \qquad
+  P=\begin{bmatrix}1&1\\1&-1\end{bmatrix}.
+\]
+Compute $P^{-1}AP$.
+\end{exercise}
+
 \subsection*{C. Python / NumPy}
-\begin{exercise}\exerciseid{10.C1} Write a function that computes cosine similarity between two nonzero vectors. \end{exercise}
+
+\begin{exercise}
+\exerciseid{10.C1}
+Write \texttt{change\_coords(B, v)} using \texttt{np.linalg.solve}. Test it
+on two bases of $\R^2$.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{10.C2}
+Choose an invertible $2\times 2$ matrix $P$ and a $2\times 2$ matrix $A$.
+Compute $P^{-1}AP$ using a linear solve, then use \NumPy{} to compare the
+eigenvalues of $A$ and $P^{-1}AP$.
+\end{exercise}
+
 \subsection*{D. Challenge}
-\begin{exercise}\exerciseid{10.D1} Give two different inner products on $\R^2$ for which the same two vectors have different angles. \end{exercise}
+
+\begin{exercise}
+\exerciseid{10.D1}
+Find a basis in which the map $T(x,y)=(x,x+y)$ has a simpler matrix. Explain
+what is simpler about your chosen basis.
+\end{exercise}

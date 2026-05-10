@@ -1,0 +1,144 @@
+\chapter{Solving Linear Systems}
+\label{ch:solving-linear-systems}
+
+\section*{Chapter Preview}
+\addcontentsline{toc}{section}{Chapter Preview}
+
+The equation $Ax=b$ asks whether $b$ can be built as a linear combination of
+the columns of $A$. This chapter classifies what can happen and describes the
+shape of the solution set.
+
+\section{Existence}
+
+Let $A\in\R^{m\times n}$ with columns $a_1,\ldots,a_n$. The equation
+\[
+  Ax=b
+\]
+means
+\[
+  x_1a_1+\cdots+x_na_n=b.
+\]
+Therefore:
+
+\begin{proposition}
+$Ax=b$ has a solution if and only if $b\in\Img A$.
+\end{proposition}
+
+This is the most important first test. If $b$ is outside the image, the exact
+system has no solution. Later, least squares will replace $b$ by its closest
+point in the image.
+
+\section{Uniqueness}
+
+Suppose $x_0$ is one solution to $Ax=b$. Then another vector $x$ is also a
+solution exactly when
+\[
+  A(x-x_0)=0.
+\]
+Thus $x-x_0\in\Ker A$.
+
+\begin{theorem}[Solution set]
+If $Ax=b$ has one solution $x_0$, then the full solution set is
+\[
+  x_0+\Ker A=\{x_0+k:k\in\Ker A\}.
+\]
+\end{theorem}
+
+So uniqueness is controlled by the kernel:
+\[
+  \Ker A=\{0\}
+  \quad\Longleftrightarrow\quad
+  \text{every consistent system }Ax=b\text{ has at most one solution.}
+\]
+
+\section{The Four Cases}
+
+The existence question and the uniqueness question are independent.
+
+\[
+\begin{array}{c|c|c}
+ & b\in\Img A & b\notin\Img A\\
+\hline
+\Ker A=\{0\}
+& \text{one solution}
+& \text{no solution}\\
+\Ker A\ne\{0\}
+& \text{infinitely many solutions }x_0+\Ker A
+& \text{no solution}
+\end{array}
+\]
+
+\begin{warningbox}
+The phrase ``the solution'' is only justified after checking uniqueness. In an
+underdetermined consistent system, a numerical routine may return one
+solution, often the least-norm solution, but the mathematical solution set is
+an affine set $x_0+\Ker A$.
+\end{warningbox}
+
+\section{Inverses}
+
+For a square matrix $A\in\R^{n\times n}$, the following conditions are
+equivalent:
+\[
+  A^{-1}\text{ exists}
+  \quad\Longleftrightarrow\quad
+  \Ker A=\{0\}
+  \quad\Longleftrightarrow\quad
+  \Img A=\R^n
+  \quad\Longleftrightarrow\quad
+  \Rank A=n.
+\]
+When these hold, every $b\in\R^n$ has the unique solution $x=A^{-1}b$.
+
+\section{Computation}
+
+In practice, one usually solves linear systems by elimination or by numerical
+factorizations, not by explicitly computing $A^{-1}$. For a square full-rank
+matrix, \texttt{np.linalg.solve(A, b)} is the standard call. For rectangular
+or inconsistent systems, \texttt{np.linalg.lstsq(A, b, rcond=None)} returns a
+least-squares solution.
+
+\begin{lstlisting}
+import numpy as np
+
+A = np.array([[1., 2.],
+              [3., 4.]])
+b = np.array([1., 0.])
+
+x = np.linalg.solve(A, b)
+print(A @ x)
+
+B = np.array([[1., 1.],
+              [1., 2.],
+              [1., 3.]])
+y = np.array([1., 2., 2.])
+
+x_hat, residuals, rank, s = np.linalg.lstsq(B, y, rcond=None)
+print(x_hat)
+print(np.linalg.norm(B @ x_hat - y))
+\end{lstlisting}
+
+\section*{Chapter Summary}
+\addcontentsline{toc}{section}{Chapter Summary}
+
+\begin{itemize}
+  \item $Ax=b$ is solvable exactly when $b$ lies in the image of $A$.
+  \item If one solution exists, all solutions are $x_0+\Ker A$.
+  \item The kernel controls uniqueness.
+  \item A square matrix is invertible exactly when its kernel is trivial.
+  \item Inconsistent systems lead naturally to least squares.
+\end{itemize}
+
+\section*{Where This Appears Later}
+\addcontentsline{toc}{section}{Where This Appears Later}
+
+Least squares begins when $b\notin\Img A$. Orthogonal projection explains the
+closest solvable right-hand side. The pseudoinverse and SVD later organize all
+four cases in one formula.
+
+\begin{labbox}
+Lab 4 builds examples for all four cases, parameterizes $x_0+\Ker A$, and
+visualizes least-norm solutions.
+\end{labbox}
+
+\input{book/exercises/ch06-exercises}

@@ -1,3 +1,22 @@
 \section*{Chapter 17}
-\paragraph{17.B1.} The rank-$1$ approximation keeps only the largest singular value.
-\paragraph{17.D1.} Centering removes the mean so PCA studies variation around it.
+
+\paragraph{17.A1.}
+If $Hx=0$ and $Hy=0$ modulo $2$, compute $H(x+y)$ modulo $2$.
+
+\paragraph{17.A2.}
+For a single-bit error, the syndrome is one column of $H$.
+
+\paragraph{17.B1.}
+Each entry of $Hr$ is a dot product reduced modulo $2$.
+
+\paragraph{17.B2.}
+Use the fifth column of $H$.
+
+\paragraph{17.C1.}
+Use \texttt{np.eye(7, dtype=int)} to generate the seven one-bit error vectors.
+
+\paragraph{17.C2.}
+The result should be a $3\times 4$ zero matrix modulo $2$.
+
+\paragraph{17.D1.}
+Use tuples of syndrome entries as dictionary keys.

@@ -1,10 +1,56 @@
 \section*{Exercises}
 \addcontentsline{toc}{section}{Exercises}
+
 \subsection*{A. Theory}
-\begin{exercise}\exerciseid{9.A1} Derive the normal equations from the condition that the residual is orthogonal to the column space. \end{exercise}
+
+\begin{exercise}
+\exerciseid{9.A1}
+Explain why solving normal equations can be less stable than solving least
+squares with QR. Your answer should mention $A^TA$.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{9.A2}
+Suppose $Q$ has orthonormal columns. Prove that the least-squares solution to
+$Qx=b$ is $\hat{x}=Q^Tb$.
+\end{exercise}
+
 \subsection*{B. By Hand}
-\begin{exercise}\exerciseid{9.B1} Fit a line $y=a+bt$ through the points $(0,1)$, $(1,2)$, and $(2,2)$ in the least-squares sense. \end{exercise}
+
+\begin{exercise}
+\exerciseid{9.B1}
+Fit a line $y=a+bt$ through the points $(0,1)$, $(1,2)$, and $(2,2)$ in the
+least-squares sense.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{9.B2}
+Apply one full Gram--Schmidt computation to
+\[
+  v_1=(1,1,0),\qquad v_2=(1,0,1).
+\]
+Find an orthonormal basis for $\Span(v_1,v_2)$.
+\end{exercise}
+
 \subsection*{C. Python / NumPy}
-\begin{exercise}\exerciseid{9.C1} Build a Vandermonde matrix for five sample points and compare the normal-equation solution with \texttt{np.linalg.lstsq}. \end{exercise}
+
+\begin{exercise}
+\exerciseid{9.C1}
+Build a Vandermonde matrix for five sample points and compare the
+normal-equation solution, a QR-based solution, and
+\texttt{np.linalg.lstsq}.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{9.C2}
+Implement classical Gram--Schmidt using only basic \NumPy operations. Test
+whether your output satisfies \texttt{Q.T @ Q = I} and \texttt{Q @ R = A}.
+\end{exercise}
+
 \subsection*{D. Challenge}
-\begin{exercise}\exerciseid{9.D1} Explain why increasing polynomial degree can reduce training error while increasing validation error. \end{exercise}
+
+\begin{exercise}
+\exerciseid{9.D1}
+Explain why increasing polynomial degree can reduce training error while
+increasing validation error. Use the column-space picture in your explanation.
+\end{exercise}

@@ -1,0 +1,196 @@
+\chapter{Coding Theory and the Hamming Code}
+\label{ch:coding-theory-hamming}
+
+\section{Optional Project}
+
+This chapter is a compact project. It shows how kernels, matrix-vector
+products, and subspaces work over the two-element field
+\[
+  \Z_2=\{0,1\},
+\]
+where addition and multiplication are done modulo $2$.
+
+\section{Messages, Codewords, And Errors}
+
+A 4-bit message is a vector in $\Z_2^4$. A 7-bit transmitted word is a vector
+in $\Z_2^7$. The goal of the Hamming$(7,4)$ code is to encode 4 data bits into
+7 bits so that any single flipped bit can be detected and corrected.
+
+The extra 3 bits are redundancy. Linear algebra organizes that redundancy.
+
+\section{The Parity-Check Matrix}
+
+Define
+\[
+  H=
+  \begin{bmatrix}
+  0&0&0&1&1&1&1\\
+  0&1&1&0&0&1&1\\
+  1&0&1&0&1&0&1
+  \end{bmatrix}.
+\]
+The columns are the nonzero binary vectors in $\Z_2^3$:
+\[
+  001,\ 010,\ 011,\ 100,\ 101,\ 110,\ 111.
+\]
+
+\begin{definition}[Code]
+The Hamming$(7,4)$ code is
+\[
+  \mathcal{C}=\Ker(H)
+  =
+  \{c\in\Z_2^7: Hc=0\}.
+\]
+Vectors in $\mathcal{C}$ are called codewords.
+\end{definition}
+
+Since $H$ has rank $3$, rank-nullity gives
+\[
+  \dim\Ker(H)=7-3=4.
+\]
+So $\mathcal{C}$ has $2^4=16$ codewords, one for each 4-bit message.
+
+\section{A Generator Matrix}
+
+A generator matrix has columns forming a basis for $\Ker(H)$. One choice is
+\[
+  G=
+  \begin{bmatrix}
+  1&0&0&0\\
+  0&1&0&0\\
+  0&0&1&0\\
+  0&0&0&1\\
+  1&1&0&1\\
+  1&0&1&1\\
+  0&1&1&1
+  \end{bmatrix}.
+\]
+Encoding a message $m\in\Z_2^4$ means computing
+\[
+  c=Gm\pmod 2.
+\]
+The first four bits of $c$ are the original message. The last three bits are
+parity bits.
+
+\begin{proposition}
+Every encoded vector $c=Gm$ is a codeword.
+\end{proposition}
+
+\begin{proof}
+It is enough to check
+\[
+  HG=0\pmod 2.
+\]
+Then
+\[
+  Hc=H(Gm)=(HG)m=0.
+\]
+\end{proof}
+
+\section{Syndromes}
+
+Suppose a codeword $c$ is transmitted and the received vector is
+\[
+  r=c+e,
+\]
+where $e$ is an error vector. Compute
+\[
+  s=Hr.
+\]
+This vector $s\in\Z_2^3$ is called the \emph{syndrome}.
+
+Since $Hc=0$,
+\[
+  s=H(c+e)=Hc+He=He.
+\]
+Thus the syndrome depends only on the error.
+
+\begin{theorem}[Single-bit correction]
+If at most one bit is flipped, then the syndrome either equals $0$ or equals
+the column of $H$ corresponding to the flipped bit.
+\end{theorem}
+
+\begin{proof}
+If there is no error, then $e=0$ and $s=He=0$. If bit $k$ is flipped, then
+$e=e_k$, the $k$-th standard basis vector. Therefore
+\[
+  s=He_k,
+\]
+which is the $k$-th column of $H$. The columns of $H$ are all nonzero and
+distinct, so the syndrome identifies the flipped bit.
+\end{proof}
+
+\begin{warningbox}
+This code corrects one flipped bit. Two flipped bits can produce a misleading
+syndrome, because the syndrome is the sum of two columns. The guarantee is
+single-error correction, not arbitrary error correction.
+\end{warningbox}
+
+\section{Python Thread}
+
+\begin{lstlisting}
+import numpy as np
+
+def mod2(x):
+    return x % 2
+
+H = np.array([[0,0,0,1,1,1,1],
+              [0,1,1,0,0,1,1],
+              [1,0,1,0,1,0,1]], dtype=int)
+
+G = np.array([[1,0,0,0],
+              [0,1,0,0],
+              [0,0,1,0],
+              [0,0,0,1],
+              [1,1,0,1],
+              [1,0,1,1],
+              [0,1,1,1]], dtype=int)
+
+print("H @ G mod 2:")
+print(mod2(H @ G))
+
+m = np.array([1, 0, 1, 1], dtype=int)
+c = mod2(G @ m)
+print("message:", m)
+print("codeword:", c)
+
+# Flip bit 5 in one-indexed language, index 4 in Python.
+r = c.copy()
+r[4] = 1 - r[4]
+
+s = mod2(H @ r)
+print("received:", r)
+print("syndrome:", s)
+
+# Build a syndrome lookup table from columns of H.
+lookup = {tuple(H[:, j]): j for j in range(7)}
+error_index = lookup[tuple(s)]
+
+fixed = r.copy()
+fixed[error_index] = 1 - fixed[error_index]
+print("corrected:", fixed)
+print("matches:", np.array_equal(fixed, c))
+\end{lstlisting}
+
+\section{What This Project Reinforces}
+
+\begin{itemize}
+  \item A code can be a null space.
+  \item Redundancy can be organized by a parity-check matrix.
+  \item Matrix-vector multiplication can detect violations of parity rules.
+  \item A syndrome is an image vector that identifies a likely error.
+  \item The same rank-nullity theorem works over $\Z_2$.
+\end{itemize}
+
+\section*{Chapter Summary}
+\addcontentsline{toc}{section}{Chapter Summary}
+
+\begin{itemize}
+  \item Hamming$(7,4)$ encodes 4-bit messages as 7-bit codewords.
+  \item The code is $\Ker(H)$ over $\Z_2$.
+  \item The generator matrix maps messages into the code.
+  \item The syndrome $Hr$ identifies a single flipped bit.
+  \item This is a compact application of kernels, images, and matrix products.
+\end{itemize}
+
+\input{book/exercises/ch17-exercises}

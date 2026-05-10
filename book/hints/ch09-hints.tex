@@ -1,3 +1,14 @@
 \section*{Chapter 9}
+\paragraph{9.A1.} Forming $A^TA$ squares the condition number in many
+important cases.
+\paragraph{9.A2.} The normal equations become $Q^TQx=Q^Tb$.
 \paragraph{9.B1.} Build the design matrix with rows $(1,t_i)$.
-\paragraph{9.C1.} Compare \texttt{np.linalg.solve(X.T @ X, X.T @ y)} with \texttt{np.linalg.lstsq(X, y, rcond=None)}.
+\paragraph{9.B2.} Normalize $v_1$ first. Then subtract the projection of
+$v_2$ onto the normalized first vector.
+\paragraph{9.C1.} Use \texttt{Q, R = np.linalg.qr(X, mode="reduced")} and
+solve \texttt{R @ c = Q.T @ y}.
+\paragraph{9.C2.} Store one column of $Q$ at a time; each new vector should
+have its projections onto all previous columns removed.
+\paragraph{9.D1.} Larger degree usually means a larger column space, so
+projection can fit the training vector more closely even when the trend is
+worse for new points.

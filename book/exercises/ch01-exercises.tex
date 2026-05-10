@@ -5,37 +5,60 @@
 
 \begin{exercise}
 \exerciseid{1.A1}
-Explain why the averaging rule in the chapter is linear. Your answer should
-check both addition and scalar multiplication.
+In one paragraph, explain why an image can be treated as a vector even though
+it is usually displayed as a rectangle of pixels.
 \end{exercise}
 
 \begin{exercise}
 \exerciseid{1.A2}
-Give an example of a rule on grid states that is not linear. State which part
-of linearity fails.
+Which of the following are naturally represented as vectors? For each, say
+what addition and scalar multiplication should mean: a temperature signal over
+time, a paragraph of text, a polynomial, a color image, a list of exam scores.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{1.A3}
+Explain why a \NumPy\ array should be thought of as a representation of a
+vector, not as the vector itself.
 \end{exercise}
 
 \subsection*{B. By Hand}
 
 \begin{exercise}
 \exerciseid{1.B1}
-Let $u=(1,0,0,0)$ on a four-cell circular grid. Apply the averaging rule
-$(Tu)_j=(u_{j-1}+u_{j+1})/2$ once by hand.
+Let $p(x)=2-x+3x^2$ and $q(x)=1+4x-x^2$. Compute $p+q$ and $2p-q$.
+Then write the coefficient vectors of all four polynomials.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{1.B2}
+Treat the grayscale image
+\[
+  \mat{1&2\\3&4}
+\]
+as a vector in $\R^4$ by stacking columns. What vector do you get? What if you
+stack rows instead?
 \end{exercise}
 
 \subsection*{C. Python / NumPy}
 
 \begin{exercise}
 \exerciseid{1.C1}
-Use basic \Python\ and \NumPy\ to implement the averaging rule for vectors of
-length $N$. Test that your function satisfies
-\texttt{T(u + v) == T(u) + T(v)} up to numerical tolerance.
+Create two \NumPy\ arrays of length $5$. Print their sum, their difference,
+and three times the first array.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{1.C2}
+Represent a polynomial $a_0+a_1x+a_2x^2$ by the array
+\texttt{[a0, a1, a2]}. Write a function that evaluates such a polynomial at a
+number $x$.
 \end{exercise}
 
 \subsection*{D. Challenge}
 
 \begin{exercise}
 \exerciseid{1.D1}
-Find a nonzero vector on a four-cell circular grid that is unchanged by the
-averaging rule.
+The set of RGB colors with integer entries between $0$ and $255$ is not a
+vector space over $\R$. Identify two different vector-space axioms that fail.
 \end{exercise}

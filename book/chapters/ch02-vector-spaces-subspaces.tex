@@ -49,6 +49,15 @@ Adding polynomials and multiplying them by real scalars stays inside
 $\mathcal P_n$. The zero vector is the zero polynomial.
 \end{example}
 
+\begin{example}[Signals as vectors]
+Fix sample points $t_1,\ldots,t_N$. A signal sampled at those points is a list
+\[
+  (f(t_1),\ldots,f(t_N))\in\R^N.
+\]
+Adding signals pointwise and multiplying them by scalars gives another signal.
+This is the finite-dimensional shadow of a function space.
+\end{example}
+
 \section{Consequences of the Axioms}
 
 The axioms imply facts that we usually take for granted.
@@ -112,6 +121,14 @@ is a subspace of $\R^3$. If $u$ and $v$ satisfy the equation, then any linear
 combination $\lambda u+\mu v$ also satisfies it.
 \end{example}
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{book/assets/figures/core/fig02_subspace.png}
+  \caption{A subspace must pass through the origin and be closed under vector
+  addition and scaling. An affine shift may look linear, but it is not a
+  subspace.}
+\end{figure}
+
 \begin{example}[An affine plane is not a subspace]
 The set
 \[
@@ -119,6 +136,27 @@ The set
 \]
 is not a subspace. It does not contain the zero vector.
 \end{example}
+
+\section{Sums and Direct Sums}
+
+If $U,W\subseteq V$ are subspaces, their sum is
+\[
+  U+W=\{u+w:u\in U,\; w\in W\}.
+\]
+This is the smallest subspace containing both $U$ and $W$.
+
+\begin{definition}
+The sum $U+W$ is a \emph{direct sum}, written $U\oplus W$, if every vector in
+$U+W$ can be written in exactly one way as $u+w$ with $u\in U$ and $w\in W$.
+\end{definition}
+
+For two subspaces, the uniqueness condition is equivalent to
+\[
+  U\cap W=\{0\}.
+\]
+Direct sums are the formal version of decomposing a vector into independent
+pieces. Later, orthogonal decompositions will let us split a vector into a
+part we can explain and a residual part we cannot.
 
 \section{Python: Testing Closure}
 
@@ -171,4 +209,4 @@ Lab 1 includes a stochastic axiom checker and subspace tests. Use it to see
 how numerical experiments can support, but not replace, proof.
 \end{labbox}
 
-\input{book/exercises/ch03-exercises}
+\input{book/exercises/ch02-exercises}

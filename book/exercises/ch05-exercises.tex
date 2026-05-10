@@ -1,64 +1,10 @@
 \section*{Exercises}
 \addcontentsline{toc}{section}{Exercises}
-
 \subsection*{A. Theory}
-
-\begin{exercise}
-\exerciseid{5.A1}
-Prove that if $A$ is a matrix, then $x\mapsto Ax$ is a linear map.
-\end{exercise}
-
-\begin{exercise}
-\exerciseid{5.A2}
-Give an example of a function $T:\R^2\to\R^2$ that satisfies
-$T(u+v)=T(u)+T(v)$ but is not linear over $\R$. Explain what fails.
-\end{exercise}
-
-\begin{exercise}
-\exerciseid{5.A3}
-Explain why the columns of a matrix are the images of the standard basis
-vectors.
-\end{exercise}
-
+\begin{exercise}\exerciseid{5.A1} Prove that $\Ker A$ is a subspace of the domain and $\Img A$ is a subspace of the codomain. \end{exercise}
 \subsection*{B. By Hand}
-
-\begin{exercise}
-\exerciseid{5.B1}
-Compute $Ax$ using the column-combination view:
-\[
-  A=\mat{1&2\\0&3\\1&-1},\qquad x=\mat{4\\-2}.
-\]
-\end{exercise}
-
-\begin{exercise}
-\exerciseid{5.B2}
-Find the matrix of the map $T(x,y)=(y,x)$.
-\end{exercise}
-
-\begin{exercise}
-\exerciseid{5.B3}
-Let $A=\mat{1&1\\0&1}$ and $B=\mat{2&0\\0&3}$. Compute $BA$ and interpret it
-as ``first apply $A$, then apply $B$.''
-\end{exercise}
-
+\begin{exercise}\exerciseid{5.B1} For $A=\mat{1&2&3\\0&1&1}$, find one nonzero vector in $\Ker A$. \end{exercise}
 \subsection*{C. Python / NumPy}
-
-\begin{exercise}
-\exerciseid{5.C1}
-Implement matrix-vector multiplication using loops. Compare your output with
-\texttt{A @ x}.
-\end{exercise}
-
-\begin{exercise}
-\exerciseid{5.C2}
-Write a function \texttt{matrix\_of\_T(T, n)} that builds the matrix of a map
-$T:\R^n\to\R^m$ by applying $T$ to the standard basis vectors.
-\end{exercise}
-
+\begin{exercise}\exerciseid{5.C1} Generate $A=UV$ with $U\in\R^{5\times 2}$ and $V\in\R^{2\times 4}$. Use NumPy to estimate $\Rank A$. \end{exercise}
 \subsection*{D. Challenge}
-
-\begin{exercise}
-\exerciseid{5.D1}
-Let $D:\mathcal P_3\to\mathcal P_2$ be differentiation. Write the matrix of
-$D$ in the monomial bases $(1,x,x^2,x^3)$ and $(1,x,x^2)$.
-\end{exercise}
+\begin{exercise}\exerciseid{5.D1} Construct a $3\times 4$ matrix with rank $2$ and explain why its nullity must be $2$. \end{exercise}

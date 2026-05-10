@@ -1,10 +1,57 @@
 \section*{Exercises}
 \addcontentsline{toc}{section}{Exercises}
+
 \subsection*{A. Theory}
-\begin{exercise}\exerciseid{12.A1} Prove that if $Av=\lambda v$ and $v\neq 0$, then $A^kv=\lambda^kv$ for every integer $k\geq 0$. \end{exercise}
+
+\begin{exercise}
+\exerciseid{12.A1}
+Prove that $B^TB$ is positive semidefinite for every real matrix $B$.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{12.A2}
+Prove that $\Ker(B^TB)=\Ker(B)$.
+\end{exercise}
+
 \subsection*{B. By Hand}
-\begin{exercise}\exerciseid{12.B1} Find the eigenvalues and eigenvectors of $\mat{2&0\\0&3}$. \end{exercise}
+
+\begin{exercise}
+\exerciseid{12.B1}
+Decide whether
+\[
+  \begin{bmatrix}2&0\\0&-1\end{bmatrix}
+\]
+is PSD. Explain using a quadratic form.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{12.B2}
+Let
+\[
+  B=\begin{bmatrix}1&0\\1&1\\0&1\end{bmatrix}.
+\]
+Compute the Gram matrix $B^TB$ and check that $x^TB^TBx\geq 0$ for
+$x=(1,-2)^T$.
+\end{exercise}
+
 \subsection*{C. Python / NumPy}
-\begin{exercise}\exerciseid{12.C1} Use \texttt{np.linalg.eig} on a diagonal matrix and on a non-diagonal matrix with known eigenvectors. \end{exercise}
+
+\begin{exercise}
+\exerciseid{12.C1}
+Generate a random matrix $B$ and check the eigenvalues of $B^TB$ with
+\texttt{np.linalg.eigvalsh}.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{12.C2}
+Create a centered data matrix $X$ with 20 rows and 3 columns. Compute its
+covariance matrix using only \NumPy, then verify that its eigenvalues are
+nonnegative up to floating-point error.
+\end{exercise}
+
 \subsection*{D. Challenge}
-\begin{exercise}\exerciseid{12.D1} Give a $2\times 2$ matrix with only one eigenvector direction. \end{exercise}
+
+\begin{exercise}
+\exerciseid{12.D1}
+Relate the trace of a covariance matrix to total variance in its features.
+\end{exercise}

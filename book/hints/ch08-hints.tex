@@ -1,3 +1,14 @@
 \section*{Chapter 8}
-\paragraph{8.B1.} The second equation is twice the first.
-\paragraph{8.C1.} Inspect the residual vector $Ax-b$ after solving.
+\paragraph{8.A1.} Perturb $\hat{x}$ in the direction of one coordinate vector,
+or use the projection theorem for $\col(A)$.
+\paragraph{8.A2.} One inclusion is immediate. For the other, multiply
+$A^TAv=0$ on the left by $v^T$.
+\paragraph{8.B1.} Use $\Proj_a(b)=\frac{\inner{b}{a}}{\inner{a}{a}}a$.
+\paragraph{8.B2.} Compute $A^TA$ and $A^Tb$ first; the resulting system is
+$2\times 2$.
+\paragraph{8.C1.} The residual is \texttt{r = b - A @ x}; test
+\texttt{A.T @ r}.
+\paragraph{8.C2.} To avoid forming an inverse, compute
+\texttt{H = A @ np.linalg.solve(A.T @ A, A.T)}.
+\paragraph{8.D1.} Start with a line in $\R^2$, such as the span of
+$(1,0)$, and choose $b$ with a nonzero perpendicular component.

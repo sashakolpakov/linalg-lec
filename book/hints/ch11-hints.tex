@@ -1,3 +1,11 @@
 \section*{Chapter 11}
-\paragraph{11.B1.} Keep the first vector, then subtract from the second its projection onto the first.
-\paragraph{11.C1.} Check whether \texttt{Q.T @ Q} is close to the identity.
+\paragraph{11.A1.} Use induction on $k$.
+\paragraph{11.A2.} Start with $c_1u_1+c_2u_2=0$, apply $A$, and subtract a
+multiple of the original equation.
+\paragraph{11.B1.} A diagonal matrix scales the coordinate axes.
+\paragraph{11.B2.} Put the eigenvectors in the columns of $P$.
+\paragraph{11.C1.} NumPy returns eigenvectors as columns.
+\paragraph{11.C2.} Decompose the starting vector mentally into eigenvector
+directions; the larger absolute eigenvalue should dominate.
+\paragraph{11.D1.} Try a shear matrix such as
+$\begin{bmatrix}1&1\\0&1\end{bmatrix}$.

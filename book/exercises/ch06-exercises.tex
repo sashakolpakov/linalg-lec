@@ -1,10 +1,10 @@
 \section*{Exercises}
 \addcontentsline{toc}{section}{Exercises}
 \subsection*{A. Theory}
-\begin{exercise}\exerciseid{6.A1} Explain why coordinates depend on a basis, but the vector being described does not. \end{exercise}
+\begin{exercise}\exerciseid{6.A1} Prove that $Ax=b$ has a solution if and only if $b\in\Img A$. \end{exercise}
 \subsection*{B. By Hand}
-\begin{exercise}\exerciseid{6.B1} For $b_1=(1,1)$ and $b_2=(1,-1)$, convert $v=(4,2)$ to $B$-coordinates and back. \end{exercise}
+\begin{exercise}\exerciseid{6.B1} Classify the system $\mat{1&1\\2&2}x=\mat{3\\6}$ as having no solution, one solution, or infinitely many solutions. \end{exercise}
 \subsection*{C. Python / NumPy}
-\begin{exercise}\exerciseid{6.C1} Write \texttt{change\_coords(B, v)} using \texttt{np.linalg.solve}. Test it on two bases of $\R^2$. \end{exercise}
+\begin{exercise}\exerciseid{6.C1} Use \texttt{np.linalg.lstsq} on a consistent system and an inconsistent system. Compare the residuals. \end{exercise}
 \subsection*{D. Challenge}
-\begin{exercise}\exerciseid{6.D1} Find a basis in which the map $T(x,y)=(x,x+y)$ has a simpler interpretation. \end{exercise}
+\begin{exercise}\exerciseid{6.D1} Find all solutions of one underdetermined $2\times 3$ system and write them as $x_0+\Ker A$. \end{exercise}

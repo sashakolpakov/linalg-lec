@@ -1,3 +1,12 @@
 \section*{Chapter 15}
-\paragraph{15.B1.} Use $R_A(x)=x^TAx/(x^Tx)$.
-\paragraph{15.D1.} Think about maximizing on the unit circle or unit sphere.
+\paragraph{15.A1.} Convolution distributes over addition and scalar
+multiplication.
+\paragraph{15.A2.} The output coordinate is always the same weighted pattern
+of input coordinates, shifted cyclically.
+\paragraph{15.B1.} Each row is a shifted copy of the kernel.
+\paragraph{15.B2.} Multiply the circulant matrix by the vector $u$.
+\paragraph{15.C1.} Use two nested loops and the index \texttt{(j - k) \% N}.
+\paragraph{15.C2.} Compute the FFTs of $h$ and $u$, multiply them entrywise,
+then apply the inverse FFT and take the real part.
+\paragraph{15.D1.} Diagonal matrices act coordinate by coordinate; FFT makes
+the needed basis change fast.

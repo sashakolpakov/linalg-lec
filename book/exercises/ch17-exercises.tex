@@ -1,10 +1,59 @@
 \section*{Exercises}
 \addcontentsline{toc}{section}{Exercises}
+
 \subsection*{A. Theory}
-\begin{exercise}\exerciseid{17.A1} State the Eckart-Young theorem in your own words. \end{exercise}
+
+\begin{exercise}
+\exerciseid{17.A1}
+Explain why the set of binary vectors satisfying $Hx=0$ modulo $2$ is closed
+under addition modulo $2$.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{17.A2}
+In one paragraph, explain why a nonzero syndrome gives information about the
+location of a single-bit error.
+\end{exercise}
+
 \subsection*{B. By Hand}
-\begin{exercise}\exerciseid{17.B1} If the singular values of $A$ are $5,3,1$, compute the Frobenius error of the best rank-$1$ approximation. \end{exercise}
+
+\begin{exercise}
+\exerciseid{17.B1}
+For
+\[
+H=\begin{bmatrix}
+0&0&0&1&1&1&1\\
+0&1&1&0&0&1&1\\
+1&0&1&0&1&0&1
+\end{bmatrix},
+\]
+compute $Hr$ modulo $2$ for $r=(1,0,1,0,1,1,0)^T$.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{17.B2}
+Using the same $H$, list the syndrome produced by a single-bit error in
+position $5$.
+\end{exercise}
+
 \subsection*{C. Python / NumPy}
-\begin{exercise}\exerciseid{17.C1} Compute rank-$k$ approximations of a matrix using \texttt{np.linalg.svd}. Plot or print the errors. \end{exercise}
+
+\begin{exercise}
+\exerciseid{17.C1}
+Write a function \texttt{syndrome(H, r)} that returns \texttt{(H @ r) \% 2}.
+Test it on all seven vectors with exactly one nonzero entry.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{17.C2}
+Implement the generator matrix $G$ from the chapter. Verify that
+\texttt{(H @ G) \% 2} is the zero matrix.
+\end{exercise}
+
 \subsection*{D. Challenge}
-\begin{exercise}\exerciseid{17.D1} Explain why PCA begins by centering the data matrix. \end{exercise}
+
+\begin{exercise}
+\exerciseid{17.D1}
+Construct a lookup table that maps each nonzero syndrome to the bit position
+that should be flipped.
+\end{exercise}

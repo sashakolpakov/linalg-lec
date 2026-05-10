@@ -14,6 +14,7 @@
 \input{book/frontmatter/copyright}
 \input{book/frontmatter/preface}
 \input{book/frontmatter/how-to-use-this-book}
+\input{book/frontmatter/prologue-linear-game-of-life}
 \input{book/frontmatter/notation}
 \input{book/frontmatter/dependency-map}
 \tableofcontents
@@ -21,33 +22,33 @@
 \mainmatter
 
 \input{book/parts/partI-vectors-spaces-coordinates}
-\include{book/chapters/ch01-prologue-linear-game-of-life}
-\include{book/chapters/ch02-vectors-data-linear-structure}
-\include{book/chapters/ch03-vector-spaces-subspaces}
-\include{book/chapters/ch04-span-independence-bases-dimension}
+\include{book/chapters/ch01-vectors-data-linear-structure}
+\include{book/chapters/ch02-vector-spaces-subspaces}
+\include{book/chapters/ch03-span-independence-bases-coordinates}
 
 \input{book/parts/partII-maps-rank-systems}
-\include{book/chapters/ch05-matrices-linear-maps}
-\include{book/chapters/ch06-coordinates-change-of-basis}
-\include{book/chapters/ch07-image-kernel-rank-nullity}
-\include{book/chapters/ch08-solving-linear-systems}
+\include{book/chapters/ch04-matrices-linear-maps}
+\include{book/chapters/ch05-image-kernel-rank-nullity}
+\include{book/chapters/ch06-solving-linear-systems}
 
 \input{book/parts/partIII-geometry-least-squares}
-\include{book/chapters/ch09-least-squares-polynomial-regression}
-\include{book/chapters/ch10-inner-product-geometry}
-\include{book/chapters/ch11-projection-qr-four-subspaces}
+\include{book/chapters/ch07-inner-product-geometry}
+\include{book/chapters/ch08-projection-least-squares}
+\include{book/chapters/ch09-regression-qr-numerical-stability}
+\include{book/chapters/ch10-change-basis-similarity}
 
 \input{book/parts/partIV-spectral-thinking}
-\include{book/chapters/ch12-eigenvalues-dynamics}
-\include{book/chapters/ch13-diagonalization-spectral-decomposition}
-\include{book/chapters/ch14-psd-quadratic-forms}
-\include{book/chapters/ch15-spectral-theorem-rayleigh-quotients}
+\include{book/chapters/ch11-eigenvalues-dynamics}
+\include{book/chapters/ch12-symmetric-psd-matrices}
+\include{book/chapters/ch13-spectral-theorem-rayleigh-quotients}
 
 \input{book/parts/partV-svd-data-low-rank}
-\include{book/chapters/ch16-singular-value-decomposition}
-\include{book/chapters/ch17-low-rank-pca-data-compression}
-\include{book/chapters/ch18-images-convolution-dft}
-\include{book/chapters/ch19-denoising-matrix-completion-low-rank-methods}
+\include{book/chapters/ch14-svd-pca-low-rank}
+
+\input{book/parts/partVI-optional-applications-projects}
+\include{book/chapters/ch15-images-convolution-dft}
+\include{book/chapters/ch16-denoising-matrix-completion}
+\include{book/chapters/ch17-coding-theory-hamming-project}
 
 \appendix
 \include{book/appendices/appA-determinants-volume-orientation}

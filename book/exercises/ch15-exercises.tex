@@ -1,10 +1,49 @@
 \section*{Exercises}
 \addcontentsline{toc}{section}{Exercises}
+
 \subsection*{A. Theory}
-\begin{exercise}\exerciseid{15.A1} State the spectral theorem for real symmetric matrices and explain why orthogonality is part of the conclusion. \end{exercise}
+
+\begin{exercise}
+\exerciseid{15.A1}
+Explain why convolution with a fixed kernel is a linear map.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{15.A2}
+Explain why circular convolution can be represented by a circulant matrix.
+\end{exercise}
+
 \subsection*{B. By Hand}
-\begin{exercise}\exerciseid{15.B1} Compute the Rayleigh quotient of $\mat{2&0\\0&5}$ at $(1,1)$ and at $(0,1)$. \end{exercise}
+
+\begin{exercise}
+\exerciseid{15.B1}
+Build the $4\times 4$ circulant matrix corresponding to the kernel
+$(1,0,-1,0)$.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{15.B2}
+Use your matrix from 15.B1 to compute the circular convolution of
+$(1,0,-1,0)$ with $u=(2,1,0,3)$.
+\end{exercise}
+
 \subsection*{C. Python / NumPy}
-\begin{exercise}\exerciseid{15.C1} Sample random unit vectors and evaluate the Rayleigh quotient for a symmetric $2\times 2$ matrix. \end{exercise}
+
+\begin{exercise}
+\exerciseid{15.C1}
+Implement circular convolution directly for vectors of length $N$ and compare
+with multiplication by a circulant matrix.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{15.C2}
+Use \texttt{np.fft.fft} and \texttt{np.fft.ifft} to verify the convolution
+theorem for two real vectors of length $8$.
+\end{exercise}
+
 \subsection*{D. Challenge}
-\begin{exercise}\exerciseid{15.D1} Explain why the maximum Rayleigh quotient of a symmetric matrix should be an eigenvalue. \end{exercise}
+
+\begin{exercise}
+\exerciseid{15.D1}
+Explain why diagonalizing convolution is useful for fast computation.
+\end{exercise}

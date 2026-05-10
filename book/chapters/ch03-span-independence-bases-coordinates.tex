@@ -1,6 +1,6 @@
 % ============================================================
-\chapter{Span, Independence, Bases, and Dimension}
-\label{ch:span-bases-dimension}
+\chapter{Span, Independence, Bases, and Coordinates}
+\label{ch:span-bases-coordinates}
 % ============================================================
 
 \section*{Chapter Preview}
@@ -8,7 +8,8 @@
 
 A small list of vectors can describe a large space. Span explains how. Linear
 independence explains when no vector in the list is redundant. A basis is a
-list that is just large enough to describe every vector uniquely.
+list that is just large enough to describe every vector uniquely, and
+coordinates are the numbers in that description.
 
 \section{Linear Combinations and Span}
 
@@ -30,6 +31,13 @@ list that is just large enough to describe every vector uniquely.
     \{\lambda_1v_1+\cdots+\lambda_kv_k:\lambda_i\in\F\}.
   \]
 \end{definition}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{book/assets/figures/core/fig03_span.png}
+  \caption{Two collinear vectors span a line. Two independent vectors in
+  $\R^2$ span the whole plane.}
+\end{figure}
 
 \begin{proposition}
   $\Span\{v_1,\ldots,v_k\}$ is the smallest subspace containing
@@ -56,6 +64,28 @@ list that is just large enough to describe every vector uniquely.
 If a list is not independent, then one vector is redundant: it can be written
 as a linear combination of the others.
 
+\begin{proposition}[Dependence means redundancy]
+A list $v_1,\ldots,v_k$ is linearly dependent if and only if at least one
+vector in the list lies in the span of the others.
+\end{proposition}
+
+\begin{proof}
+If, for example, $v_j$ lies in the span of the other vectors, then
+\[
+  v_j=\sum_{i\ne j} c_i v_i
+\]
+gives the nontrivial relation $v_j-\sum_{i\ne j}c_i v_i=0$.
+Conversely, suppose
+\[
+  c_1v_1+\cdots+c_kv_k=0
+\]
+with some $c_j\ne 0$. Solving for $v_j$ gives
+\[
+  v_j=-\sum_{i\ne j}\frac{c_i}{c_j}v_i,
+\]
+so $v_j$ is redundant.
+\end{proof}
+
 \section{Bases}
 
 \begin{definition}
@@ -65,6 +95,21 @@ as a linear combination of the others.
 
 The two conditions work together. Spanning says every vector can be described.
 Independence says the description is unique.
+
+\begin{proposition}[Equivalent views of a basis]
+For a finite list $b_1,\ldots,b_n$ in $V$, the following ideas are equivalent:
+\begin{enumerate}
+  \item the list is a spanning independent list;
+  \item the list is a minimal spanning list;
+  \item the list is a maximal independent list;
+  \item every $v\in V$ has a unique expansion
+  $v=c_1b_1+\cdots+c_nb_n$.
+\end{enumerate}
+\end{proposition}
+
+This is why bases are efficient descriptions. A spanning list with redundancy
+wastes coordinates; an independent list that does not span misses vectors. A
+basis is exactly balanced.
 
 \begin{theorem}[Unique coordinates]
   If $b_1,\ldots,b_n$ is a basis of $V$, then every $v\in V$ can be written in
@@ -139,4 +184,4 @@ kind of computation.
 Coordinates and bases are the mechanism behind matrices, change of basis,
 diagonalization, Fourier methods, and PCA.
 
-\input{book/exercises/ch04-exercises}
+\input{book/exercises/ch03-exercises}

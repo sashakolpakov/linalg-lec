@@ -1,3 +1,13 @@
 \section*{Chapter 10}
-\paragraph{10.B1.} Use $\Proj_u(v)=\frac{\inner{v}{u}}{\inner{u}{u}}u$.
-\paragraph{10.C1.} Divide the dot product by the product of the two norms.
+\paragraph{10.A1.} Compare naming a point by street address in two coordinate
+systems: the point is the same, the address changes.
+\paragraph{10.A2.} Start with $x=P[x]_B$, apply $A$, then convert the output
+back by solving with $P$.
+\paragraph{10.B1.} Put $b_1$ and $b_2$ in the columns of a matrix $B$ and
+solve $Bc=v$.
+\paragraph{10.B2.} First compute $P^{-1}$. For this $P$, the arithmetic stays
+small.
+\paragraph{10.C1.} The command is \texttt{np.linalg.solve(B, v)}.
+\paragraph{10.C2.} Use \texttt{np.linalg.solve(P, A @ P)} for $P^{-1}AP$.
+\paragraph{10.D1.} The map has only one eigenvector direction. Try a basis
+starting with $(0,1)$ and then add a vector sent to itself plus that direction.

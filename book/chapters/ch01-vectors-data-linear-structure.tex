@@ -30,6 +30,20 @@ The same operation may appear in several forms:
 
 The objects look different. The structure is the same.
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{book/assets/figures/core/fig01_vectors.png}
+  \caption{The same vector-space operation in two concrete settings:
+  arrows in space and polynomials represented by coefficients.}
+\end{figure}
+
+\begin{remark}[Two legs of the subject]
+Practical linear algebra has two legs. One leg is computation: implementation,
+experiments, data, and numerical algorithms. The other is theory: definitions,
+proofs, invariants, and guarantees. Either leg by itself is unstable. The book
+will keep switching between them.
+\end{remark}
+
 \begin{definition}
   A \emph{scalar} is a number used to scale vectors. In this book the scalars
   usually come from $\R$, and sometimes from $\C$.
@@ -59,6 +73,10 @@ It is useful for switches, parity checks, and error-correcting codes. This is
 a reminder that linear algebra is not restricted to real numbers.
 \end{example}
 
+Over $\Z_2$, addition is the same as XOR. This small field will return in the
+optional Hamming-code project, where a matrix detects and corrects one-bit
+errors.
+
 \section{Data as Vectors}
 
 A grayscale image with $m$ rows and $n$ columns is an $m\times n$ array of
@@ -68,6 +86,11 @@ in $\R^{mn}$. A color image has three such arrays, one for each color channel.
 A data table with $N$ observations and $d$ features is usually represented by
 a matrix $X\in \R^{N\times d}$. Each row is a data point. Each column is a
 feature. This is already linear algebra.
+
+This is also the first place where notation matters. The same image can be
+stored as a rectangular array or stacked into one long vector. The same
+polynomial can be drawn as a curve or stored as a coefficient list. The
+mathematical object and its representation are not identical.
 
 \begin{aimlbox}
 Feature vectors are one of the simplest bridges from linear algebra to machine
@@ -110,12 +133,12 @@ array. The object is the same; the description changes.
 \addcontentsline{toc}{section}{Where This Appears Later}
 
 Chapter~\ref{ch:vector-spaces-subspaces} defines vector spaces formally.
-Chapter~\ref{ch:span-bases-dimension} explains coordinates and bases.
-Chapter~\ref{ch:low-rank-pca} returns to data matrices, PCA, and compression.
+Chapter~\ref{ch:span-bases-coordinates} explains coordinates and bases.
+Chapter~\ref{ch:svd-pca-low-rank} returns to data matrices, PCA, and compression.
 
 \begin{labbox}
 Lab 1 turns the vector-space axioms into \Python checks and explores span,
 subspaces, and polynomial coefficient vectors.
 \end{labbox}
 
-\input{book/exercises/ch02-exercises}
+\input{book/exercises/ch01-exercises}

@@ -300,31 +300,74 @@ Recommendation:
 
 ## Suggested Chapter Map
 
-This is a possible final table of contents.
+This is the preferred final table of contents after the critical pass. The
+book should read as an introductory linear algebra course whose examples,
+computations, and programming work prepare students for AI/ML, not as a course
+on specialized AI/ML linear algebra.
 
-1. Prologue: A Linear Game of Life
-2. Vectors, data, and linear structure
-3. Vector spaces and subspaces
-4. Span, independence, bases, and dimension
-5. Matrices and linear maps
-6. Coordinates and change of basis
-7. Image, kernel, and rank-nullity
-8. Solving linear systems
-9. Least squares and polynomial regression
-10. Inner product geometry
-11. Orthogonal projection, QR, and the four subspaces
-12. Eigenvalues, eigenvectors, and dynamics
-13. Diagonalization and spectral decomposition
-14. PSD matrices and quadratic forms
-15. The spectral theorem and Rayleigh quotients
-16. The SVD
-17. Low-rank approximation, PCA, and data compression
-18. Images, convolution, and the DFT
-19. Denoising, matrix completion, and optional modern low-rank methods
-20. Mathematical complements: determinants, tensors, exterior algebra
-21. Hints for Selected Exercises
+Front matter:
 
-For a shorter course edition, chapters 18-20 can become optional modules.
+- Prologue: A Linear Game of Life
+- How to Use This Book
+- Notation
+- Dependency Map
+
+Core chapters:
+
+1. Vectors, data, and linear structure
+2. Vector spaces and subspaces
+3. Span, independence, bases, and coordinates
+4. Matrices and linear maps
+5. Image, kernel, rank, and rank-nullity
+6. Solving linear systems
+7. Inner product geometry
+8. Orthogonal projection and least squares
+9. Regression, QR, and numerical stability
+10. Change of basis and similarity
+11. Eigenvalues, eigenvectors, and dynamics
+12. Symmetric and PSD matrices
+13. The spectral theorem and Rayleigh quotients
+14. The SVD, PCA, and low-rank approximation
+
+Optional application modules:
+
+15. Images, convolution, and the DFT
+16. Denoising and matrix completion
+17. Coding theory and the Hamming code
+
+Mathematical complements:
+
+- Determinants, volume, and orientation
+- Tensor products and Kronecker products
+- Alternating forms and exterior algebra
+- Background proofs
+- Python/NumPy reference
+- Hints for Selected Exercises
+
+## Actionable Critical Review Items
+
+These items convert the second-pass critique into concrete book-development
+work. They should remain visible until the source files, layout document, and
+compiled book all reflect the resolved structure.
+
+- [x] Make the core route shorter and more teachable: 14 core chapters plus
+  optional application modules, instead of a 19-chapter default route.
+- [x] Demote the Game of Life opening to front matter so the numbered course
+  starts with vectors and data.
+- [x] Keep basic coordinates with bases early, but move full change of basis,
+  similarity, and diagonalization near the spectral chapters.
+- [x] Put inner product geometry before least squares, then treat least
+  squares as projection before regression and QR.
+- [x] Merge the PSD, spectral theorem, and Rayleigh quotient material into a
+  tighter spectral sequence.
+- [x] Combine SVD, PCA, and low-rank approximation into the final core chapter
+  instead of splitting them into separate core chapters.
+- [x] Move DFT, denoising, matrix completion, and coding theory to optional
+  application modules.
+- [x] Keep determinants, tensor products, and exterior algebra out of the core
+  route as mathematical complements.
+- [x] Preserve the exercise design constraints: accessible freshman/sophomore
+  problems, three exercise themes, and selected hints at the end of the book.
 
 ## Exercise Architecture
 
@@ -1451,7 +1494,9 @@ focus on:
 
 ## Repository Restructuring Proposal
 
-No files were moved now. This is a suggested future structure.
+Resolved in the `book/` source tree. The current book scaffold keeps the book,
+exercise, hint, appendix, and build files separate from the original notes and
+labs.
 
 ```text
 .
@@ -1460,13 +1505,17 @@ No files were moved now. This is a suggested future structure.
 │   ├── preamble/
 │   ├── frontmatter/
 │   ├── chapters/
-│   │   ├── ch01-prologue.tex
-│   │   ├── ch02-vector-spaces.tex
+│   │   ├── ch01-vectors-data-linear-structure.tex
+│   │   ├── ch02-vector-spaces-subspaces.tex
 │   │   ├── ...
 │   ├── appendices/
-│   └── exercises/
-│       ├── ch02-exercises.tex
-│       ├── ch03-exercises.tex
+│   ├── exercises/
+│   │   ├── ch01-exercises.tex
+│   │   ├── ch02-exercises.tex
+│   │   └── ...
+│   └── hints/
+│       ├── prologue-hints.tex
+│       ├── ch01-hints.tex
 │       └── ...
 ├── labs/
 │   ├── student/

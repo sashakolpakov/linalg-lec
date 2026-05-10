@@ -1,0 +1,249 @@
+\chapter{The Spectral Theorem and Rayleigh Quotients}
+\label{ch:spectral-theorem-rayleigh}
+
+\section{Why Symmetric Matrices Are Special}
+
+General square matrices may have too few eigenvectors, complex eigenvalues, or
+badly conditioned eigenvector bases. Symmetric real matrices behave much
+better.
+
+\begin{theorem}[Spectral theorem]
+Let $A\in\R^{n\times n}$ be symmetric. Then there is an orthonormal basis
+$q_1,\ldots,q_n$ of $\R^n$ and real numbers
+$\lambda_1,\ldots,\lambda_n$ such that
+\[
+  Aq_i=\lambda_i q_i.
+\]
+Equivalently, if $Q=[q_1\ \cdots\ q_n]$, then
+\[
+  Q^TQ=I,
+  \qquad
+  A=Q\Lambda Q^T,
+  \qquad
+  \Lambda=\diag(\lambda_1,\ldots,\lambda_n).
+\]
+\end{theorem}
+
+This is diagonalization with an orthonormal change of basis. The inverse of
+$Q$ is just $Q^T$, so the geometry is preserved.
+
+\section{Orthogonal Eigenvectors}
+
+One piece of the spectral theorem is easy to prove and useful on its own.
+
+\begin{proposition}
+Let $A$ be symmetric. If $Av=\lambda v$ and $Aw=\mu w$ with
+$\lambda\neq \mu$, then $v\perp w$.
+\end{proposition}
+
+\begin{proof}
+Using symmetry,
+\[
+  \lambda\inner{v}{w}
+  =
+  \inner{\lambda v}{w}
+  =
+  \inner{Av}{w}
+  =
+  \inner{v}{Aw}
+  =
+  \inner{v}{\mu w}
+  =
+  \mu\inner{v}{w}.
+\]
+Thus $(\lambda-\mu)\inner{v}{w}=0$. Since $\lambda\neq\mu$, we get
+$\inner{v}{w}=0$.
+\end{proof}
+
+\begin{computebox}
+This is why numerical linear algebra uses \texttt{np.linalg.eigh} for
+symmetric matrices rather than the more general \texttt{np.linalg.eig}. The
+symmetric problem has real eigenvalues and an orthonormal eigenbasis, and
+algorithms exploit that structure.
+\end{computebox}
+
+\section{A Useful Proof Idea}
+
+The full spectral theorem is deeper than the proposition above, but the main
+mechanism is approachable:
+
+\begin{enumerate}
+  \item A symmetric matrix has at least one real eigenvector.
+  \item The orthogonal complement of an invariant subspace is invariant.
+  \item Peel off one unit eigenvector at a time.
+\end{enumerate}
+
+The key invariance statement is short.
+
+\begin{lemma}
+Let $A$ be symmetric, and let $U\subseteq\R^n$ be a subspace such that
+$A(U)\subseteq U$. Then
+\[
+  A(U^\perp)\subseteq U^\perp.
+\]
+\end{lemma}
+
+\begin{proof}
+Take $w\in U^\perp$. To show $Aw\in U^\perp$, we must show
+$\inner{Aw}{u}=0$ for every $u\in U$. Since $A$ is symmetric,
+\[
+  \inner{Aw}{u}=\inner{w}{Au}.
+\]
+Because $U$ is invariant, $Au\in U$. Since $w\in U^\perp$, the last inner
+product is zero.
+\end{proof}
+
+Once one eigenvector $q_1$ is found, the line $\Span(q_1)$ is invariant, so
+its orthogonal complement is invariant. Restrict $A$ to that complement and
+repeat. This creates an orthonormal eigenbasis.
+
+\section{Rayleigh Quotients}
+
+\begin{definition}[Rayleigh quotient]
+For a symmetric matrix $A$ and nonzero vector $x$, the \emph{Rayleigh quotient}
+is
+\[
+  R_A(x)=\frac{x^TAx}{x^Tx}.
+\]
+\end{definition}
+
+The quotient is scale-invariant:
+\[
+  R_A(cx)=R_A(x)
+  \qquad(c\neq 0).
+\]
+So it is enough to study it on unit vectors.
+
+\begin{theorem}[Rayleigh quotient bounds]
+Let $A$ be symmetric with eigenvalues
+\[
+  \lambda_1\leq \lambda_2\leq \cdots \leq \lambda_n.
+\]
+Then for every nonzero $x$,
+\[
+  \lambda_1\leq R_A(x)\leq \lambda_n.
+\]
+Moreover,
+\[
+  \min_{x\neq 0} R_A(x)=\lambda_1,
+  \qquad
+  \max_{x\neq 0} R_A(x)=\lambda_n.
+\]
+\end{theorem}
+
+\begin{proof}
+Use the spectral theorem. Write $x$ in the orthonormal eigenbasis:
+\[
+  x=c_1q_1+\cdots+c_nq_n.
+\]
+Then
+\[
+  x^Tx=c_1^2+\cdots+c_n^2
+\]
+and
+\[
+  x^TAx=\lambda_1c_1^2+\cdots+\lambda_nc_n^2.
+\]
+Therefore
+\[
+  R_A(x)=
+  \frac{\lambda_1c_1^2+\cdots+\lambda_nc_n^2}
+       {c_1^2+\cdots+c_n^2}.
+\]
+This is a weighted average of the eigenvalues, with nonnegative weights
+$c_i^2$. A weighted average lies between the smallest and largest values.
+Equality is achieved by taking $x=q_1$ or $x=q_n$.
+\end{proof}
+
+\begin{aimlbox}
+For a covariance matrix $C$, the Rayleigh quotient
+$w^TCw/(w^Tw)$ is the variance of centered data in direction $w$, normalized
+by the length of $w$. The top eigenvector is therefore the direction of
+maximum variance. This is the linear algebra behind the first principal
+component.
+\end{aimlbox}
+
+\section{PSD Matrices In Spectral Form}
+
+\begin{proposition}
+If $A$ is symmetric, then $A$ is PSD if and only if all eigenvalues of $A$ are
+nonnegative.
+\end{proposition}
+
+\begin{proof}
+If $A$ is PSD and $Av=\lambda v$ with $v\neq 0$, then
+\[
+  0\leq v^TAv=v^T(\lambda v)=\lambda\norm{v}^2,
+\]
+so $\lambda\geq 0$.
+
+Conversely, if all eigenvalues are nonnegative, write
+$x=c_1q_1+\cdots+c_nq_n$ in an orthonormal eigenbasis. Then
+\[
+  x^TAx=\lambda_1c_1^2+\cdots+\lambda_nc_n^2\geq 0.
+\]
+Thus $A$ is PSD.
+\end{proof}
+
+\section{Power Iteration}
+
+The Rayleigh quotient explains why repeated multiplication can find dominant
+eigenvectors. If
+\[
+  x_0=c_1q_1+\cdots+c_nq_n
+\]
+and $|\lambda_n|$ is strictly larger than the others, then
+\[
+  A^t x_0
+  =
+  c_1\lambda_1^tq_1+\cdots+c_n\lambda_n^tq_n
+\]
+eventually points mostly in the $q_n$ direction, provided $c_n\neq 0$.
+Normalizing at each step prevents overflow.
+
+\begin{lstlisting}
+import numpy as np
+
+rng = np.random.default_rng(0)
+M = rng.standard_normal((4, 4))
+A = M + M.T
+
+x = rng.standard_normal(4)
+x = x / np.linalg.norm(x)
+
+for _ in range(20):
+    x = A @ x
+    x = x / np.linalg.norm(x)
+
+rayleigh = x @ A @ x
+vals, vecs = np.linalg.eigh(A)
+
+print("Rayleigh quotient:", rayleigh)
+print("eigenvalues:", vals)
+print("largest abs eigenvalue:", vals[np.argmax(np.abs(vals))])
+\end{lstlisting}
+
+Power iteration is a first algorithmic glimpse. Practical eigensolvers are more
+careful, but they still exploit the same spectral structure.
+
+\begin{labbox}
+Lab 9 experiments with Rayleigh quotients, gradient-style eigenvalue searches,
+and deflation. Keep the theorem in view: the quotient is not just a heuristic;
+for symmetric matrices its extrema are eigenvalues.
+\end{labbox}
+
+\section*{Chapter Summary}
+\addcontentsline{toc}{section}{Chapter Summary}
+
+\begin{itemize}
+  \item Real symmetric matrices have an orthonormal eigenbasis.
+  \item Eigenvectors with distinct eigenvalues of a symmetric matrix are
+        orthogonal.
+  \item The Rayleigh quotient is a weighted average of eigenvalues.
+  \item The minimum and maximum Rayleigh quotients are the smallest and largest
+        eigenvalues.
+  \item A symmetric matrix is PSD exactly when all its eigenvalues are
+        nonnegative.
+\end{itemize}
+
+\input{book/exercises/ch13-exercises}

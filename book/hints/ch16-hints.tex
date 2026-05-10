@@ -1,3 +1,11 @@
 \section*{Chapter 16}
-\paragraph{16.A1.} Symmetry follows by transposing $A^TA$. PSD follows from a squared norm.
-\paragraph{16.C1.} With \texttt{full\_matrices=False}, reconstruct using \texttt{U @ np.diag(s) @ Vt}.
+\paragraph{16.A1.} Low-rank signal contributes a few large singular values;
+spread-out noise contributes a longer tail.
+\paragraph{16.A2.} Count the entries in $L$ and $R$ and compare with $mn$.
+\paragraph{16.B1.} Look for a large drop in the singular values.
+\paragraph{16.B2.} Compare $3(100+80)$ with $100\cdot 80$.
+\paragraph{16.C1.} Build a rank-$2$ signal as \texttt{L @ R} with two
+columns/rows.
+\paragraph{16.C2.} Use \texttt{np.cumsum(s**2) / np.sum(s**2)}.
+\paragraph{16.D1.} Think of discarded singular directions as removed content
+and retained tail directions as possible noise.

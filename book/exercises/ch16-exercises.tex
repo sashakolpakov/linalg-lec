@@ -1,10 +1,53 @@
 \section*{Exercises}
 \addcontentsline{toc}{section}{Exercises}
+
 \subsection*{A. Theory}
-\begin{exercise}\exerciseid{16.A1} Explain why $A^TA$ is symmetric and PSD for any real matrix $A$. \end{exercise}
+
+\begin{exercise}
+\exerciseid{16.A1}
+Explain why a low-rank signal plus full-rank noise may still have a visible
+singular-value elbow.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{16.A2}
+Explain why a rank-$k$ factorization $LR$ uses far fewer parameters than a full
+$m\times n$ matrix when $k\ll \min(m,n)$.
+\end{exercise}
+
 \subsection*{B. By Hand}
-\begin{exercise}\exerciseid{16.B1} Find the SVD of the diagonal matrix $\mat{3&0\\0&1}$. \end{exercise}
+
+\begin{exercise}
+\exerciseid{16.B1}
+Suppose a matrix has singular values $10,7,1,0.8,0.7$. Which rank would you try
+first for denoising, and why?
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{16.B2}
+A $100\times 80$ rank-$3$ factorization $LR$ uses
+$L\in\R^{100\times 3}$ and $R\in\R^{3\times 80}$. Compare the number of
+parameters with the full $100\times 80$ matrix.
+\end{exercise}
+
 \subsection*{C. Python / NumPy}
-\begin{exercise}\exerciseid{16.C1} Use \texttt{np.linalg.svd} to reconstruct a random $4\times 3$ matrix. \end{exercise}
+
+\begin{exercise}
+\exerciseid{16.C1}
+Generate a rank-$2$ matrix plus Gaussian noise. Compute singular values and
+compare rank-$1$, rank-$2$, and rank-$5$ reconstructions.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{16.C2}
+For your noisy matrix from 16.C1, compute the energy fraction kept by the top
+$k$ singular values for $k=1,2,5$.
+\end{exercise}
+
 \subsection*{D. Challenge}
-\begin{exercise}\exerciseid{16.D1} Explain what singular values measure geometrically for a $2\times 2$ matrix. \end{exercise}
+
+\begin{exercise}
+\exerciseid{16.D1}
+Explain why too small a truncation rank underfits while too large a rank leaves
+noise in the reconstruction.
+\end{exercise}

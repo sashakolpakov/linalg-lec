@@ -1,0 +1,160 @@
+\chapter{Denoising and Matrix Completion}
+\label{ch:denoising-matrix-completion}
+
+\section{Optional Module}
+
+This chapter is optional. It uses the SVD as a practical tool, but it is not a
+new theory unit. The goal is to reinforce one idea:
+\[
+  \text{large singular values often carry structure; small ones often carry noise.}
+\]
+That sentence is not a theorem in every situation. It is a modeling principle
+that works when the signal is approximately low rank.
+
+\section{Low-Rank Signal Plus Noise}
+
+Suppose an observed matrix has the form
+\[
+  M=A+E,
+\]
+where $A$ is a low-rank signal and $E$ is noise. If $A$ has rank $r$, then its
+SVD has only $r$ nonzero singular values. Noise usually spreads energy across
+many directions.
+
+In a favorable case, the singular values of $M$ look like
+\[
+  \sigma_1\geq\cdots\geq\sigma_r
+  \quad\text{large, then a drop, then a tail.}
+\]
+The drop is often called an \emph{elbow}.
+
+\section{Truncated SVD Denoising}
+
+The denoising procedure is:
+\begin{enumerate}
+  \item compute the SVD $M=U\Sigma V^T$;
+  \item choose a rank $k$;
+  \item reconstruct
+        \[
+          M_k=\sum_{i=1}^k \sigma_i u_i v_i^T.
+        \]
+\end{enumerate}
+
+If $k$ is too small, important signal is removed. If $k$ is too large, noise is
+kept.
+
+\begin{warningbox}
+SVD truncation is not automatic truth extraction. It is a good method when the
+signal is well approximated by a low-rank matrix and the noise is not aligned
+with the leading singular directions.
+\end{warningbox}
+
+\section{A Basic NumPy Experiment}
+
+\begin{lstlisting}
+import numpy as np
+
+rng = np.random.default_rng(0)
+
+m, n, r = 40, 30, 2
+L = rng.standard_normal((m, r))
+R = rng.standard_normal((r, n))
+A_true = L @ R                       # rank at most 2
+
+noise = 0.5 * rng.standard_normal((m, n))
+M = A_true + noise
+
+U, s, Vt = np.linalg.svd(M, full_matrices=False)
+print("first singular values:", s[:8])
+
+for k in [1, 2, 5, 10]:
+    M_k = U[:, :k] @ np.diag(s[:k]) @ Vt[:k, :]
+    err_to_signal = np.linalg.norm(M_k - A_true, "fro")
+    err_to_observed = np.linalg.norm(M_k - M, "fro")
+    print(k, err_to_signal, err_to_observed)
+\end{lstlisting}
+
+The best $k$ for recovering the original signal need not be the best $k$ for
+approximating the noisy observation. Approximating the observation too closely
+can mean fitting noise.
+
+\section{Choosing The Rank}
+
+There is no universal rank-choice rule for an introductory course. Three
+reasonable first checks are:
+
+\begin{itemize}
+  \item look for an elbow in the singular values;
+  \item keep enough singular values to explain a chosen energy fraction;
+  \item test performance on held-out entries or held-out data.
+\end{itemize}
+
+The energy fraction of the top $k$ singular values is
+\[
+  \frac{\sigma_1^2+\cdots+\sigma_k^2}
+       {\sigma_1^2+\cdots+\sigma_r^2}.
+\]
+
+\section{Matrix Completion}
+
+Matrix completion asks for missing entries of a matrix. Without assumptions,
+this is impossible: missing numbers could be anything. Low-rank structure is
+one useful assumption.
+
+For example, suppose a user-item rating matrix is approximately low rank
+because a few hidden preference factors explain many ratings. Then the observed
+entries may contain enough information to estimate the missing entries.
+
+At this level, the linear algebra message is modest:
+\[
+  \text{low rank reduces degrees of freedom.}
+\]
+A general $m\times n$ matrix has $mn$ entries. A rank-$k$ factorization
+\[
+  A=LR,
+  \qquad
+  L\in\R^{m\times k},
+  \quad
+  R\in\R^{k\times n},
+\]
+uses about $k(m+n)$ parameters. When $k\ll \min(m,n)$, that is much smaller.
+
+\section{A Simple Completion Objective}
+
+Let $\Omega$ be the set of observed entries. One basic low-rank fitting problem
+is
+\[
+  \min_{L,R}
+  \sum_{(i,j)\in\Omega}
+  \left((LR)_{ij}-M_{ij}\right)^2.
+\]
+This is not a linear least-squares problem in $L$ and $R$ together, because the
+unknowns multiply each other. But if $R$ is fixed, solving for $L$ is least
+squares; if $L$ is fixed, solving for $R$ is least squares. More advanced
+matrix completion algorithms build on this idea.
+
+\begin{aimlbox}
+Modern low-rank methods in machine learning often use the same parameter-count
+idea: represent a large update by two thin matrices instead of one full matrix.
+That is an application of rank intuition, not a replacement for learning the
+linear algebra itself.
+\end{aimlbox}
+
+\begin{labbox}
+Lab 12 uses synthetic low-rank matrices plus noise and compares SVD
+truncations. The experiment is intentionally small enough that every step can
+be inspected with basic NumPy.
+\end{labbox}
+
+\section*{Chapter Summary}
+\addcontentsline{toc}{section}{Chapter Summary}
+
+\begin{itemize}
+  \item Low-rank matrices have only a few nonzero singular values.
+  \item Noise often spreads across many singular directions.
+  \item Truncated SVD can denoise when signal and noise separate spectrally.
+  \item Choosing the truncation rank is a modeling decision.
+  \item Matrix completion needs assumptions; low rank is one useful assumption.
+\end{itemize}
+
+\input{book/exercises/ch16-exercises}

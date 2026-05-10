@@ -10,6 +10,35 @@ Matrices are not just rectangular tables of numbers. They represent linear
 maps once bases have been chosen. This chapter connects the algebra of matrix
 multiplication with the geometry of transformations.
 
+\section{Matrices as Vector-Space Objects}
+
+An $m\times n$ matrix over $\F$ is a rectangular array
+\[
+  A=(a_{ij})\in\F^{m\times n}.
+\]
+The set $\F^{m\times n}$ is itself a vector space: matrices of the same shape
+are added entry by entry, and scalars multiply every entry.
+
+\begin{proposition}
+The vector space $\F^{m\times n}$ has dimension $mn$.
+\end{proposition}
+
+\begin{proof}
+Let $E_{ij}$ be the matrix with a $1$ in position $(i,j)$ and $0$ everywhere
+else. Every matrix has the unique expansion
+\[
+  A=\sum_{i=1}^m\sum_{j=1}^n a_{ij}E_{ij}.
+\]
+Thus the $mn$ matrices $E_{ij}$ form a basis.
+\end{proof}
+
+\begin{aimlbox}
+A grayscale image is an $m\times n$ matrix of pixel intensities. A color image
+is three such matrices. This is not only storage; it is structure. Rows,
+columns, local neighborhoods, and low-rank approximations all become linear
+algebraic objects.
+\end{aimlbox}
+
 \section{Matrix-Vector Multiplication}
 
 Let $A\in\R^{m\times n}$ have columns $a_1,\ldots,a_n$. For
@@ -30,6 +59,12 @@ then
     =\mat{3\\11\\-1}.
 \]
 \end{example}
+
+\begin{remark}[The column-space interpretation]
+The product $Ax$ can only land in the span of the columns of $A$. This simple
+observation becomes the image of a linear map in Chapter~\ref{ch:image-kernel-rank-nullity}
+and the existence condition for $Ax=b$ in Chapter~\ref{ch:solving-linear-systems}.
+\end{remark}
 
 \section{Linear Maps}
 
@@ -74,6 +109,20 @@ then linearity forces
 
 This is why matrices work: the columns tell us where the basis vectors go.
 
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}[>=stealth,scale=0.95]
+    \node (domain) at (0,0) {$\R^n$};
+    \node (codomain) at (6,0) {$\R^m$};
+    \draw[->,thick] (domain) -- node[above] {$T(x)=Ax$} (codomain);
+    \node[align=center] at (0,-1.2) {$e_1,\ldots,e_n$\\basis vectors};
+    \node[align=center] at (6,-1.2) {$T(e_1),\ldots,T(e_n)$\\columns of $A$};
+    \draw[->] (0,-0.35) -- (0,-0.9);
+    \draw[->] (6,-0.35) -- (6,-0.9);
+  \end{tikzpicture}
+  \caption{A matrix records where a linear map sends the basis vectors.}
+\end{figure}
+
 \section{Matrix Multiplication as Composition}
 
 If $A:\R^n\to\R^m$ and $B:\R^m\to\R^p$, then applying $A$ and then $B$ gives
@@ -96,6 +145,42 @@ The matrix of this composite map is $BA$.
   Since $Ae_j$ is the $j$-th column of $A$, the columns are exactly the
   columns produced by the usual definition of $BA$.
 \end{proof}
+
+\begin{proposition}[Three views of $AB$]
+For compatible matrices $A$ and $B$:
+\begin{enumerate}
+  \item the $(i,j)$ entry of $AB$ is row $i$ of $A$ dotted with column $j$
+  of $B$;
+  \item the $j$-th column of $AB$ is $A$ applied to the $j$-th column of
+  $B$;
+  \item $AB$ is a sum of rank-one outer products.
+\end{enumerate}
+\end{proposition}
+
+The column view is usually the most important one early in the course: each
+column of $B$ is an input, and $A$ transforms those inputs one at a time.
+
+\section{Differentiation as a Matrix}
+
+Linear maps are not limited to arrows in Euclidean space. On
+$\mathcal P_n$, the space of polynomials of degree at most $n$, differentiation
+is linear:
+\[
+  D(\lambda p+\mu q)=\lambda Dp+\mu Dq.
+\]
+In the monomial basis $1,x,x^2,\ldots,x^n$, differentiation has a matrix:
+\[
+  D=
+  \begin{bmatrix}
+  0&1&0&\cdots&0\\
+  0&0&2&\cdots&0\\
+  \vdots&\vdots&\vdots&\ddots&\vdots\\
+  0&0&0&\cdots&n\\
+  0&0&0&\cdots&0
+  \end{bmatrix}.
+\]
+This is a useful example because the object being transformed is a polynomial,
+but the computation becomes a matrix-vector product after choosing a basis.
 
 \section{Python: Building a Matrix from a Rule}
 
@@ -138,4 +223,4 @@ Lab 2 builds matrices for differentiation, integration, rotations,
 reflections, projections, and composition.
 \end{labbox}
 
-\input{book/exercises/ch05-exercises}
+\input{book/exercises/ch04-exercises}

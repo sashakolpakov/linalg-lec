@@ -1,3 +1,15 @@
 \section*{Chapter 14}
-\paragraph{14.A1.} Compute $x^TB^TBx$ and rewrite it as a squared norm.
-\paragraph{14.C1.} Use \texttt{np.linalg.eigvalsh}, not \texttt{eig}, for symmetric matrices.
+\paragraph{14.A1.} Symmetry follows by transposing $A^TA$. PSD follows from a
+squared norm.
+\paragraph{14.A2.} The largest singular values are the largest stretch factors
+and contribute the largest terms to the Frobenius norm.
+\paragraph{14.B1.} For this diagonal matrix, you may take $U=I$, $V=I$, and
+$\Sigma$ equal to the matrix itself.
+\paragraph{14.B2.} The discarded squared singular values determine the squared
+Frobenius error.
+\paragraph{14.C1.} With \texttt{full\_matrices=False}, reconstruct using
+\texttt{U @ np.diag(s) @ Vt}.
+\paragraph{14.C2.} Compare \texttt{s[0]**2} with \texttt{np.sum(s**2)}.
+\paragraph{14.C3.} The formula is
+$\sqrt{\sigma_{k+1}^2+\cdots+\sigma_r^2}$ for the Frobenius error.
+\paragraph{14.D1.} Look at what the matrix does to the unit circle.

@@ -1,3 +1,12 @@
 \section*{Chapter 12}
-\paragraph{12.A1.} Use induction on $k$.
-\paragraph{12.D1.} Try a shear matrix.
+\paragraph{12.A1.} Compute $x^TB^TBx$ and rewrite it as a squared norm.
+\paragraph{12.A2.} One inclusion is immediate. For the other, multiply
+$B^TBx=0$ on the left by $x^T$.
+\paragraph{12.B1.} Test the vector $x=(0,1)^T$.
+\paragraph{12.B2.} The value $x^TB^TBx$ is the same as $\norm{Bx}^2$.
+\paragraph{12.C1.} Use \texttt{np.linalg.eigvalsh}, not \texttt{eig}, for
+symmetric matrices.
+\paragraph{12.C2.} Center by \texttt{X = X - X.mean(axis=0)} and use
+\texttt{X.T @ X / (n - 1)}.
+\paragraph{12.D1.} The diagonal entries of a covariance matrix are feature
+variances.

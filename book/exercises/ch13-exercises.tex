@@ -1,10 +1,56 @@
 \section*{Exercises}
 \addcontentsline{toc}{section}{Exercises}
+
 \subsection*{A. Theory}
-\begin{exercise}\exerciseid{13.A1} Explain why an eigenbasis makes the matrix of a linear map diagonal. \end{exercise}
+
+\begin{exercise}
+\exerciseid{13.A1}
+State the spectral theorem for real symmetric matrices and explain why
+orthogonality is part of the conclusion.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{13.A2}
+Let $A$ be symmetric. Prove that eigenvectors with distinct eigenvalues are
+orthogonal.
+\end{exercise}
+
 \subsection*{B. By Hand}
-\begin{exercise}\exerciseid{13.B1} Diagonalize $\mat{2&0\\0&5}$ and use the diagonal form to compute its fifth power. \end{exercise}
+
+\begin{exercise}
+\exerciseid{13.B1}
+Compute the Rayleigh quotient of
+\[
+  A=\begin{bmatrix}2&0\\0&5\end{bmatrix}
+\]
+at $x=(1,1)^T$ and at $x=(0,1)^T$.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{13.B2}
+For the same matrix $A$, find the minimum and maximum possible values of the
+Rayleigh quotient.
+\end{exercise}
+
 \subsection*{C. Python / NumPy}
-\begin{exercise}\exerciseid{13.C1} For a diagonalizable $2\times 2$ matrix, verify numerically that $A=P\Lambda P^{-1}$. \end{exercise}
+
+\begin{exercise}
+\exerciseid{13.C1}
+Sample random unit vectors and evaluate the Rayleigh quotient for a symmetric
+$2\times 2$ matrix. Compare the observed minimum and maximum with
+\texttt{np.linalg.eigvalsh}.
+\end{exercise}
+
+\begin{exercise}
+\exerciseid{13.C2}
+Implement 20 steps of power iteration for a symmetric matrix. Compare the final
+Rayleigh quotient with the eigenvalue of largest absolute value.
+\end{exercise}
+
 \subsection*{D. Challenge}
-\begin{exercise}\exerciseid{13.D1} Find a matrix with repeated eigenvalue $1$ that is not diagonalizable. \end{exercise}
+
+\begin{exercise}
+\exerciseid{13.D1}
+Explain why the maximum Rayleigh quotient of a symmetric matrix should be an
+eigenvalue. Use the orthonormal eigenbasis picture.
+\end{exercise}
